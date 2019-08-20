@@ -1,0 +1,729 @@
+<!DOCTYPE HTML>
+<html lang="en-US" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>I❤Manb 爱漫吧</title>
+    <meta name="keywords" content="GFX, design"/>
+    <meta name="description" content="GFX Design"/>
+    <link rel="stylesheet" th:href="@{/static/css/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/static/css/mycss.css}">
+    <!-- <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script> -->
+    <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.js}"></script>
+    <script th:src="@{/static/js/jquery-migrate-1.2.1.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/functions.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/my.js}"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+    <script type="text/javascript" th:src="@{/static/js/selectivizr-min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/PIE.htc}"></script>
+    <![endif]-->
+</head>
+
+<body class="home">
+
+
+<div class="elastic">
+    <div id="header" class="grid-clear">
+        <div class="grid" id="logo"><a href="index.html" class="settings-text">I❤Man 爱漫吧</a></div>
+        <div class="grid main-menu-block">
+            <ul id="main-menu">
+                <li>
+                    <form class="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="搜索漫画">
+                        </div>
+                    </form>
+                </li>
+                <li><a href="index.html" class="settings-txt">首页</a></li>
+                <li><a href="portfolio.html" class="settings-txt">分类</a></li>
+                <li><a href="blog.html" class="settings-txt">最近更新</a></li>
+                <li><a href="services.html" class="settings-txt">连载ing~</a>
+                    <ul>
+                        <li><span class="top_area">&nbsp;</span></li>
+                        <li><a href="columns.html" class="settings-txt">Columns</a></li>
+                        <li><a href="404.html" class="settings-txt">404 Error</a></li>
+                        <li><a href="user.html" class="settings-txt">Home 2</a></li>
+                        <li><a href="#" class="settings-txt">More</a></li>
+                        <li><span class="bottom_area">&nbsp;</span></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="settings-txt">说明</a></li>
+                <li><a href="contact.html" class="settings-txt">联系我们</a></li>
+                <li>
+                    <button style="display: none" class="btn btn-primary btn-lg" data-toggle="modal"
+                            data-target="#login">注册/登录
+                    </button>
+                    <div class="user">
+                        <a href="#" class="user-ican"><img th:src="@{/static/images/avatar_4.jpg}" alt=""></a>
+                        <p class="center username mytext-p">larimar</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div> <!-- #header -->
+
+    <div id="user-info">
+        <div class="tabpanel user-tabs left mr20">
+
+            <div role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="user-tab" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#home" aria-controls="home" role="tab" data-toggle="tab" class="mytext-title">🏠
+                            个人中心</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#message" aria-controls="message" role="tab" data-toggle="tab"
+                           class="mytext-title">✉ 我的回复</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#myorder" aria-controls="myorder" role="tab" data-toggle="tab"
+                           class="mytext-title">🔔 我的订阅</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#history" aria-controls="history" role="tab" data-toggle="tab"
+                           class="mytext-title">📚 阅读记录</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#approve" aria-controls="approve" role="tab" data-toggle="tab"
+                           class="mytext-title">📰 作者认证</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Tab panes -->
+        <div class="tab-content user-content right">
+            <div role="tabpanel" class="tab-pane active user-content-item" id="home">
+
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#my-info" aria-controls="my-info" role="tab" data-toggle="tab">我的信息</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#change-info" aria-controls="change-info" role="tab" data-toggle="tab">修改信息</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#change-psw" aria-controls="change-psw" role="tab" data-toggle="tab">修改密码</a>
+                        </li>
+                    </ul>
+
+                    <!-- 个人中心内容-->
+                    <div class="tab-content">
+                        <!-- 我的信息页面（展示用户信息） -->
+                        <div role="tabpanel" class="tab-pane active" id="my-info">
+                            <div class="info-head">
+                                <img th:src="@{/static/images/avatar_4.jpg}" class="my-info-icon left mr20" alt="">
+                                <p class="mytext-title user-info-nickname">Larimar(UID:20654)</p>
+                                <p class="mytext-title user-info-name">565203943</p>
+                            </div>
+                            <h3 class="title-line"><span class="current-bg pr5">基本信息</span></h3>
+                            <div class="form-group">
+                                <label for="username" class="col-sm-3 control-label">用户名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="username" value="larimar" readonly
+                                           name="username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nickname" class="col-sm-3 control-label">昵称：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="nickname" value="larimar" readonly
+                                           name="nickname">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender" class="col-sm-3 control-label">性别：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="gender" value="男" readonly
+                                           name="gender">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-3 control-label">邮箱：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="email" value="2411699692@qq.com"
+                                           readonly name="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="QQ" class="col-sm-3 control-label">QQ：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="QQ" value="2411699692" readonly
+                                           name="QQ">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 修改信息页面 -->
+                        <div role="tabpanel" class="tab-pane" id="change-info">
+                            <form action="#" method="POST" id="form-change-icon">
+                                <div class="info-head">
+                                    <a data-toggle="modal" href="" class="change-icon"><img
+                                            th:src="@{/static/images/avatar_4.jpg}" class="my-info-icon left mr20"
+                                            alt=""></a>
+                                    <p class="mytext-title user-info-nickname">Larimar(UID:20654)</p>
+                                    <p class="mytext-title user-info-name">565203943</p>
+                                    <input type="file" name="change-icon" id="changeIcon" style="display: none">
+                                </div>
+                            </form>
+                            <!-- 上传图片模态框 -->
+                            <div id="changeImgModal" class="modal fade" tabindex="-1" role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body center">
+                                            <h1 class="center title-large">更改头像</h1>
+                                            <img src="" alt="" class="img" width="200px">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" id="close"
+                                                    data-dismiss="modal">关闭
+                                            </button>
+                                            <button type="button" class="btn btn-primary" id="change">更改头像</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 上传图片模态框 -->
+
+                            <h3 class="title-line"><span class="current-bg pr5">修改信息</span></h3>
+                            <form action="#" method="POST" id="form-change-info">
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-3 control-label">用户名：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="username" value="larimar"
+                                               name="username">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nickname" class="col-sm-3 control-label">昵称：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="nickname" value="larimar"
+                                               name="nickname">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender" class="col-sm-3 control-label">性别：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="gender" value="男" name="gender">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-3 control-label">邮箱：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="email" value="2411699692@qq.com"
+                                               name="email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="QQ" class="col-sm-3 control-label">QQ：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="QQ" value="2411699692"
+                                               name="QQ">
+                                    </div>
+                                </div>
+                                <div class="form-group center center col-sm-10">
+                                    <button type="submit" class="btn btn-info">提交修改</button>
+                                    <button type="reset" class="btn btn-info">重置</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- 修改密码页面 -->
+                        <div role="tabpanel" class="tab-pane" id="change-psw">
+                            <h3> ⚙ 修改密码</h3>
+                            <form action="#" method="POST" id="form-change-psw">
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-3 control-label">用户名：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="username" value="larimar"
+                                               readonly name="username">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-3 control-label">原密码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="password"
+                                               placeholder="请输入原密码" name="password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-3 control-label">新密码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="newPassword"
+                                               placeholder="请输入新密码" name="newPassword">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-3 control-label">重复新密码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="CheckNewPassword"
+                                               placeholder="请确认新密码" name="CheckNewPassword">
+                                    </div>
+                                </div>
+                                <div class="form-group center center col-sm-10">
+                                    <button type="submit" class="btn btn-info">提交修改</button>
+                                    <button type="reset" class="btn btn-info">重置</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane user-content-item" id="message">
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#allMessage" aria-controls="allorder" role="tab" data-toggle="tab">全部消息</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#noreadMessage" aria-controls="news" role="tab" data-toggle="tab">未读消息</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#readMessage" aria-controls="readMessage" role="tab" data-toggle="tab">已读消息</a>
+                        </li>
+                    </ul>
+                    <!-- 消息情况 -->
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="allMessage">
+                            全部消息
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="noreadMessage">
+                            未读消息
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="readMessage">
+                            已读消息
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane user-content-item" id="myorder">
+
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#allorder" aria-controls="allorder" role="tab" data-toggle="tab">全部订阅</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#news" aria-controls="news" role="tab" data-toggle="tab">已读更新</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#noread" aria-controls="news" role="tab" data-toggle="tab">未读更新</a>
+                        </li>
+                    </ul>
+                    <!-- 订阅情况 -->
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="allorder">
+                            <h3 class="mytext-p3">第1-5条，共5条数据</h3>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_2.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">斗破苍穹</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第26话：决斗</p>
+                                <p class="mytext-p1 left mt5">更新时间：2018-01-06</p>
+                                <button type="button" class="btn btn-primary left mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_1.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">斗罗大陆</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第126话：另一个双生武魂</p>
+                                <p class="mytext-p1 left mt5">更新时间：2018-03-28</p>
+                                <button type="button" class="btn btn-primary left mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_3.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">魔道祖师</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第25话：阴险</p>
+                                <p class="mytext-p1 left mt5">更新时间：2019-08-06</p>
+                                <button type="button" class="btn btn-primary left mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_4.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">进击的巨人</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第126话：巨人的秘密</p>
+                                <p class="mytext-p1 left mt5">更新时间：2019-05-08</p>
+                                <button type="button" class="btn btn-primary left  mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left  mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_4.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">进击的巨人</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第126话：巨人的秘密</p>
+                                <p class="mytext-p1 left mt5">更新时间：2019-05-08</p>
+                                <button type="button" class="btn btn-primary left  mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left  mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="pagecontroller pagination-small pagination-center center">
+                                <ul class="pagination">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&raquo;</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="news">
+                            <h3 class="mytext-p3">第1-2条，共2条数据</h3>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_1.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">斗罗大陆</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第126话：另一个双生武魂</p>
+                                <p class="mytext-p1 left mt5">更新时间：2018-03-28</p>
+                                <button type="button" class="btn btn-primary left mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_4.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">进击的巨人</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第126话：巨人的秘密</p>
+                                <p class="mytext-p1 left mt5">更新时间：2019-05-08</p>
+                                <button type="button" class="btn btn-primary left  mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left  mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="pagecontroller pagination-small pagination-center center">
+                                <ul class="pagination">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&raquo;</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="noread">
+                            <h3 class="mytext-p3">第1-1条，共1条数据</h3>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_3.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">魔道祖师</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第25话：阴险</p>
+                                <p class="mytext-p1 left mt5">更新时间：2019-08-06</p>
+                                <button type="button" class="btn btn-primary left mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="pagecontroller pagination-small pagination-center center">
+                                <ul class="pagination">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&raquo;</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane user-content-item" id="history">
+
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#allHistory" aria-controls="allHistory" role="tab" data-toggle="tab">全部记录</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#haveNews" aria-controls="haveNews" role="tab" data-toggle="tab">已有更新</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="allHistory">
+                            <h3 class="mytext-p3">第1-2条，共2条数据</h3>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_1.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">斗罗大陆</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第126话：另一个双生武魂</p>
+                                <p class="mytext-p1 left mt5">更新时间：2018-03-28</p>
+                                <button type="button" class="btn btn-primary left mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_4.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">进击的巨人</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第126话：巨人的秘密</p>
+                                <p class="mytext-p1 left mt5">更新时间：2019-05-08</p>
+                                <button type="button" class="btn btn-primary left  mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left  mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="pagecontroller pagination-small pagination-center center">
+                                <ul class="pagination">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&raquo;</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="haveNews">
+                            <h3 class="mytext-p3">第1-1条，共1条数据</h3>
+                            <div class="user-item">
+                                <img th:src="@{/static/images/slider/project_3.jpg}" alt="">
+                                <h1 class="mytext-p3 center mt10">魔道祖师</h1>
+                                <p class="mytext-p1 left mt5">最新章节：第25话：阴险</p>
+                                <p class="mytext-p1 left mt5">更新时间：2019-08-06</p>
+                                <button type="button" class="btn btn-primary left mt5 ml10">继续阅读</button>
+                                <button type="button" class="btn btn-danger left mt5 ml10">取消订阅</button>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="pagecontroller pagination-small pagination-center center">
+                                <ul class="pagination">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&raquo;</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane user-content-item center" id="approve">
+
+                <h1 class="title-large" style="margin:40px 0px;">暂未开放</h1>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<!-- HERE START FOOTER -->
+<div id="footer" class="circle-inline-border">
+    <div class="elastic">
+        <div class="top_footer">
+            <div class="footer_widget">
+                <h3 class="general-font">Pages</h3>
+                <ul>
+                    <li><a href="index.html">Home Page</a></li>
+                    <li><a href="about.html">About Page</a></li>
+                    <li><a href="services.html">Services Page</a></li>
+                    <li><a href="portfolio.html">Portfolio Page</a></li>
+                    <li><a href="blog.html">Blog Page</a></li>
+                    <li><a href="contact.html">Contact Page</a></li>
+                </ul>
+            </div><!-- .footer_widget_1 -->
+
+            <div class="footer_widget">
+                <h3 class="general-font">Services</h3>
+                <ul>
+                    <li><a href="#">Website Design</a></li>
+                    <li><a href="#">Development</a></li>
+                    <li><a href="#">Optimization</a></li>
+                    <li><a href="#">Ecommerce</a></li>
+                    <li><a href="#">Photography</a></li>
+                    <li><a href="#">Branding</a></li>
+                </ul>
+            </div><!-- .footer_widget_2 -->
+
+            <div class="footer_widget">
+                <h3 class="general-font">Why Us?</h3>
+                <ul>
+                    <li><a href="#">Easy to Customize</a></li>
+                    <li><a href="#">Userfriendly</a></li>
+                    <li><a href="#">Pixel Perfect</a></li>
+                    <li><a href="#">Clean & Modern</a></li>
+                    <li><a href="#">Complete Pages</a></li>
+                    <li><a href="#">Add Color You Like</a></li>
+                </ul>
+            </div><!-- .footer_widget_3 -->
+            <div class="clear"></div>
+
+            <div class="footer_image">
+                <img class="inline-border active" th:src="@{/static/images/slider/footer_home.jpg}" alt="" width="450"
+                     height="250"/>
+                <img class="inline-border" th:src="@{/static/images/slider/footer_2.jpg}" alt="" width="450"
+                     height="250"/>
+                <img class="inline-border" th:src="@{/static/images/slider/footer_3.jpg}" alt="" width="450"
+                     height="250"/>
+                <img class="inline-border" th:src="@{/static/images/slider/footer_4.jpg}" alt="" width="450"
+                     height="250"/>
+                <img class="inline-border" th:src="@{/static/images/slider/footer_5.jpg}" alt="" width="450"
+                     height="250"/>
+                <img class="inline-border" th:src="@{/static/images/slider/footer_6.jpg}" alt="" width="450"
+                     height="250"/>
+                <img class="inline-border" th:src="@{/static/images/slider/footer_7.jpg}" alt="" width="450"
+                     height="250"/>
+                <img class="inline-border" th:src="@{/static/images/slider/footer_8.jpg}" alt="" width="450"
+                     height="250"/>
+
+                <ul class="social-icons">
+                    <li class="vimeo-social"><a href="#">&nbsp;</a></li>
+                    <li class="twitter-social"><a href="#">&nbsp;</a></li>
+                    <li class="flickr-social"><a href="#">&nbsp;</a></li>
+                    <li class="facebook-social"><a href="#">&nbsp;</a></li>
+                    <li class="dribbble-social"><a href="#">&nbsp;</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bottom_footer">
+            <div class="left">
+                <p>&copy; Copyright &copy; 2013.Company name All rights reserved. </p>
+            </div>
+            <div class="right area2">
+
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div> <!-- end of elastic -->
+</div><!-- #footer end of footer -->
+
+<!-- 模态框 -->
+<!-- 注册登录模块框 -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <div role="tabpanel">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#home" aria-controls="login" role="tab" data-toggle="tab">登录</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#tab" aria-controls="register" role="tab" data-toggle="tab">注册</a>
+                            </li>
+                        </ul>
+                    </div>
+                </h4>
+            </div>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="user_form" method="post"
+                              action="${pageContext.request.contextPath}/login.user">
+                            <div class="form-group">
+                                <label for="new_loginName" class="col-sm-3 control-label">账号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="new_loginName" placeholder="账号"
+                                           name="loginName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="new_loginPwd" class="col-sm-3 control-label">密码</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="new_loginPwd" placeholder="密码"
+                                           name="loginPwd">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="login_code" class="col-sm-3 control-label">验证码</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="login_code" placeholder="验证码"
+                                           name="code">
+                                    <div class="code" style="float: right">
+                                        <img th:src="@{/static/images/ia_10281.jpg}"/>
+                                        <a href="javascript:changeCode()">看不清换一张</a><br>
+                                        <!-- <img src="${pageContext.request.contextPath}/code" onclick="changeCode()" id="checkCodeImg"/>
+                                            <a href="javascript:changeCode()" >看不清换一张</a><br> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" value="" id="dologin" style="display: none">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="loginbtn">登录</button>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="tab">
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="register_user_form" method="post" action="register.user">
+                            <div class="form-group">
+                                <label for="register_loginName" class="col-sm-3 control-label">账号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="register_loginName" placeholder="账号"
+                                           name="loginName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register_loginPwd" class="col-sm-3 control-label">密码</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="register_loginPwd" placeholder="密码"
+                                           name="loginPwd">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register_gender" class="col-sm-3 control-label">性别</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="register_gender" placeholder="性别"
+                                           name="gender">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register_email" class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="register_email" placeholder="Email"
+                                           name="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register_telephone" class="col-sm-3 control-label">电话</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="register_telephone" placeholder="电话"
+                                           name="telephone">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register_QQ" class="col-sm-3 control-label">QQ</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="register_QQ" placeholder="QQ账号"
+                                           name="QQ">
+                                </div>
+                            </div>
+                            <input type="submit" value="" id="doRegister" style="display: none">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="registerBtn">注册</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 注册登录模块框 -->
+
+
+<div style="display:none">
+    <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript'
+            charset='gb2312'></script>
+</div>
+</body>
+
+</html>
