@@ -1,5 +1,7 @@
 package com.larimar.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 /**
  * @author Larimar
  * @time 2019/8/20 周二 19:30
@@ -32,6 +34,22 @@ public interface LikesMapper {
      * @return 删除数量
      */
     public int delComicLikes(Integer comicId);
+
+    /**
+     * 修改漫画点赞数
+     * @param comicId 漫画id
+     * @param number 点赞数
+     * @return 修改数量
+     */
+    public int updateComicLikes(@Param("comicId") Integer comicId,@Param("number") Integer number);
+
+    /**
+     * 修改章节点赞数
+     * @param detailId 章节id
+     * @param number 点赞数
+     * @return 修改数量
+     */
+    public int updateDetailLikes(@Param("detailId")Integer detailId,@Param("number") Integer number);
 
     /**
      * 查找章节点赞数

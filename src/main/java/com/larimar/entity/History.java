@@ -11,21 +11,21 @@ public class History {
     private Integer comicId;//漫画id
     private String comicName;//漫画名
     private Integer detailId;//章节id
-    private String detailName;//章节名
+    private String chapterName;//章节名
     private String lastReadTime;//最后一次阅读时间
     private Integer status;//状态 0未更新 1已有更新 -1已读更新
 
     public History() {
     }
 
-    public History(Integer historyId, Integer userId, String userName, Integer comicId, String comicName, Integer detailId, String detailName, String lastReadTime, Integer status) {
+    public History(Integer historyId, Integer userId, String userName, Integer comicId, String comicName, Integer detailId, String chapterName, String lastReadTime, Integer status) {
         this.historyId = historyId;
         this.userId = userId;
         this.userName = userName;
         this.comicId = comicId;
         this.comicName = comicName;
         this.detailId = detailId;
-        this.detailName = detailName;
+        this.chapterName = chapterName;
         this.lastReadTime = lastReadTime;
         this.status = status;
     }
@@ -78,12 +78,12 @@ public class History {
         this.detailId = detailId;
     }
 
-    public String getDetailName() {
-        return detailName;
+    public String getchapterName() {
+        return chapterName;
     }
 
-    public void setDetailName(String detailName) {
-        this.detailName = detailName;
+    public void setchapterName(String chapterName) {
+        this.chapterName = chapterName;
     }
 
     public String getLastReadTime() {
@@ -111,7 +111,7 @@ public class History {
                 ", comicId=" + comicId +
                 ", comicName='" + comicName + '\'' +
                 ", detailId=" + detailId +
-                ", detailName='" + detailName + '\'' +
+                ", chapterName='" + chapterName + '\'' +
                 ", lastReadTime='" + lastReadTime + '\'' +
                 ", status=" + status +
                 '}';

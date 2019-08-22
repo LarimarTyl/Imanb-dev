@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.larimar.mapper.LikesMapper">
+  <insert id="addComicLikes" parameterType="integer">
+    insert into likes(comic_id, number)
+    values (#{comicId},1)
+  </insert>
+  <insert id="addDetailLikes" parameterType="integer">
+    insert into likes(detail_id, number)
+    values (#{detailId},1)
+  </insert>
+  <delete id="delComicLikes" parameterType="integer">
+    delete from likes
+    where comic_id = #{comicId}
+  </delete>
+  <delete id="delDetailLikes" parameterType="integer">
+    delete from likes
+    where detail_id = #{detailId}
+  </delete>
+  <select id="selectComicLikes" resultType="Integer">
+    select number from likes where comic_id=#{comicId}
+  </select>
+  <select id="selectDetailLikes" resultType="Integer">
+    select number from likes where detail_id=#{detailId}
+  </select>
+  <update id="updateComicLikes">
+        update likes
+        <set>
+          number=#{number}
+        </set>
+        <where>
+          <if test="comicId!=null">
+            comic_id = #{comicId}
+          </if>
+        </where>
+  </update>
+  <update id="updateDetailLikes">
+    update likes
+    <set>
+      number=#{number}
+    </set>
+    <where>
+      <if test="detailId!=null">
+        detail_id = #{detailId}
+      </if>
+    </where>
+  </update>
+</mapper>

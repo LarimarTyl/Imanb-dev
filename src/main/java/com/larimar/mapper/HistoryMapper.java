@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.History;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -35,9 +36,10 @@ public interface HistoryMapper {
      * 更改阅读历史状态（是否更新）
      * // FIXME: 2019/8/20  这里不需要考虑用户 直接修改对应漫画的所有历史记录的状态为已更新
      * @param comicId 漫画id
+     * @param status 漫画状态
      * @return 更新数量
      */
-    public int updateHistoryStatus(Integer comicId);
+    public int updateHistoryStatus(@Param("comicId")Integer comicId,@Param("status")Integer status);
 
     /**
      * 查找用户所有阅读历史
@@ -52,5 +54,5 @@ public interface HistoryMapper {
      * @param status 状态码
      * @return 历史记录集合
      */
-    public List<History> selectHistoryByStatus(Integer userId,Integer status);
+    public List<History> selectHistoryByStatus(@Param("userId") Integer userId,@Param("status") Integer status);
 }

@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,17 +19,17 @@ public interface UserMapper {
 
     /**
      * 删除用户
-     * @param id 用户id
+     * @param userId 用户id
      * @return 删除用户数
      */
-    public int delUser(Integer id);
+    public int delUser(Integer userId);
 
     /**
      * 根据用户名删除用户
      * @param userName 用户名
      * @return 删除用户数
      */
-    public int delUserByName(Integer userName);
+    public int delUserByName(String userName);
 
     /**
      * 更改用户信息
@@ -39,10 +40,11 @@ public interface UserMapper {
 
     /**
      * 更改用户注册状态
-     * @param UserId
-     * @return
+     * @param userId 用户id
+     * @param status 用户状态
+     * @return 修改数量
      */
-    public int updateUserStatus(Integer UserId);
+    public int updateUserStatus(@Param("userId") Integer userId ,@Param("status")Integer status);
 
     /**
      * 更改用户密码
@@ -50,7 +52,7 @@ public interface UserMapper {
      * @param userId 用户id
      * @return 更改用户数
      */
-    public int updateUserPassWord(String newPassWord ,Integer userId);
+    public int updateUserPassWord(@Param("newPassWord")String newPassWord ,@Param("userId") Integer userId);
 
     /**
      * 更改用户头像
@@ -58,14 +60,14 @@ public interface UserMapper {
      * @param userId 用户id
      * @return 更改用户数
      */
-    public int updateUserPhoto(String newPhoto,Integer userId);
+    public int updateUserPhoto(@Param("newPhoto") String newPhoto,@Param("userId")Integer userId);
 
     /**
      * 查询用户名是否存在（根据用户名查找用户）
      * @param userName 用户名
      * @return 对应的用户
      */
-    public User findUserName(String userName);
+    public User findUserByName(String userName);
 
     /**
      * 根据用户id查找用户
@@ -87,7 +89,7 @@ public interface UserMapper {
      * @param password 密码
      * @return 对应的用户
      */
-    public User findUserByUserNameAndPsw(String userName,String password);
+    public User findUserByUserNameAndPsw(@Param("userName") String userName,@Param("password")String password);
 
     /**
      * 查找所有用户
@@ -100,5 +102,5 @@ public interface UserMapper {
      * @param name 用户名/昵称
      * @return 用户集合
      */
-    public  List<User> selectUserNameLike(String name);
+    public  List<User> selectUserNameLike(@Param("name") String name);
 }

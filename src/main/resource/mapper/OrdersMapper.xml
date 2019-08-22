@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.larimar.mapper.OrdersMapper">
+    <insert id="addOrders" parameterType="orders">
+        insert into orders(orders_id, comic_id, user_id, status)
+        values (#{ordersId},#{comicId},#{userId},#{status})
+    </insert>
+    <delete id="delOrders" parameterType="Integer">
+        delete from orders
+        where orders_id = #{ordersId}
+    </delete>
+    <update id="updateOrders">
+        update orders
+    <set>
+        <if test="status!=null">
+            status=#{status}
+        </if>
+    </set>
+    <where>
+        <if test="comicId!=null">
+            comic_id = #{comicId}
+        </if>
+    </where>
+    </update>
+    <update id="updateUserOrders">
+        update orders
+        <set>
+            <if test="status!=null">
+                status = #{status}
+            </if>
+        </set>
+        <where>
+            <if test="comicId!=null">
+                comic_id = #{comicId}
+            </if>
+            <if test="userId!=null">
+               and user_id = #{userId}
+            </if>
+        </where>
+    </update>
+
+    <select id="selectAllOrders" parameterType="Integer" resultMap="BaseResultMap">
+        select orders_id,
+               orders.comic_id AS 'comicId',
+               comicname,
+               orders.user_id  AS 'userId',
+               username,
+               orders.status
+        from orders,
+             user,
+             comic
+        where comic.comic_id = orders.comic_id
+          and orders.user_id = `user`.user_id
+          and orders.user_id = #{userId};
+    </select>
+    <resultMap id="BaseResultMap" type="orders">
+        <id property="ordersId" column="orders_id"/>
+        <result property="comicId" column="comicId"/>
+        <result property="userId" column="userId"/>
+        <result property="status" column="status"/>
+        <result property="comicName" column="comicname"/>
+        <result property="userName" column="username"/>
+    </resultMap>
+    <select id="selectAllOrdersByStatus" resultMap="BaseResultMap">
+        select orders_id,
+               orders.comic_id AS 'comicId',
+               comicname,
+               orders.user_id  AS 'userId',
+               username,
+               orders.status
+        from orders,
+             user,
+             comic
+        where comic.comic_id = orders.comic_id
+          and orders.user_id = `user`.user_id
+          and orders.user_id = #{userId}
+          and orders.status = #{status};
+    </select>
+</mapper>

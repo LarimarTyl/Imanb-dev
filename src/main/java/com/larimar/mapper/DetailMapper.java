@@ -28,7 +28,7 @@ public interface DetailMapper {
      * @param detail 章节详情对象
      * @return 更新数量
      */
-    public  int updateDetailUpdateTime(Detail detail);
+    public  int updateDetail(Detail detail);
 
     /**
      * 查找漫画的章节详细信息
@@ -37,19 +37,7 @@ public interface DetailMapper {
      */
     public List<Detail> selectAllDetails(Integer comicId);
 
-    /**
-     * 获取最新的章节更新
-     * @param comicId 漫画id
-     * @return 章节详情页
-     */
-    public Detail getNewDetails(Integer comicId);
-
-    /**
-     * 根据时间查找漫画详情
-     * @param time 时间
-     * @return 章节对象集合
-     */
-    public List<Detail> selectDetailsByTime(String time);
+    // TODO: 2019/8/21 根据时间 查找当月更新用更新时间的字符串包含来实现 更新session就可以是实现
 
     /**
      * 根据类型查找漫画详情

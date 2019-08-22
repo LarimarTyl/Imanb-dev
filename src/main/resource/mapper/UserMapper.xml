@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.larimar.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="user">
+        <id column="user_id" property="userId" javaType="Integer"/>
+        <result column="username" property="userName" javaType="String"/>
+        <result column="password" property="password" javaType="String"/>
+        <result column="gender" property="gender" javaType="String"/>
+        <result column="email" property="email" javaType="String"/>
+        <result column="QQ" property="qq" javaType="String"/>
+        <result column="nickname" property="nickName" javaType="String"/>
+        <result column="status" property="status" javaType="Integer"/>
+    </resultMap>
+    <delete id="delUser" parameterType="Integer">
+        delete from user where user_id=#{userId}
+    </delete>
+    <delete id="delUserByName" parameterType="String">
+        delete from user where username = #{username}
+    </delete>
+    <select id="findUserById" parameterType="Integer" resultType="user">
+        select user_id, username, password, gender, email, QQ, nickname, photo ,status from user where user_id=#{userId}
+    </select>
+    <select id="findUserByUserNameAndPsw" resultType="User">
+        select user_id, username, password, gender, email, QQ, nickname, photo ,status from user where username = #{userName} and password = #{password}
+    </select>
+    <select id="findUserByName" resultType="User">
+        select user_id, username, password, gender, email, QQ, nickname, photo ,status from user where username = #{username}
+    </select>
+    <select id="findUserStatus" resultType="int">
+        select status from user where user_id=#{userId}
+    </select>
+    <insert id="saveUser" parameterType="user">
+        insert into user(user_id,username, password, gender, email, QQ, nickname, photo, status)
+        values (#{userId},#{userName}, #{password}, #{gender}, #{email}, #{qq}, #{nickName}, #{photo}, #{status})
+    </insert>
+    <select id="selectAllUsers" resultMap="BaseResultMap">
+        select user_id,username, password, gender, email, QQ, nickname, photo, status
+        from user;
+    </select>
+    <select id="selectUserNameLike" parameterType="String" resultMap="BaseResultMap">
+        <bind name="likeName" value="'%' +name+ '%'"/>
+        select user_id,username, password, gender, email, QQ, nickname, photo, status
+        from user
+        where username like #{likeName} or nickname like #{likeName}
+    </select>
+    <update id="updateUser" parameterType="user">
+        update user
+        <set>
+        <if test="userName!=null">
+        username = #{userName},
+        </if>
+        <if test="password!=null">
+        password = #{password},
+        </if>
+        <if test="gender!=null">
+        gender = #{gender},
+        </if>
+        <if test="email!=null">
+        email =  #{email},
+        </if>
+        <if test="qq!=null">
+        QQ =  #{qq},
+        </if>
+        <if test="nickName!=null">
+        nickname = #{nickName},
+        </if>
+        <if test="photo!=null">
+        photo = #{photo},
+        </if>
+        <if test="status!=null">
+        status = #{status}
+        </if>
+        </set>
+        <where>
+        <if test="userId!=null">
+            user_id = #{userId}
+        </if>
+        </where>
+    </update>
+    <update id="updateUserPassWord">
+        update user
+        <set>
+            <if test="newPassWord!=null">
+                password = #{newPassWord},
+            </if>
+        </set>
+        <where>
+            <if test="userId!=null">
+                user_id = #{userId}
+            </if>
+        </where>
+    </update>
+    <update id="updateUserPhoto">
+        update user
+        <set>
+            <if test="newPhoto!=null">
+                photo = #{newPhoto},
+            </if>
+        </set>
+        <where>
+            <if test="userId!=null">
+                user_id = #{userId}
+            </if>
+        </where>
+    </update>
+    <update id="updateUserStatus" parameterType="Integer">
+        update user
+        <set>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+        </set>
+        <where>
+            <if test="userId!=null">
+                user_id = #{userId}
+            </if>
+        </where>
+    </update>
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.larimar.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="comment">
+    <id column="commentId" property="commentid" />
+    <result column="userId" property="userid" />
+    <result column="username" property="userName"/>
+    <result column="photo" property="userPhoto"/>
+    <result column="content" property="content" />
+    <result column="status" property="status" />
+    <result column="time" property="time" />
+    <result column="aim" property="commentAim"/>
+    <result column="detail_id" property="detailId"/>
+    <result column="comic_id" property="comicId"/>
+  </resultMap>
+
+  <insert id="addComicComment" parameterType="comment">
+    insert into comment(comment_id, user_id, comic_id, content, status, time)
+    values (#{commentId},#{userId},#{comicId},#{content},#{status},#{time})
+  </insert>
+
+  <insert id="addDetailComment" parameterType="comment">
+    insert into comment(comment_id, user_id, detail_id, content, status, time)
+    values (#{commentId},#{userId},#{detailId},#{content},#{status},#{time})
+  </insert>
+
+  <insert id="addRevertComment" parameterType="comment">
+    insert into comment(comment_id, user_id, aim, content, status, time)
+    values (#{commentId},#{userId},#{commentAim},#{content},#{status},#{time})
+  </insert>
+
+  <delete id="delComment" parameterType="Integer">
+    delete from comment
+    where comment_id = #{commentId} and user_id=#{userId}
+  </delete>
+
+  <update id="updateCommentStatus" >
+    update comment
+    <set>
+            status = 1
+    </set>
+    <where>
+        <if test="userId!=null">
+          user_id = #{userId}
+        </if>
+        <if test="commentId!=null">
+          and comment_id = #{commentId}
+        </if>
+    </where>
+  </update>
+
+  <select id="selectAllComments" parameterType="Integer" resultMap="BaseResultMap">
+    select comment_id,
+           comment.user_id,
+           username,
+           photo,
+           aim,
+           comic_id,
+           detail_id,
+           content,
+           comment.status,
+           time
+    from comment,user
+    where user.user_id = comment.user_id and comment.user_id = #{userId} order by time desc
+  </select>
+
+  <select id="selectComicComments" parameterType="Integer" resultMap="BaseResultMap">
+      select comment_id,
+             comment.user_id,
+             username,
+             photo,
+             aim,
+             comic_id,
+             detail_id,
+             content,
+             comment.status,
+             time
+      from comment,user
+      where user.user_id = comment.user_id and comment.comic_id = #{comicId} order by time desc
+  </select>
+
+  <select id="selectDetailComments" parameterType="Integer" resultMap="BaseResultMap">
+    select comment_id,
+           comment.user_id,
+           username,
+           photo,
+           aim,
+           comic_id,
+           detail_id,
+           content,
+           comment.status,
+           time
+    from comment,user
+    where user.user_id = comment.user_id and comment.detail_id = #{detailId} order by time desc
+  </select>
+
+  <select id="selectRevertComments" parameterType="Integer" resultMap="BaseResultMap">
+    select comment_id,
+           comment.user_id,
+           username,
+           photo,
+           aim,
+           comic_id,
+           detail_id,
+           content,
+           comment.status,
+           time
+    from comment,user
+    where user.user_id = comment.user_id and aim = #{commentAim} order by time
+  </select>
+
+<!--  查看用户对应状态的评论-->
+  <select id="selectCommentsByStatus" parameterType="Integer" resultMap="BaseResultMap">
+    select comment_id,
+           comment.user_id,
+           username,
+           photo,
+           aim,
+           comic_id,
+           detail_id,
+           content,
+           comment.status,
+           time
+    from comment,user
+    where user.user_id = comment.user_id
+      and aim in (select comment_id from comment where user_id=#{userId})
+      and comment.status=#{status}
+    order by time desc;
+  </select>
+
+</mapper>

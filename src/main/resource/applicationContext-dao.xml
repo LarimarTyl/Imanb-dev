@@ -8,8 +8,9 @@
     <!--配置数据源-->
     <bean class="com.alibaba.druid.pool.DruidDataSource" id="source">
         <property name="driverClassName" value="${driver}"/>
-        <property name="name" value="${username}"/>
+        <property name="username" value="${username}"/>
         <property name="password" value="${password}"/>
+        <property name="maxWait" value="1000"/>
         <property name="url" value="${url}"/>
     </bean>
     <!--配置mapper-->

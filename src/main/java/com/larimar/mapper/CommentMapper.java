@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.Comment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,24 +12,24 @@ import java.util.List;
 public interface CommentMapper {
     /**
      * 添加对漫画评论
-     * @param comicId 漫画id
+     * @param comment 评论对象 包含 漫画id
      * @return 返回评论数量
      */
-    public int addComicComment(Integer comicId);
+    public int addComicComment(Comment comment);
 
     /**
      * 添加对章节的评论
-     * @param detailId 漫画章节id
+     * @param comment 评论对象包含 漫画章节id
      * @return 评论数量
      */
-    public int addDetailComment(Integer detailId);
+    public int addDetailComment(Comment comment);
 
     /**
      * 添加回复评论
-     * @param commentId 回复评论id
+     * @param comment 评论对象包含 回复评论id
      * @return 返回添加数量
      */
-    public int addRevertComment(Integer commentId);
+    public int addRevertComment(Comment comment);
 
     /**
      * 删除评论
@@ -36,7 +37,7 @@ public interface CommentMapper {
      * @param userId 用户id
      * @return 删除数量
      */
-    public int delComment(Integer commentId,Integer userId);
+    public int delComment(@Param("commentId") Integer commentId,@Param("userId") Integer userId);
 
     /**
      * 修改评论状态
@@ -44,7 +45,7 @@ public interface CommentMapper {
      * @param userId 用户id
      * @return 修改数量
      */
-    public int updateCommentStatus(Integer commentId,Integer userId);
+    public int updateCommentStatus(@Param("commentId") Integer commentId,@Param("userId") Integer userId);
 
     /**
      * 查询用户所有的评论
@@ -59,7 +60,7 @@ public interface CommentMapper {
      * @param status 状态码
      * @return 评论集合
      */
-    public List<Comment> selectCommentsByStatus(Integer userId,Integer status);
+    public List<Comment> selectCommentsByStatus(@Param("userId") Integer userId,@Param("status")Integer status);
 
     /**
      * 查找漫画对应的评论
@@ -82,9 +83,4 @@ public interface CommentMapper {
      */
     public List<Comment> selectRevertComments(Integer commentId);
 
-    /**
-     * 获取最新评论
-     * @return 评论集合
-     */
-    public List<Comment> selectNewComments();
 }

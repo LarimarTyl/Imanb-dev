@@ -4,14 +4,14 @@ package com.larimar.entity;
  * @author Larimar
  * @time 2019/8/20 周二 19:25
  */
-public class Type {
+public class Types {
     private Integer typeId;//类型id
     private String typeName;//类型名
 
-    public Type() {
+    public Types() {
     }
 
-    public Type(Integer typeId, String typeName) {
+    public Types(Integer typeId, String typeName) {
         this.typeId = typeId;
         this.typeName = typeName;
     }

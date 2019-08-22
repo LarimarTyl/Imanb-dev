@@ -2,6 +2,7 @@ package com.larimar.mapper;
 
 import com.larimar.entity.Comic;
 import net.sf.jsqlparser.statement.Commit;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public interface ComicMapper {
      * @param status 漫画状态
      * @return 修改数量
      */
-    public int updateComicStatus(Integer comicId,Integer status);
+    public int updateComicStatus(@Param("comicId") Integer comicId,@Param("status") Integer status);
 
     /**
      * 修改漫画最新更新信息
@@ -47,7 +48,7 @@ public interface ComicMapper {
      * @param status 漫画状态
      * @return 修改数量
      */
-    public int updateComicNewsUpdateTime(Integer comicId,String newUpdateTime,String newChapter,Integer status);
+    public int updateComicNewsUpdateTime(@Param("comicId")Integer comicId,@Param("newUpdateTime") String newUpdateTime,@Param("newChapter") String newChapter,@Param("status")Integer status);
 
     /**
      * 根据漫画id查找漫画
