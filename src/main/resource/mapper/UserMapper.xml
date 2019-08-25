@@ -28,12 +28,12 @@
     <select id="findUserByName" resultType="User">
         select user_id, username, password, gender, email, QQ, nickname, photo ,status from user where username = #{username}
     </select>
-    <select id="findUserStatus" resultType="int">
-        select status from user where user_id=#{userId}
+    <select id="findUserStatus" resultType="Integer">
+        select status from user where username=#{userName}
     </select>
     <insert id="saveUser" parameterType="user">
-        insert into user(user_id,username, password, gender, email, QQ, nickname, photo, status)
-        values (#{userId},#{userName}, #{password}, #{gender}, #{email}, #{qq}, #{nickName}, #{photo}, #{status})
+        insert into user(user_id,username, password, gender, email, QQ, nickname)
+        values (#{userId},#{userName}, #{password}, #{gender}, #{email}, #{qq}, #{nickName})
     </insert>
     <select id="selectAllUsers" resultMap="BaseResultMap">
         select user_id,username, password, gender, email, QQ, nickname, photo, status

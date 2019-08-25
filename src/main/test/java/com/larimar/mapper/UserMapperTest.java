@@ -79,7 +79,7 @@ public class UserMapperTest {
 
     @Test
     public void testFindUserStatus() {
-        System.out.println(mapper.findUserStatus(2));
+        System.out.println(mapper.findUserStatus("larimar"));
     }
 
     @Test

@@ -89,16 +89,11 @@ public class CommentMapperTest {
     // TODO: 2019/8/22 测试留言系统
     public void testCommentsSystem(){
         List<Comment> comments = mapper.selectAllComments(1);
-        List<Reply> total = new LinkedList<>();
+
         for (Comment c : comments) {
             Reply reply = new Reply(c);
-            Reply reply1 = getComments(reply);
-            reply.getReplyList().add(reply1);
-            total.add(reply);
-        }
-        for (Reply c :total) {
-            List<Reply> replyList = c.getReplyList();
-            System.out.println(replyList);
+            Reply comments1 = getComments(reply);
+            printlnComment(comments1);
         }
     }
 
@@ -121,6 +116,10 @@ public class CommentMapperTest {
         }
     }
     public void printlnComment(Reply reply){
-
+        System.out.println("主楼层内容："+reply.getContent());
+        List<Reply> replyList = reply.getReplyList();
+        for (Reply replys:replyList) {
+            printlnComment(replys);
+        }
     }
 }

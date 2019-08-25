@@ -78,10 +78,10 @@ public interface UserMapper {
 
     /**
      * 查询用户的注册状态
-     * @param userId 用户id
+     * @param userName 用户名
      * @return 注册状态码
      */
-    public int findUserStatus(Integer userId);
+    public int findUserStatus(String userName);
 
     /**
      * 根据用户名和密码查找用户（登录）

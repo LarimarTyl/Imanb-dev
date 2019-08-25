@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en-US" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -49,21 +49,33 @@
                         <li><span class="bottom_area">&nbsp;</span></li>
                     </ul>
                 </li>
-                <li><a th:href="@{about.html}" class="settings-txt">说明</a></li>
-                <li><a th:href="@{contact.html}" class="settings-txt">联系我们</a></li>
+                <li><a th:href="@{/about}" class="settings-txt">说明</a></li>
+                <li><a th:href="@{/contact}" class="settings-txt">联系我们</a></li>
                 <li>
-                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#login">注册/登录</button>
+                    <div th:unless="${session.user}!=null">
+                        <button  class="btn btn-primary btn-lg" data-toggle="modal"
+                                 data-target="#login">注册/登录</button>
+                    </div>
+                    <div th:if="${session.user}!=null" th:object="${session.user}"  class="user">
+                        <div class="left">
+<!--                            <a href="#" class="user-ican"><img th:attr="src='@{/static/images/'+*{photo}+'.jpg'" th:src="@{/static/images/user.jpg}" alt=""></a>-->
+                            <a th:href="@{/user}" class="user-ican"><img th:src="|/images/user/*{photo}.jpg|" alt=""></a>
+<!--                            <a href="#" class="user-ican"><img th:src="@{/static/images/}*{photo}.jpg|" alt=""></a>-->
+                            <p class="center username mytext-p" th:text="*{nickName}">读者老爷</p>
+                        </div>
+                        <a class="loginOut right" th:href="@{/loginOut}" >退出</a>
+                    </div>
                 </li>
             </ul>
         </div>
     </div> <!-- #header -->
+
     <div id="head-text">
         <h1 class="general-font">I (*´∀`)~♥ Comic <span class="china blue f80 settings-text"> Imanb 爱漫吧!</span></h1>
         <h3><span class="f14">o(*￣3￣)o Imanb 爱漫吧 致力于挖掘精品原创漫画，专注漫画业务 为广大读者老爷♡(☄◣ω◢)☄♡提供优质服务
 					<br>各位读者老爷请笑纳｡:.ﾟヽ(*´∀`)ﾉﾟ.:｡ </span></h3>
     </div> <!-- #head-text -->
 </div>
-
 
 <!-- HERE START SLIDER -->
 <div id="allslider">
@@ -784,66 +796,81 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
                         <div class="modal-body">
-                            <form class="form-horizontal" id="user_form" method="post"
-                                  action="${pageContext.request.contextPath}/login.user">
+                            <form class="form-horizontal" id="user_form" method="post" th:action="@{/doLogin}">
                                 <div class="form-group">
-                                    <label for="new_loginName" class="col-sm-2 control-label">账号</label>
+                                    <label for="login_loginName" class="col-sm-2 control-label">账号</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="new_loginName" placeholder="账号"
-                                               name="loginName">
+                                        <input type="text" class="form-control" id="login_loginName" placeholder="账号"
+                                               name="userName">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="new_loginPwd" class="col-sm-2 control-label">密码</label>
+                                    <label for="login_loginPassword" class="col-sm-2 control-label">密码</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="new_loginPwd" placeholder="密码"
-                                               name="loginPwd">
+                                        <input type="text" class="form-control" id="login_loginPassword" placeholder="密码"
+                                               name="password">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="login_code" class="col-sm-2 control-label">验证码</label>
+                                    <label for="validateCode" class="col-sm-2 control-label">验证码</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="login_code" placeholder="验证码"
-                                               name="code">
+                                        <input type="text" class="form-control" id="validateCode" placeholder="验证码"
+                                               name="validateCode">
                                         <div class="code" style="float: right">
-                                            <img th:src="@{/static/images/ia_10281.jpg}"/>
+                                            <img  th:src="@{/code}" onclick="changeCode()" id="checkCodeImg" />
                                             <a href="javascript:changeCode()">看不清换一张</a><br>
                                             <!-- <img src="${pageContext.request.contextPath}/code" onclick="changeCode()" id="checkCodeImg"/>
                                             <a href="javascript:changeCode()" >看不清换一张</a><br> -->
                                         </div>
                                     </div>
                                 </div>
-                                <input type="submit" value="" id="dologin" style="display: none">
+                                <input type="submit" value="" id="doLogin" style="display: none">
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" id="loginbtn">登录</button>
+                            <button type="button" class="btn btn-primary" id="loginBtn">登录</button>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tab">
                         <div class="modal-body">
-                            <form class="form-horizontal" id="register_user_form" method="post"
-                                  action="register.user">
+                            <form class="form-horizontal" id="register_user_form" method="post" th:action="@{/doRegister}">
                                 <div class="form-group">
-                                    <label for="register_loginName" class="col-sm-2 control-label">账号</label>
+                                    <label for="register_loginName" class="col-sm-2 control-label">用户名</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="register_loginName"
-                                               placeholder="账号" name="loginName">
+                                               placeholder="账号" name="userName">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register_nickName" class="col-sm-2 control-label">昵称</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="register_nickName"
+                                               placeholder="昵称" name="nickName">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="register_loginPwd" class="col-sm-2 control-label">密码</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="register_loginPwd"
-                                               placeholder="密码" name="loginPwd">
+                                               placeholder="密码" name="password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register_checkPwd" class="col-sm-2 control-label">确认密码</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="register_checkPwd"
+                                               placeholder="确认密码" name="checkPassword">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="register_gender" class="col-sm-2 control-label">性别</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="register_gender"
-                                               placeholder="性别" name="gender">
+                                        <select name="gender" id="register_gender" class="form-control">
+                                            <option value="男">男</option>
+                                            <option value="女">女</option>
+                                            <option value="其他">其他</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -854,17 +881,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="register_telephone" class="col-sm-2 control-label">电话</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="register_telephone"
-                                               placeholder="电话" name="telephone">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label for="register_QQ" class="col-sm-2 control-label">QQ</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="register_QQ" placeholder="QQ账号"
-                                               name="QQ">
+                                               name="qq">
                                     </div>
                                 </div>
                                 <input type="submit" value="" id="doRegister" style="display: none">
