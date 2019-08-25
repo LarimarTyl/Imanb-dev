@@ -40,17 +40,17 @@ public class CommentMapperTest {
         }
     @Test
     public void addComicComment() {
-        System.out.println(mapper.addComicComment(new Comment(12,3,"larimar","larimar",null,2,null,"666",0,"2019-08-21 15:30:21")));
+//        System.out.println(mapper.addComicComment(new Comment(12,3,"larimar","larimar",null,2,null,"666",0,"2019-08-21 15:30:21")));
     }
 
     @Test
     public void addDetailComment() {
-        System.out.println(mapper.addDetailComment(new Comment(10,3,"larimar","larimar",null,null,1,"666",0,"2019-08-21 15:30:21")));
+//        System.out.println(mapper.addDetailComment(new Comment(10,3,"larimar","larimar",null,null,1,"666",0,"2019-08-21 15:30:21")));
     }
 
     @Test
     public void addRevertComment() {
-        System.out.println(mapper.addRevertComment(new Comment(11,3,"larimar","larimar",1,null,null,"666",0,"2019-08-21 15:30:21")));
+//        System.out.println(mapper.addRevertComment(new Comment(11,3,"larimar","larimar",1,null,null,"666",0,"2019-08-21 15:30:21")));
     }
 
     @Test

@@ -35,7 +35,7 @@ public class OrdersMapperTest {
 
     @Test
     public void addOrders() {
-        System.out.println(mapper.addOrders(new Orders(7,2,"斗罗大陆",2,"admin",0)));
+//        System.out.println(mapper.addOrders(new Orders(7,2,"斗罗大陆",2,"admin",0)));
     }
 
     @Test

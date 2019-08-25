@@ -34,7 +34,7 @@ public class HistoryMapperTest {
         }
     @Test
     public void addHistory() {
-        System.out.println(mapper.addHistory(new History(3,1,"张三",3,"海贼王",17,"第3话：海贼猎人索隆","2019-08-21 14:49:06",0)));
+//        System.out.println(mapper.addHistory(new History(3,1,"张三",3,"海贼王",17,"第3话：海贼猎人索隆","2019-08-21 14:49:06",0)));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class HistoryMapperTest {
 
     @Test
     public void updateHistoryStatus() {
-        System.out.println(mapper.updateHistory(new History(1,1,"root",1,"海贼王",4,"第4话：大师？老师？（上）","2019-08-21 11:49:06",-1)));
+//        System.out.println(mapper.updateHistory(new History(1,1,"root",1,"海贼王",4,"第4话：大师？老师？（上）","2019-08-21 11:49:06",-1)));
     }
 
     @Test
