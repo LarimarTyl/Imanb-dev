@@ -11,6 +11,7 @@
         <result column="email" property="email" javaType="String"/>
         <result column="QQ" property="qq" javaType="String"/>
         <result column="nickname" property="nickName" javaType="String"/>
+        <result column="photo" property="photo" javaType="String"/>
         <result column="status" property="status" javaType="Integer"/>
     </resultMap>
     <delete id="delUser" parameterType="Integer">

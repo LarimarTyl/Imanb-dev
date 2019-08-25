@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.larimar.mapper.HistoryMapper">
   <resultMap id="BaseResultMap" type="history">
-    <id column="historyId"  property="historyId" />
-    <result column="userId"  property="user_id" />
-    <result column="username" property="userName"/>
-    <result column="comicId"  property="comic_id" />
-    <result column="comicname"  property="comicName" />
-    <result column="detailId"  property="detail_id" />
-    <result column="chaptername"  property="chapterName" />
+    <id column="history_Id"  property="historyId" />
+    <result column="user_id"  property="userId" />
+    <result column="comic_id"  property="comicId" />
+    <result column="detail_id"  property="detailId" />
     <result column="lastreadtime" property="lastReadTime" />
     <result column="status" property="status" />
+      <association property="comic" javaType="comic" column="comic_id" resultMap="com.larimar.mapper.ComicMapper.BaseResultMap"/>
+      <association property="user" javaType="user" column="user_id" resultMap="com.larimar.mapper.UserMapper.BaseResultMap"/>
+      <association property="detail" javaType="detail" column="detail_id" resultMap="com.larimar.mapper.DetailMapper.BaseResultMap"/>
   </resultMap>
   <insert id="addHistory" parameterType="history">
     insert into history(history_id, user_id, comic_id, detail_id, lastreadtime, status)
@@ -39,30 +39,14 @@
     where comic_id = #{comicId} and user_id = #{userId} and history_id=#{historyId}
   </update>
     <select id="selectAllHistory" parameterType="Integer" resultMap="BaseResultMap">
-      select history_id AS historyId,
-             history.user_id,
-             username,
-             history.comic_id,
-             comicname,
-             history.detail_id,
-             chaptername,
-             lastreadtime,
-             history.status
+      select *
       from history,comic,user,detail
       where history.comic_id = comic.comic_id = detail.comic_id and
            history.detail_id = detail.detail_id and user.user_id = history.user_id
         and history.user_id=#{userId}
     </select>
   <select id="selectHistoryByStatus" resultMap="BaseResultMap">
-    select history_id AS historyId,
-           history.user_id,
-           username,
-           history.comic_id,
-           comicname,
-           history.detail_id,
-           chaptername,
-           lastreadtime,
-           history.status
+    select *
     from history,comic,user,detail
     where history.comic_id = comic.comic_id = detail.comic_id and
       history.detail_id = detail.detail_id and user.user_id = history.user_id

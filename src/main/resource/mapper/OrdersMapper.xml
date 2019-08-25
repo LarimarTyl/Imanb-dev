@@ -40,12 +40,7 @@
     </update>
 
     <select id="selectAllOrders" parameterType="Integer" resultMap="BaseResultMap">
-        select orders_id,
-               orders.comic_id AS 'comicId',
-               comicname,
-               orders.user_id  AS 'userId',
-               username,
-               orders.status
+        select *
         from orders,
              user,
              comic
@@ -55,19 +50,14 @@
     </select>
     <resultMap id="BaseResultMap" type="orders">
         <id property="ordersId" column="orders_id"/>
-        <result property="comicId" column="comicId"/>
-        <result property="userId" column="userId"/>
+        <result property="comicId" column="comic_id"/>
+        <result property="userId" column="user_id"/>
         <result property="status" column="status"/>
-        <result property="comicName" column="comicname"/>
-        <result property="userName" column="username"/>
+        <association property="comic" javaType="comic" column="comic_id" resultMap="com.larimar.mapper.ComicMapper.BaseResultMap"/>
+        <association property="user" javaType="user" column="user_id" resultMap="com.larimar.mapper.UserMapper.BaseResultMap"/>
     </resultMap>
     <select id="selectAllOrdersByStatus" resultMap="BaseResultMap">
-        select orders_id,
-               orders.comic_id AS 'comicId',
-               comicname,
-               orders.user_id  AS 'userId',
-               username,
-               orders.status
+        select *
         from orders,
              user,
              comic

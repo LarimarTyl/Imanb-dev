@@ -7,20 +7,20 @@ package com.larimar.entity;
 public class Orders {
     private Integer ordersId;//订阅表id
     private Integer comicId;//漫画id
-    private String comicName;//漫画名
+    private Comic comic;//漫画对象
     private Integer userId;//用户id
-    private String userName;//用户名
+    private User user;//用户对象
     private Integer status;//订阅状态（0未更新 1已有更新 -1已读更新）
 
     public Orders() {
     }
 
-    public Orders(Integer ordersId, Integer comicId, String comicName, Integer userId, String userName, Integer status) {
+    public Orders(Integer ordersId, Integer comicId, Comic comic, Integer userId, User user, Integer status) {
         this.ordersId = ordersId;
         this.comicId = comicId;
-        this.comicName = comicName;
+        this.comic = comic;
         this.userId = userId;
-        this.userName = userName;
+        this.user = user;
         this.status = status;
     }
 
@@ -40,12 +40,12 @@ public class Orders {
         this.comicId = comicId;
     }
 
-    public String getComicName() {
-        return comicName;
+    public Comic getComic() {
+        return comic;
     }
 
-    public void setComicName(String comicName) {
-        this.comicName = comicName;
+    public void setComic(Comic comic) {
+        this.comic = comic;
     }
 
     public Integer getUserId() {
@@ -56,12 +56,12 @@ public class Orders {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getStatus() {
@@ -77,9 +77,9 @@ public class Orders {
         return "Orders{" +
                 "ordersId=" + ordersId +
                 ", comicId=" + comicId +
-                ", comicName='" + comicName + '\'' +
+                ", comic=" + comic +
                 ", userId=" + userId +
-                ", userName='" + userName + '\'' +
+                ", user=" + user +
                 ", status=" + status +
                 '}';
     }

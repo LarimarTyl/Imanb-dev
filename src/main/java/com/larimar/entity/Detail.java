@@ -7,22 +7,22 @@ package com.larimar.entity;
 public class Detail {
     private Integer detailId;//详情页id
     private Integer comicId;//漫画id
-    private String comicName;//漫画名
+    private Comic comic;//漫画对象
     private String chapterName;//章节名
     private String path;//章节图片地址
-    private String introduction;//章节简介
+    private String generalize;//章节概况
     private String updateTime;//章节更新时间
 
     public Detail() {
     }
 
-    public Detail(Integer detailId, Integer comicId, String comicName, String chapterName, String path, String introduction, String updateTime) {
+    public Detail(Integer detailId, Integer comicId, Comic comic, String chapterName, String path, String introduction, String updateTime) {
         this.detailId = detailId;
         this.comicId = comicId;
-        this.comicName = comicName;
+        this.comic = comic;
         this.chapterName = chapterName;
         this.path = path;
-        this.introduction = introduction;
+        this.generalize = introduction;
         this.updateTime = updateTime;
     }
 
@@ -42,12 +42,12 @@ public class Detail {
         this.comicId = comicId;
     }
 
-    public String getComicName() {
-        return comicName;
+    public Comic getComic() {
+        return comic;
     }
 
-    public void setComicName(String comicName) {
-        this.comicName = comicName;
+    public void setComic(Comic comic) {
+        this.comic = comic;
     }
 
     public String getChapterName() {
@@ -66,12 +66,12 @@ public class Detail {
         this.path = path;
     }
 
-    public String getIntroduction() {
-        return introduction;
+    public String getGeneralize() {
+        return generalize;
     }
 
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
+    public void setGeneralize(String generalize) {
+        this.generalize = generalize;
     }
 
     public String getUpdateTime() {
@@ -87,10 +87,10 @@ public class Detail {
         return "Detail{" +
                 "detailId=" + detailId +
                 ", comicId=" + comicId +
-                ", comicName='" + comicName + '\'' +
+                ", comic=" + comic +
                 ", chapterName='" + chapterName + '\'' +
                 ", path='" + path + '\'' +
-                ", introduction='" + introduction + '\'' +
+                ", generalize='" + generalize + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 '}';
     }

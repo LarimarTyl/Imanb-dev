@@ -6,9 +6,8 @@ package com.larimar.entity;
  */
 public class Comment {
     private Integer commentId; //评论id
-    private Integer userId;   //评论用户id
-    private String userName;//评论用户名
-    private String userPhoto;//评论用户头像
+    private Integer userId;//用户id
+    private User user;// 用户对象
     private Integer commentAim;//评论对象id
     private Integer comicId;//评论漫画id
     private Integer detailId;//评论章节id
@@ -19,11 +18,10 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Integer commentId, Integer userId, String userName, String userPhoto, Integer commentAim, Integer comicId, Integer detailId, String content, Integer status, String time) {
+    public Comment(Integer commentId, Integer userId, User user, Integer commentAim, Integer comicId, Integer detailId, String content, Integer status, String time) {
         this.commentId = commentId;
         this.userId = userId;
-        this.userName = userName;
-        this.userPhoto = userPhoto;
+        this.user = user;
         this.commentAim = commentAim;
         this.comicId = comicId;
         this.detailId = detailId;
@@ -48,44 +46,12 @@ public class Comment {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserPhoto() {
-        return userPhoto;
-    }
-
-    public void setUserPhoto(String userPhoto) {
-        this.userPhoto = userPhoto;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getCommentAim() {
@@ -112,19 +78,42 @@ public class Comment {
         this.detailId = detailId;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "commentId=" + commentId +
                 ", userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", userPhoto='" + userPhoto + '\'' +
-                ", content='" + content + '\'' +
-                ", status=" + status +
-                ", time='" + time + '\'' +
+                ", user=" + user +
                 ", commentAim=" + commentAim +
                 ", comicId=" + comicId +
                 ", detailId=" + detailId +
+                ", content='" + content + '\'' +
+                ", status=" + status +
+                ", time='" + time + '\'' +
                 '}';
     }
 }

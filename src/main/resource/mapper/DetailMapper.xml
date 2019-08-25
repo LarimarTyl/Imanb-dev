@@ -4,11 +4,11 @@
   <resultMap id="BaseResultMap" type="detail">
     <id column="detail_id" property="detailId" />
     <result column="comic_id"  property="comicId" />
-    <result column="comicname" property="comicName"/>
     <result column="chaptername"  property="chapterName" />
     <result column="path" property="path" />
-    <result column="introduction" property="introduction" />
+    <result column="generalize" property="generalize"/>
     <result column="updatetime"  property="updateTime" />
+      <association property="comic" javaType="comic" column="comic_id" resultMap="com.larimar.mapper.ComicMapper.BaseResultMap"/>
   </resultMap>
 
   <insert id="addDetail" parameterType="detail">
@@ -48,13 +48,7 @@
   </update>
 
   <select id="selectAllDetails" parameterType="Integer" resultMap="BaseResultMap">
-    select detail_id,
-           detail.comic_id,
-           comicname,
-           chaptername,
-           comic.path,
-           detail.introduction,
-           updatetime
+    select *
     from detail,comic
     where detail.comic_id=comic.comic_id
       and detail.comic_id = #{comicId}
@@ -63,13 +57,7 @@
 
   <select id="selectDetailsByType" parameterType="String" resultMap="BaseResultMap">
     <bind name="likeType" value="'%' +type+ '%'"/>
-    select detail_id,
-           detail.comic_id,
-           comicname,
-           chaptername,
-           comic.path,
-            detail.introduction,
-           updatetime
+    select *
     from detail,comic
     where detail.comic_id=comic.comic_id
       and detail.comic_id

@@ -7,25 +7,25 @@ package com.larimar.entity;
 public class History {
     private Integer historyId;//阅读历史id
     private Integer userId;//用户id
-    private String userName;//用户名
+    private User user;//用户对象
     private Integer comicId;//漫画id
-    private String comicName;//漫画名
+    private Comic comic;//漫画对象
     private Integer detailId;//章节id
-    private String chapterName;//章节名
+    private Detail detail;//章节对象
     private String lastReadTime;//最后一次阅读时间
     private Integer status;//状态 0未更新 1已有更新 -1已读更新
 
     public History() {
     }
 
-    public History(Integer historyId, Integer userId, String userName, Integer comicId, String comicName, Integer detailId, String chapterName, String lastReadTime, Integer status) {
+    public History(Integer historyId, Integer userId, User user, Integer comicId, Comic comic, Integer detailId, Detail detail, String lastReadTime, Integer status) {
         this.historyId = historyId;
         this.userId = userId;
-        this.userName = userName;
+        this.user = user;
         this.comicId = comicId;
-        this.comicName = comicName;
+        this.comic = comic;
         this.detailId = detailId;
-        this.chapterName = chapterName;
+        this.detail = detail;
         this.lastReadTime = lastReadTime;
         this.status = status;
     }
@@ -46,12 +46,12 @@ public class History {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getComicId() {
@@ -62,12 +62,12 @@ public class History {
         this.comicId = comicId;
     }
 
-    public String getComicName() {
-        return comicName;
+    public Comic getComic() {
+        return comic;
     }
 
-    public void setComicName(String comicName) {
-        this.comicName = comicName;
+    public void setComic(Comic comic) {
+        this.comic = comic;
     }
 
     public Integer getDetailId() {
@@ -78,12 +78,12 @@ public class History {
         this.detailId = detailId;
     }
 
-    public String getchapterName() {
-        return chapterName;
+    public Detail getDetail() {
+        return detail;
     }
 
-    public void setchapterName(String chapterName) {
-        this.chapterName = chapterName;
+    public void setDetail(Detail detail) {
+        this.detail = detail;
     }
 
     public String getLastReadTime() {
@@ -107,11 +107,11 @@ public class History {
         return "History{" +
                 "historyId=" + historyId +
                 ", userId=" + userId +
-                ", userName='" + userName + '\'' +
+                ", user=" + user +
                 ", comicId=" + comicId +
-                ", comicName='" + comicName + '\'' +
+                ", comic=" + comic +
                 ", detailId=" + detailId +
-                ", chapterName='" + chapterName + '\'' +
+                ", detail=" + detail +
                 ", lastReadTime='" + lastReadTime + '\'' +
                 ", status=" + status +
                 '}';
