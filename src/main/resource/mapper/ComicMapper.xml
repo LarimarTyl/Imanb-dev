@@ -86,9 +86,6 @@
     <update id="updateComicNewsUpdateTime">
         update comic
         <set>
-            <if test="status!=null">
-                status=#{status},
-            </if>
             <if test="newUpdateTime!=null">
                 newupdate=#{newUpdateTime},
             </if>

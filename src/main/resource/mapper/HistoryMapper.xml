@@ -38,7 +38,13 @@
     set detail_id = #{detailId},lastreadtime = #{lastReadTime},status = #{status}
     where comic_id = #{comicId} and user_id = #{userId} and history_id=#{historyId}
   </update>
-    <select id="selectAllHistory" parameterType="Integer" resultMap="BaseResultMap">
+  <select id="selectAllHistory" parameterType="Integer" resultMap="BaseResultMap">
+    select *
+    from history,comic,user,detail
+    where history.comic_id = comic.comic_id = detail.comic_id and
+      history.detail_id = detail.detail_id and user.user_id = history.user_id
+  </select>
+    <select id="selectUsersAllHistory" parameterType="Integer" resultMap="BaseResultMap">
       select *
       from history,comic,user,detail
       where history.comic_id = comic.comic_id = detail.comic_id and

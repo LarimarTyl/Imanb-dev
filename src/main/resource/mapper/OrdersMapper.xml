@@ -39,7 +39,7 @@
         </where>
     </update>
 
-    <select id="selectAllOrders" parameterType="Integer" resultMap="BaseResultMap">
+    <select id="selectUsersAllOrders" parameterType="Integer" resultMap="BaseResultMap">
         select *
         from orders,
              user,
@@ -47,6 +47,14 @@
         where comic.comic_id = orders.comic_id
           and orders.user_id = `user`.user_id
           and orders.user_id = #{userId};
+    </select>
+    <select id="selectAllOrders" resultMap="BaseResultMap">
+        select *
+        from orders,
+             user,
+             comic
+        where comic.comic_id = orders.comic_id
+          and orders.user_id = `user`.user_id
     </select>
     <resultMap id="BaseResultMap" type="orders">
         <id property="ordersId" column="orders_id"/>

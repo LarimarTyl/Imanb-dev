@@ -5,14 +5,14 @@
     <id column="detail_id" property="detailId" />
     <result column="comic_id"  property="comicId" />
     <result column="chaptername"  property="chapterName" />
-    <result column="path" property="path" />
+    <result column="dpath" property="path" />
     <result column="generalize" property="generalize"/>
     <result column="updatetime"  property="updateTime" />
       <association property="comic" javaType="comic" column="comic_id" resultMap="com.larimar.mapper.ComicMapper.BaseResultMap"/>
   </resultMap>
 
   <insert id="addDetail" parameterType="detail">
-    insert into detail(detail_id, comic_id, chaptername, path, introduction, updatetime)
+    insert into detail(detail_id, comic_id, chaptername, path, generalize, updatetime)
     values (#{detailId},#{comicId},#{chapterName},#{path},#{introduction},#{updateTime})
   </insert>
 
@@ -47,8 +47,23 @@
     </where>
   </update>
 
-  <select id="selectAllDetails" parameterType="Integer" resultMap="BaseResultMap">
-    select *
+    <select id="selectAllDetails" resultMap="BaseResultMap">
+        select detail_id,detail.comic_id, chaptername,
+               detail.path as dpath, generalize, updatetime,
+               comic.comic_id, comic.path, comicname, author,
+               status, type, location, newupdate,
+               newchaptername, introduction, mark
+        from detail,comic
+        where detail.comic_id=comic.comic_id
+        order by updatetime desc
+    </select>
+
+  <select id="selectComicAllDetails" parameterType="Integer" resultMap="BaseResultMap">
+      select detail_id,detail.comic_id, chaptername,
+             detail.path as dpath, generalize, updatetime,
+             comic.comic_id, comic.path, comicname, author,
+             status, type, location, newupdate,
+             newchaptername, introduction, mark
     from detail,comic
     where detail.comic_id=comic.comic_id
       and detail.comic_id = #{comicId}
