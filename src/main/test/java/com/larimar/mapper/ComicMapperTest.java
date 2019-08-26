@@ -57,7 +57,7 @@ public class ComicMapperTest {
 
     @Test
     public void updateComicNewsUpdateTime() {
-        System.out.println(mapper.updateComicNewsUpdateTime(5,"2019-08-21 14:45:36","第二话:伊莱克斯哦",1));
+        System.out.println(mapper.updateComicNewsUpdateTime(5,"2019-08-21 14:45:36","第二话:伊莱克斯哦"));
     }
 
     @Test

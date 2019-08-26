@@ -52,7 +52,7 @@ public class DetailMapperTest {
 
     @Test
     public void selectAllDetails() {
-        System.out.println(mapper.selectAllDetails(2));
+        System.out.println(mapper.selectAllDetails());
     }
 
     @Test

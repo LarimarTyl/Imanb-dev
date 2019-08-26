@@ -54,7 +54,7 @@ public class HistoryMapperTest {
 
     @Test
     public void selectAllHistory() {
-        System.out.println(mapper.selectAllHistory(1));
+        System.out.println(mapper.selectAllHistory());
     }
 
     @Test

@@ -55,7 +55,7 @@ public class OrdersMapperTest {
 
     @Test
     public void selectAllOrders() {
-        System.out.println(mapper.selectAllOrders(1));
+        System.out.println(mapper.selectAllOrders());
     }
 
     @Test
