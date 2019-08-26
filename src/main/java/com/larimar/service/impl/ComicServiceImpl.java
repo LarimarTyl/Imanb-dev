@@ -1,8 +1,13 @@
 package com.larimar.service.impl;
 
 import com.larimar.entity.Comic;
+import com.larimar.entity.Conditon;
+import com.larimar.mapper.ComicMapper;
 import com.larimar.service.ComicService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Larimar
@@ -10,28 +15,66 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ComicServiceImpl implements ComicService {
+    @Autowired
+    ComicMapper comicMapper;
     @Override
     public boolean addComic(Comic comic) {
-        return false;
+        return comicMapper.addComic(comic)>0;
     }
 
     @Override
     public boolean delComic(Integer comicId) {
-        return false;
+        return comicMapper.delComic(comicId)>0;
     }
 
     @Override
     public boolean updateComicInfo(Comic comic) {
-        return false;
+        return comicMapper.updateComic(comic)>0;
     }
 
     @Override
     public boolean updateComicStatus(Integer comicId, Integer status) {
-        return false;
+        return comicMapper.updateComicStatus(comicId,status)>0;
     }
 
     @Override
-    public boolean updateNewComicDetail(Integer comicId, String userName, String newUpdateTime, Integer status) {
-        return false;
+    public boolean updateNewComicDetail(Integer comicId, String userName, String newUpdateTime) {
+        return comicMapper.updateComicNewsUpdateTime(comicId,userName,newUpdateTime)>0;
+    }
+
+    @Override
+    public List<Comic> queryAllComic() {
+        return comicMapper.selectAllComics();
+    }
+
+    @Override
+    public List<Comic> findLikestComic() {
+        return comicMapper.selectComicsByLikes();
+    }
+
+    @Override
+    public List<Comic> findNewComic() {
+        return comicMapper.selectNewComics();
+    }
+
+    @Override
+    public List<Comic> findComicByOrderNum() {
+        return comicMapper.selectComicByOrder();
+    }
+
+    @Override
+    public List<Comic> findComicByStatus(Integer status) {
+        return comicMapper.selectComicByStatus(status);
+    }
+
+    @Override
+    public List<Comic> findUserOrderComic(Integer userId) {
+        return comicMapper.selectOrderComic(userId);
+    }
+
+    // TODO: 2019/8/26 按条件查找漫画
+    @Override
+    public List<Comic> findComicByCondition(Conditon condition) {
+        return null;
     }
 }

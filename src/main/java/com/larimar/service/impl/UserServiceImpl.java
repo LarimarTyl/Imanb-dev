@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean doRegister(User user) {
        return userMapper.saveUser(user)>0;
-
     }
 
     @Override

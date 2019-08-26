@@ -35,7 +35,8 @@ public interface DetailMapper {
      * @param comicId 漫画id
      * @return 漫画章节详情集合
      */
-    public List<Detail> selectAllDetails(Integer comicId);
+    public List<Detail> selectComicAllDetails(Integer comicId);
+    public List<Detail> selectAllDetails();
 
     // TODO: 2019/8/21 根据时间 查找当月更新用更新时间的字符串包含来实现 更新session就可以是实现
 

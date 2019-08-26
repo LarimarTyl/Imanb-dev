@@ -46,7 +46,8 @@ public interface HistoryMapper {
      * @param userId 用户id
      * @return 历史记录集合
      */
-    public List<History> selectAllHistory(Integer userId);
+    public List<History> selectUsersAllHistory(Integer userId);
+    public List<History> selectAllHistory();
 
     /**
      * 查询用户对应状态的历史记录

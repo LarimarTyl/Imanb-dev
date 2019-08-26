@@ -46,8 +46,12 @@ public interface OrdersMapper {
      * @param userId 用户id
      * @return 订阅集合
      */
-    public List<Orders> selectAllOrders(Integer userId);
-
+    public List<Orders> selectUsersAllOrders(Integer userId);
+    /**
+     * 查询所有订阅信息
+     * @return 订阅集合
+     */
+    public List<Orders> selectAllOrders();
     /**
      * 查询用户指定状态的订阅（未读更新订阅 已读更新订阅）
      * @param userId 用户id

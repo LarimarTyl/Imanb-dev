@@ -1,6 +1,9 @@
 package com.larimar.service;
 
 import com.larimar.entity.Comic;
+import com.larimar.entity.Conditon;
+
+import java.util.List;
 
 /**
  * @author Larimar
@@ -11,5 +14,12 @@ public interface ComicService {
     public boolean delComic(Integer comicId);
     public boolean updateComicInfo(Comic comic);
     public boolean updateComicStatus(Integer comicId,Integer status);
-    public boolean updateNewComicDetail(Integer comicId,String userName,String newUpdateTime,Integer status);
+    public boolean updateNewComicDetail(Integer comicId,String comicName,String newUpdateTime);
+    public List<Comic> queryAllComic();
+    public List<Comic> findLikestComic();
+    public List<Comic> findNewComic();
+    public List<Comic> findComicByOrderNum();
+    public List<Comic> findComicByStatus(Integer status);
+    public List<Comic> findUserOrderComic(Integer userId);
+    public List<Comic> findComicByCondition(Conditon condition);
 }
