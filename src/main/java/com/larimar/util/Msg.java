@@ -10,15 +10,15 @@ public class Msg {
     //提示信息
     private String msg;
     //返回给客户端的数据
-    private Object date;
+    private Object data;
 
     public Msg() {
     }
 
-    public Msg(int code, String msg, Object date) {
+    public Msg(int code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
-        this.date = date;
+        this.data = data;
     }
     public static Msg success(){
         Msg result = new Msg();
@@ -33,7 +33,7 @@ public class Msg {
     }
     public Msg add(String msg,Object o){
         this.setMsg(msg);
-        this.setDate(o);
+        this.setdata(o);
         return this;
     }
     public int getCode() {
@@ -52,11 +52,20 @@ public class Msg {
         this.msg = msg;
     }
 
-    public Object getDate() {
-        return date;
+    public Object getdata() {
+        return data;
     }
 
-    public void setDate(Object date) {
-        this.date = date;
+    public void setdata(Object data) {
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "Msg{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }
