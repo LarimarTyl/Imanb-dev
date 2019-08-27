@@ -55,6 +55,9 @@ div.head .logo .btn-icon{
   div.admin .icon {
      text-align: center;
   }
+  p.adminname{
+      font-size: 25px;
+  }
   div.admin .admin-ican img{
       margin-top: 5px;
       width: 60px;
@@ -74,8 +77,14 @@ div.head .logo .btn-icon{
 }
 div.admin-tabs{
     height: 500px;
-    background-color:#fff;
     padding: 20px 0px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-color: #ddd;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 div#admin-tabs .admin-tab li{
     height: 50px;
@@ -107,11 +116,6 @@ div#admin-tabs .admin-tab li a{
 }
 .wd80{
     width: 80%;}
-
-div#admin-content {
-    /* height: 100%; */
-    margin-bottom: 75px;
-}
 /* 自定义图标设置 */
 [my-icon=upload]
 {

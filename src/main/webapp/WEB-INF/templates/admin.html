@@ -22,7 +22,7 @@
         <div class="admin right">
             <div class="left icon mr20">
             <a href="#" class="admin-ican"><img th:src="@{/static/images/avatar_4.jpg}" alt=""></a>
-            <p class="center adminname mytext-p">larimar</p>
+            <p class="center adminname">larimar</p>
             </div>
             <a class="loginOut right mr40" href="#">退出</a>
         </div>
@@ -57,7 +57,7 @@
         </div>
         
     </div>
-    <div id="admin-content" class=" wd80 m15 left" >
+    <div id="admin-content" class=" wd80 m20 left" >
          <!-- 内容栏Tab panes -->
          <div class="tab-content admin-content">
              <div role="tabpanel" class="tab-pane admin-content-item active" id="home">
@@ -135,8 +135,6 @@
                  </div>
              </div>
             <div role="tabpanel" class="tab-pane  admin-content-item" id="user">
-                <h1>用户管理</h1>
-                <br>
                 <div class="panel panel-default">
                     <!-- 搜索部分 -->
                         <div class="panel-body">
@@ -270,12 +268,12 @@
                 </table>
                 <div id="userPageControl" class="col-md-12 pagination-center center">
                     <nav>
-                        <ul class="pagination">
-                            <li ><a href="#">首页 </a></li>
-                            <li ><a href="#">上一页 </a></li>
-                            <li><a href="#">1</a></li>
-                            <li ><a href="#">下一页</a></li>
-                            <li ><a href="#">尾页</a></li>
+                        <ul class="pagination userPage">
+                            <li class="first" ><a >首页 </a></li>
+                            <li class="pre"><a >上一页 </a></li>
+                            <li class="current"><a >1</a></li>
+                            <li class="next"><a >下一页</a></li>
+                            <li class="last"><a >尾页</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -355,8 +353,9 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane  admin-content-item" id="orders">
-                <h1>订阅管理</h1><br>
-                <div class="panel-body">
+                <div class="panel panel-default">
+                    <!-- 搜索部分 -->
+                    <div class="panel-body">
                         <form class="form-inline" method="get" action="">
                             <div class="form-group">
                                 <label for="orderSearch_comicName">漫画名称</label>
@@ -390,6 +389,7 @@
                             </div>
                             <button type="button" class="btn btn-primary">查询</button>
                         </form>
+                </div>
                 </div>
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#newOrdersDialog" onclick="clearDept()">添加订阅</a>
                 <div class="right orderPageInfo mr40">当前第1页，总共2页，共10条记录 </div>
@@ -468,12 +468,12 @@
                 </table>
                 <div id="orderPageControl" class="col-md-12 pagination-center center">
                         <nav>
-                            <ul class="pagination">
-                                <li ><a href="#">首页 </a></li>
-                                <li ><a href="#">上一页 </a></li>
-                                <li><a href="#">1</a></li>
-                                <li ><a href="#">下一页</a></li>
-                                <li ><a href="#">尾页</a></li>
+                            <ul class="pagination orderPage">
+                                <li class="first" ><a >首页 </a></li>
+                                <li class="pre"><a >上一页 </a></li>
+                                <li class="current"><a >1</a></li>
+                                <li class="next"><a >下一页</a></li>
+                                <li class="last"><a >尾页</a></li>
                             </ul>
                         </nav>
                 </div>
@@ -522,7 +522,6 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane  admin-content-item" id="comic">
-                <h1>漫画管理</h1><br>
                 <div class="panel panel-default">
                     <!-- 搜索部分 -->
                     <div class="panel-body">
@@ -697,15 +696,15 @@
                         </tbody>
                 </table>
                 <div id="comicPageControl" class="col-md-12 pagination-center center">
-                        <nav>
-                            <ul class="pagination">
-                                <li ><a href="#">首页 </a></li>
-                                <li ><a href="#">上一页 </a></li>
-                                <li><a href="#">1</a></li>
-                                <li ><a href="#">下一页</a></li>
-                                <li ><a href="#">尾页</a></li>
-                            </ul>
-                        </nav>
+                    <nav>
+                        <ul class="pagination comicPage">
+                            <li class="first" ><a >首页 </a></li>
+                            <li class="pre"><a >上一页 </a></li>
+                            <li class="current"><a >1</a></li>
+                            <li class="next"><a >下一页</a></li>
+                            <li class="last"><a >尾页</a></li>
+                        </ul>
+                    </nav>
                 </div>
                 <div class="modal fade" id="comicEditDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
@@ -803,7 +802,6 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane  admin-content-item" id="detail">
-                 <h1>章节管理</h1><br>
                  <div class="panel panel-default">
                      <!-- 搜索部分 -->
                      <div class="panel-body">
@@ -930,17 +928,17 @@
                      </tr>
                      </tbody>
                  </table>
-                 <div id="detailPageControl" class="col-md-12 pagination-center center">
-                     <nav>
-                         <ul class="pagination">
-                             <li ><a href="#">首页 </a></li>
-                             <li ><a href="#">上一页 </a></li>
-                             <li><a href="#">1</a></li>
-                             <li ><a href="#">下一页</a></li>
-                             <li ><a href="#">尾页</a></li>
-                         </ul>
-                     </nav>
-                 </div>
+                <div id="detailPageControl" class="col-md-12 pagination-center center">
+                    <nav>
+                        <ul class="pagination detailPage">
+                            <li class="first" ><a >首页 </a></li>
+                            <li class="pre"><a >上一页 </a></li>
+                            <li class="current"><a >1</a></li>
+                            <li class="next"><a >下一页</a></li>
+                            <li class="last"><a >尾页</a></li>
+                        </ul>
+                    </nav>
+                </div>
                  <div class="modal fade" id="detailEditDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                      <div class="modal-dialog" role="document">
                          <div class="modal-content">
@@ -952,7 +950,7 @@
                              </div>
                              <div class="modal-body">
                                  <form class="form-horizontal" id="edit_detail_form">
-                                     <input type="text" name="detailId" value="id">
+                                     <input type="hidden" name="detailId" value="id">
                                      <div class="form-group">
                                          <label for="edit_detail_comicname" class="col-sm-2 control-label">漫画名</label>
                                          <div class="col-sm-4">
