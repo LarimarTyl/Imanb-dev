@@ -33,8 +33,15 @@
         select status from user where username=#{userName}
     </select>
     <insert id="saveUser" parameterType="user">
-        insert into user(user_id,username, password, gender, email, QQ, nickname)
-        values (#{userId},#{userName}, #{password}, #{gender}, #{email}, #{qq}, #{nickName})
+        insert into user(user_id,username, password, gender, email, QQ, nickname,photo,status)
+        values (#{userId},#{userName}, #{password}, #{gender}, #{email}, #{qq}, #{nickName}
+        <if test="photo!=null">
+            ,#{photo}
+        </if>
+        <if test="status!=null">
+            ,#{status}
+        </if>
+        )
     </insert>
     <select id="selectAllUsers" resultMap="BaseResultMap">
         select user_id,username, password, gender, email, QQ, nickname, photo, status
