@@ -25,7 +25,7 @@
         <property name="templateEngine" ref="templateEngine"/>
     </bean>
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
-        <!--设置图片大小10M-->
-        <property name="maxUploadSize" value="10240000"/>
+        <!--设置图片大小100M-->
+        <property name="maxUploadSize" value="102400000"/>
     </bean>
 </beans>

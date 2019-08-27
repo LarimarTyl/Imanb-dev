@@ -38,7 +38,8 @@
     </insert>
     <select id="selectAllUsers" resultMap="BaseResultMap">
         select user_id,username, password, gender, email, QQ, nickname, photo, status
-        from user;
+        from user
+        order by user_id desc
     </select>
     <select id="selectUserNameLike" parameterType="String" resultMap="BaseResultMap">
         <bind name="likeName" value="'%' +name+ '%'"/>

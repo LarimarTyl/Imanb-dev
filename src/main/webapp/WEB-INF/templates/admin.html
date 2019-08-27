@@ -152,11 +152,12 @@
                                         <option value="女">女</option>
                                     </select>
                                 </div>
-                                <button type="button" class="btn btn-primary">查询</button>
+                                <button type="button" id="userSearch" class="btn btn-primary">查询</button>
                             </form>
                         </div>
                     </div>
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addUserDialog" onclick="clearDept()">新建用户</a>
+                    <a href="#" class="btn btn-primary left" data-toggle="modal" data-target="#addUserDialog">新建用户</a>
+                <div class="right userPageInfo mr40">当前第2页，总共2页，共10条记录 </div>
                  <!-- 添加用户模态框 -->
                 <div class="modal fade" id="addUserDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
@@ -168,11 +169,11 @@
                                 <h4 class="modal-title" id="addUserModalLabel">添加用户信息</h4>
                             </div>
                             <div class="modal-body">
-                                <form class="form-horizontal" id="new_user_form">
+                                <form class="form-horizontal" method="post" enctype="multipart/form-data" id="new_user_form">
                                     <div class="form-group">
                                         <label for="new_photo" class="col-sm-2 control-label">头像</label>
                                         <div class="col-sm-4">
-                                            <input type="file" name="photo" class="user-icon newInputIcon" id="new_photo">
+                                            <input type="file" name="file" class="user-icon newInputIcon" id="new_photo">
                                         </div>
                                         <label for="new_userPhoto" class="col-sm-2 control-label">头像预览</label>
                                         <img src="" alt="" id="new_userPhoto" class="userPhoto">
@@ -225,7 +226,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="createplayer()">创建用户</button>
+                                <button type="button" class="btn btn-primary" id="btn-addUser" >创建用户</button>
                             </div>
                         </div>
                     </div>
@@ -267,7 +268,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="col-md-12 pagination-center center">
+                <div id="userPageControl" class="col-md-12 pagination-center center">
                     <nav>
                         <ul class="pagination">
                             <li ><a href="#">首页 </a></li>
@@ -391,6 +392,7 @@
                         </form>
                 </div>
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#newOrdersDialog" onclick="clearDept()">添加订阅</a>
+                <div class="right orderPageInfo mr40">当前第1页，总共2页，共10条记录 </div>
                 <div class="modal fade" id="newOrdersDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -464,7 +466,7 @@
                             </tr>
                         </tbody>
                 </table>
-                <div class="col-md-12 pagination-center center">
+                <div id="orderPageControl" class="col-md-12 pagination-center center">
                         <nav>
                             <ul class="pagination">
                                 <li ><a href="#">首页 </a></li>
@@ -556,6 +558,7 @@
                     </div>
                 </div>
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addComicDialog" onclick="clearDept()">添加漫画</a>
+                <div class="right comicPageInfo mr40">当前第1页，总共2页，共10条记录 </div>
                 <!-- 添加漫画模态框 -->
                <div class="modal fade" id="addComicDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
@@ -693,7 +696,7 @@
                             </tr>
                         </tbody>
                 </table>
-                <div class="col-md-12 pagination-center center">
+                <div id="comicPageControl" class="col-md-12 pagination-center center">
                         <nav>
                             <ul class="pagination">
                                 <li ><a href="#">首页 </a></li>
@@ -836,6 +839,7 @@
                      </div>
                  </div>
                  <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addDetailDialog" onclick="clearDept()">添加章节</a>
+                <div class="right detailPageInfo mr40">当前第1页，总共2页，共10条记录 </div>
                  <!-- 添加章节模态框 -->
                  <div class="modal fade" id="addDetailDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                      <div class="modal-dialog" role="document">
@@ -902,7 +906,6 @@
                          <th>章节路径</th>
                          <th>章节简介</th>
                          <th>更新时间</th>
-                         <th>章节预览</th>
                          <td>操作</td>
                      </tr>
                      </thead>
@@ -927,7 +930,7 @@
                      </tr>
                      </tbody>
                  </table>
-                 <div class="col-md-12 pagination-center center">
+                 <div id="detailPageControl" class="col-md-12 pagination-center center">
                      <nav>
                          <ul class="pagination">
                              <li ><a href="#">首页 </a></li>

@@ -124,7 +124,7 @@ $(function () {
 });
 // 更改个人头像
 //更改个人信息
-$(function () {
+
     $("#change-info-btn").click(function () {
         $.ajax({
             url:rootPath+"updateUser",
@@ -140,8 +140,7 @@ $(function () {
                    }
                }
         })
-    })
-});
+    });
 //更改个人信息
 //更改密码
 $(function () {

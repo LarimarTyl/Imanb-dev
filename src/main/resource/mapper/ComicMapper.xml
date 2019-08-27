@@ -101,7 +101,7 @@
     </update>
 
   <select id="selectAllComics" resultMap="BaseResultMap">
-    select * from comic
+    select * from comic order by comic_id desc
   </select>
 
   <select id="selectComicByAuthor" resultMap="BaseResultMap">

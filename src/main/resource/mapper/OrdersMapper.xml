@@ -55,6 +55,7 @@
              comic
         where comic.comic_id = orders.comic_id
           and orders.user_id = `user`.user_id
+            order by orders_id desc
     </select>
     <resultMap id="BaseResultMap" type="orders">
         <id property="ordersId" column="orders_id"/>
