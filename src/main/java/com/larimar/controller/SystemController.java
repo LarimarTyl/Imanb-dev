@@ -8,10 +8,13 @@ import com.larimar.entity.Detail;
 import com.larimar.entity.Orders;
 import com.larimar.entity.User;
 import com.larimar.service.*;
+import com.larimar.util.FileUtil;
 import com.larimar.util.Msg;
 import com.larimar.util.ValidateCodeUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +27,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.larimar.util.FileUtil.deleteDir;
 
 /**
  * @author Larimar
@@ -93,32 +98,90 @@ public class SystemController {
         Msg msg = new Msg();
         //获取文件名
         String filename = file.getOriginalFilename();
-        //获取文件后缀
-        String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
-        String newFileName = user.getUserName();
-        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\user\\" + newFileName + suffix);
-        try {
-            if (dest.delete()) {
-                System.out.println("原头像删除成功");
-            }
-            file.transferTo(dest);
-        } catch (IOException e) {
+        //判断是否选择了头像
+        if (!filename.equals("")) {
+            //获取文件后缀
+            String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
+            String newFileName = user.getUserName();
+            File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\user\\" + newFileName + suffix);
+            try {
+                if (dest.delete()) {
+                    System.out.println("原头像删除成功");
+                }
+                file.transferTo(dest);
+            } catch (IOException e) {
 //         //回显信息 上传失败
-            msg.setCode(400);
-            msg.setMsg("头像选择有误，请重试。");
-            e.printStackTrace();
-            return msg;
+                msg.setCode(400);
+                msg.setMsg("头像选择有误，请重试。");
+                e.printStackTrace();
+                return msg;
+            }
+            //有头像选择才设置更新photo
+            user.setPhoto(newFileName);
         }
-        user.setPhoto(newFileName);
-        if (userService.doRegister(user)) {
-            msg.setCode(200);
-            msg.setMsg("添加用户成功！");
-        }else{
-            msg.setCode(400);
-            msg.setMsg("添加用户失败！");
-        }
+            if (userService.doRegister(user)) {
+                msg.setCode(200);
+                msg.setMsg("添加用户成功！");
+            }else{
+                msg.setCode(400);
+                msg.setMsg("添加用户失败！");
+            }
         return msg;
     };
+    @RequestMapping("/getUserInfo")
+    @ResponseBody
+    public Msg getUserInfo(Integer id){
+        User user = userService.findUserById(id);
+        if (user!=null){
+            return Msg.success().add(null,user);
+        }
+        return null;
+    }
+    // FIXME: 2019/8/28  对应的form 应该要有 enctype="multipart/form-data"
+    @RequestMapping("/editUser")
+    @ResponseBody
+    public Msg editUser(User user,@RequestParam("path") MultipartFile file){
+        Msg msg = new Msg();
+        //获取文件名
+        String filename = file.getOriginalFilename();
+        //判断是否有修改头像
+        if (!filename.equals("")){
+            //获取文件后缀
+            String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
+            String newFileName = user.getUserName();
+            File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\user\\" + newFileName + suffix);
+            try {
+                if (dest.delete()) {
+                    System.out.println("原头像删除成功");
+                }
+                file.transferTo(dest);
+            } catch (IOException e) {
+            //回显信息 上传失败
+                msg.setCode(400);
+                msg.setMsg("头像选择有误，请重试。");
+                e.printStackTrace();
+                return msg;
+            }
+            user.setPhoto(newFileName);
+        }
+            if (userService.updateUserInfo(user)) {
+                msg.setCode(200);
+                msg.setMsg("修改用户信息成功！");
+            }else{
+                msg.setCode(400);
+                msg.setMsg("修改用户信息失败！");
+            }
+            return msg;
+    }
+    @RequestMapping("/delUser")
+    @ResponseBody
+    public Msg delUser(Integer id){
+        if (userService.delUser(id)) {
+            return Msg.success().add("删除用户信息成功！",null);
+        }else {
+            return Msg.success().add("删除用户信息失败！",null);
+        }
+    }
     /*
      用户管理
      */
@@ -135,6 +198,99 @@ public class SystemController {
         List<Comic> comic = comicService.queryAllComic();
         PageInfo comics = new PageInfo(comic,5);
         return  Msg.success().add("成功", comics);
+    }
+    @RequestMapping("/addComic")
+    @ResponseBody
+    public Msg addComic(Comic comic,@RequestParam("photo")MultipartFile file) {
+        Msg msg = new Msg();
+        //获取文件名
+        String filename = file.getOriginalFilename();
+        //判断是否选择了封面
+        if (!filename.equals("")) {
+            //获取文件后缀
+            String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
+            File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getPath() + "\\cover"+suffix);
+            try {
+                if (dest.delete()) {
+                    System.out.println("原封面删除成功");
+                }
+                file.transferTo(dest);
+            } catch (IOException e) {
+                //回显信息 上传失败
+                msg.setCode(400);
+                msg.setMsg("封面上传失败，请重试。");
+                e.printStackTrace();
+                return msg;
+            }
+            if (comicService.addComic(comic)) {
+                msg.setCode(200);
+                msg.setMsg("添加漫画成功！");
+            }else {
+                msg.setCode(400);
+                msg.setMsg("封面上传失败，请重试。");
+            }
+            return msg;
+        } else {
+            msg.setCode(400);
+            msg.setMsg("请选择上传漫画封面");
+            return msg;
+        }
+    }
+    @RequestMapping("/getComicInfo")
+    @ResponseBody
+    public Msg getComicInfo(Integer id){
+        Comic comic = comicService.getComicById(id);
+        if (comic!=null){
+            return Msg.success().add(null,comic);
+        }
+        return null;
+    }
+    @RequestMapping("/editComic")
+    @ResponseBody
+    public Msg editComic(Comic comic,@RequestParam("photo") MultipartFile file){
+        Msg msg = new Msg();
+        //获取文件名
+        String filename = file.getOriginalFilename();
+        //判断是否选择了封面
+        if (!filename.equals("")) {
+            //获取文件后缀
+            String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
+            File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getPath() + "\\cover"+ suffix);
+            try {
+                if (dest.delete()) {
+                    System.out.println("原封面删除成功");
+                }
+                file.transferTo(dest);
+            } catch (IOException e) {
+                //回显信息 上传失败
+                msg.setCode(400);
+                msg.setMsg("封面上传失败，请重试。");
+                e.printStackTrace();
+                return msg;
+            }
+        }
+        if (comicService.updateComicInfo(comic)) {
+            msg.setCode(200);
+            msg.setMsg("修改漫画信息成功！");
+        }else{
+            msg.setCode(400);
+            msg.setMsg("修改漫画信息失败！");
+        }
+        return msg;
+    }
+    @RequestMapping("/delComic")
+    @ResponseBody
+    public Msg delComic(Integer id){
+            Comic comic = comicService.getComicById(id);
+            File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getPath());
+        if (deleteDir(dest)) {
+            dest.delete();
+        }
+        if (comicService.delComic(id)) {
+            return Msg.success().add("删除漫画信息成功！",null);
+        }else {
+            return Msg.success().add("删除漫画信息失败！",null);
+        }
     }
     /*
     漫画管理
@@ -153,6 +309,41 @@ public class SystemController {
         PageInfo details = new PageInfo(detail,5);
         return  Msg.success().add("成功", details);
     }
+
+    @RequestMapping("/addDetail")
+    @ResponseBody
+    public Msg addDetail(Detail detail,@RequestParam("pictures") MultipartFile[] files,@RequestParam("comicName")String comicName){
+        Comic comic = comicService.getComicByName(comicName);
+        if (comic==null){
+            return Msg.fail().add("该漫画不存在，请检查漫画名后重试！",null);
+        }else {
+            if (files!=null && files.length>0){
+                String comicPath = comic.getPath();
+                if (detail.getPath()!=null){
+                    for (int i = 0; i < files.length; i++) {
+                        MultipartFile file = files[i];
+                        String filename = file.getOriginalFilename();
+                        String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
+                        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" +comicPath + "\\"+detail.getPath() + "\\"+i+suffix);
+                        try {
+                            if (dest.delete()) {
+                                System.out.println("原图片删除成功");
+                            }
+                            file.transferTo(dest);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return Msg.fail().add("漫画图片上传失败，请检查后重试",null);
+                        }
+                    }}else {
+                    return Msg.fail().add("请填写章节图片存放路径，检查后重试",null);
+                }
+                detail.setComicId(comic.getComicId());
+                detail.setComic(comic);
+        }else {
+                return Msg.fail().add("未检测到图片资源，请添加漫画图片后重试",null);
+            }
+    } return Msg.success().add("添加章节成功！",null);
+    }
     /*
     章节详情管理
      */
@@ -169,6 +360,68 @@ public class SystemController {
         List<Orders> order = orderService.selectAllOrders();
         PageInfo orders = new PageInfo(order,5);
         return  Msg.success().add("成功", orders);
+    }
+    @RequestMapping("/addOrder")
+    @ResponseBody
+    public Msg addOrder(Orders orders,@Param("comicName")String comicName,@Param("userName")String userName){
+        Comic comicByName = comicService.getComicByName(comicName);
+        if (comicByName==null){
+            return Msg.fail().add("该漫画不存在哦",null);
+        }
+        User userByName = userService.findUserByName(userName);
+        if (userByName==null) {
+            return Msg.fail().add("该用户不存在哦",null);
+        }
+        orders.setComic(comicByName);
+        orders.setComicId(comicByName.getComicId());
+        orders.setUser(userByName);
+        orders.setUserId(userByName.getUserId());
+        if (orderService.addOrders(orders)) {
+            return Msg.success().add("添加订阅成功！",null);
+        }else {
+            return Msg.fail().add("添加订阅失败！",null);
+        }
+
+    }
+    @RequestMapping("/getOrderInfo")
+    @ResponseBody
+    public Msg getOrderInfo(Integer id){
+        Orders ordersById = orderService.getOrdersById(id);
+        if (ordersById!=null){
+            return Msg.success().add(null,ordersById);
+        }else {
+            return Msg.fail().add("获取信息失败",null);
+        }
+    }
+    @RequestMapping("/editOrder")
+    @ResponseBody
+    public Msg editOrder(Orders orders,@Param("comicName")String comicName,@Param("userName")String userName){
+        Comic comicByName = comicService.getComicByName(comicName);
+        if (comicByName==null){
+            return Msg.fail().add("修改失败，该漫画不存在哦",null);
+        }
+        User userByName = userService.findUserByName(userName);
+        if (userByName==null) {
+            return Msg.fail().add("修改失败，该用户不存在哦",null);
+        }
+        orders.setComic(comicByName);
+        orders.setComicId(comicByName.getComicId());
+        orders.setUser(userByName);
+        orders.setUserId(userByName.getUserId());
+        if (orderService.updateOrdersInfo(orders)) {
+            return Msg.success().add("修该成功，添加订阅成功！",null);
+        }else {
+            return Msg.fail().add("修改订阅信息失败！",null);
+        }
+    }
+    @RequestMapping("/delOrder")
+    @ResponseBody
+    public Msg delOrder(Integer id){
+        if (orderService.delOrders(id)) {
+            return Msg.success().add("删除订阅信息成功！",null);
+        }else {
+            return Msg.success().add("删除订阅信息失败！",null);
+        }
     }
     /*
     订阅管理

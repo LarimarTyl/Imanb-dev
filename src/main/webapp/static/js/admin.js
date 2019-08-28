@@ -50,6 +50,43 @@ $(function () {
         $("#admin-content").toggleClass("long").toggleClass("wd80")
      });
 });
+
+//选择事件
+//选择事件 选择被选中的checkbox的值进行拼接
+$(function () {
+    $("#add_typeCheck input").click(function () {
+        var types=[];
+        if($("#add_typeCheck input:checked").length<=3){
+            //遍历选中的内容 取值
+            $("#add_typeCheck input:checkbox").each(function(){
+                if($(this).prop("checked")==true){
+                    types.push($(this).val())
+                }
+            });
+            //join方法分割数组为字符串以“”取代，替换
+            $("#new_typeName").val(types.join(""))
+        }else{
+            //超过数量 不能继续选中
+            $(this).prop("checked",false);
+        }
+    });
+    $("#edit_typeCheck input").click(function () {
+        var types=[];
+        if($("#edit_typeCheck input:checked").length<=3){
+            //遍历选中的内容 取值
+            $("#edit_typeCheck input:checkbox").each(function(){
+                if($(this).prop("checked")==true){
+                    types.push($(this).val())
+                }
+            });
+            //join方法分割数组为字符串以“”取代，替换
+            $("#edit_typeName").val(types.join(""))
+        }else{
+            //超过数量 不能继续选中
+            $(this).prop("checked",false);
+        }
+    })
+});
 //进入页面请求（全部数据刷新）
 $(function () {
     to_Page(1);
@@ -129,8 +166,8 @@ $(function () {
                 case (-1):userstatu="封禁";
             }
             var status = $("<th></th>").append(userstatu);
-            var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='editUser'>修改</a>").attr("edit-id",item.userId);
-            var del = $("<a  class='btn btn-danger btn-xs' id='delUser'>删除</a>").attr("del-id",item.userId);
+            var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editUser'>修改</a>").attr("edit-id",item.userId);
+            var del = $("<a  class='btn btn-danger btn-xs' id='btn-delUser'>删除</a>").attr("del-id",item.userId);
             var handle = $("<td></td>").append(edit).append(" ").append(del);
            $("<tr></tr>").append(id).append(photo).append(username)
                .append(password).append(gender).append(email).append(qq)
@@ -336,14 +373,22 @@ $(function () {
             orderTo_page(totalPage)
         })
         }
+    //清空原表 绑定事件
+    $(function () {
+        $(".add").on("click",function () {
 
-//用户Ajax请求
+            $($(this).attr("dialog")+" form")[0].reset();
+            $($(this).attr("dialog")+" form img").attr("src","");
+            $($(this).attr("dialog")).modal({
+                backdrop:"static"
+            });
+        });
+    });
+//Ajax请求
 $(function () {
     //添加用户请求
     $("div .modal-footer").on("click","#btn-addUser",function () {
-        var file = document.getElementById("new_user_form");
-        var formData = new FormData(file);
-        console.log(formData);
+        var formData = new FormData($("#new_user_form")[0]);
         $.ajax({
             url:rootPath+"addUser",
             type:"POST",
@@ -352,20 +397,314 @@ $(function () {
             contentType:false,
             success:function (result) {
                 if (result.code==200){
-                    var users = result.data;
+                    $("#addUserDialog").modal("hide");
                     userTo_page(1);
-                    $("#addUserDialog").modal("hide")
                 }else {
                     confirm(result.msg)
                 }
             }
         })
     });
-    //修改用户请求
-    $("tbody").on("click","#editUser",function () {
-        console.log($("#userCurrent").text());
-        console.log($(this).attr("edit-id"));
-    })
+    //修改用户请求 1.获取指定用户信息 2.修改指定用户id
+    $("tbody").on("click","#btn-editUser",function () {
+        var id = $(this).attr("edit-id");
+        $.ajax({
+            url:rootPath+"getUserInfo?id="+id,
+            type:"GET",
+            success:function (result) {
+                $("#edit_userId").val(result.data.userId);
+                $("#edit_showPhoto").attr("src","/images/user/"+result.data.photo+".jpg");
+                $("#edit_name").val(result.data.userName);
+                $("#edit_password").val(result.data.password);
+                $("#edit_gender").val(result.data.gender);
+                $("#edit_email").val(result.data.email);
+                $("#edit_qq").val(result.data.qq);
+                $("#edit_nickName").val(result.data.nickName);
+                $("#edit_status").val(result.data.status);
+            }
+        });
+        $("#userEditDialog").modal({
+            backdrop:"static"
+        });
+    });
+    $("#btn-updateUser").click(function () {
+        if (confirm("确定要修改"+$("#edit_name").val()+"的信息么？")){
+            var file = document.getElementById("edit_user_form");
+            var formData = new FormData(file);
+            $.ajax({
+                url:rootPath+"editUser",
+                type:"POST",
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    if (result.code=200){
+                        $("#userEditDialog").modal('hide');
+                        userTo_page($("#userCurrent").text())
+                    }else {
+                        alert(result.msg);
+                    }
+                }
+            })
+        }
+    });
+    //删除用户请求
+    $("tbody").on("click","#btn-delUser",function (){
+        if (confirm("确定要删除id为【"+$(this).attr("del-id")+"】的用户信息么？")){
+            var id = $(this).attr("del-id");
+            $.ajax({
+                url:rootPath+"delUser?id="+id,
+                type:"GET",
+                success:function (result) {
+                    alert(result.msg);
+                    to_Page($("#userCurrent").text())
+                }
+            })
+        }
+    });
+
+    
+    //添加漫画请求
+    $("div .modal-footer").on("click","#btn-addComic",function () {
+        var formData = new FormData($("#new_comic_form")[0]);
+        $.ajax({
+            url:rootPath+"addComic",
+            type:"POST",
+            data:formData,
+            processData:false,
+            contentType:false,
+            success:function (result) {
+                if (result.code==200){
+                    $("#addComicDialog").modal("hide");
+                    comicTo_page(1);
+                }else {
+                    confirm(result.msg)
+                }
+            }
+        })
+    });
+    //修改漫画请求 1.获取指定漫画信息 2.修改指定漫画id
+    $("tbody").on("click","#btn-editComic",function () {
+        var id = $(this).attr("edit-id");
+        $.ajax({
+            url:rootPath+"getComicInfo?id="+id,
+            type:"GET",
+            success:function (result) {
+                $("#edit_id").val(result.data.comicId);
+                $("#edit_showPhotos").attr("src","/images/comics/"+result.data.path+"/cover.jpg");
+                $("#edit_coverPath").val(result.data.path);
+                $("#edit_comicName").val(result.data.comicName);
+                $("#edit_author").val(result.data.author);
+                $("#edit_location").val(result.data.location);
+                $("#introduction").val(result.data.introduction);
+                $("#edit_update").val(result.data.newUpdate);
+                $("#edit_ChapterName").val(result.data.newChapterName);
+                $("#edit_mark").val(result.data.mark);
+                $("#edit_comicStatus").val(result.data.status);
+                $("#edit_typeName").val(result.data.type);
+                $("#edit_typeCheck input:checkbox").each(function () {
+                    if (result.data.type.indexOf($(this).val())!=-1){
+                        $(this).prop("checked",true);
+                    }
+                });
+            }
+        });
+        $("#comicEditDialog").modal({
+            backdrop:"static"
+        });
+    });
+    $("#btn-updateComic").click(function () {
+        if (confirm("确定要修改"+$("#edit_comicName").val()+"的信息么？")){
+            var file = document.getElementById("edit_comic_form");
+            var formData = new FormData(file);
+            $.ajax({
+                url:rootPath+"editComic",
+                type:"POST",
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    if (result.code=200){
+                        $("#comicEditDialog").modal('hide');
+                        comicTo_page($("#comicCurrent").text())
+                    }else {
+                        alert(result.msg);
+                    }
+                }
+            })
+        }
+    });
+    //删除漫画请求
+    $("tbody").on("click","#btn-delComic",function (){
+        if (confirm("确定要删除id为【"+$(this).attr("del-id")+"】的漫画信息么？")){
+            var id = $(this).attr("del-id");
+            $.ajax({
+                url:rootPath+"delComic?id="+id,
+                type:"GET",
+                success:function (result) {
+                    alert(result.msg);
+                    comicTo_page($("#comicCurrent").text())
+                }
+            })
+        }
+    });
+
+    //添加订阅请求
+    $("div .modal-footer").on("click","#btn-addOrder",function () {
+        var formData = new FormData($("#add_orders_form")[0]);
+        $.ajax({
+            url:rootPath+"addOrder",
+            type:"POST",
+            data:formData,
+            processData:false,
+            contentType:false,
+            success:function (result) {
+                if (result.code==200){
+                    $("#newOrdersDialog").modal("hide");
+                    orderTo_page(1);
+                }else {
+                    confirm(result.msg)
+                }
+            }
+        })
+    });
+    //修改订阅请求 1.获取指定订阅信息 2.修改指定订阅id
+    $("tbody").on("click","#btn-editOrder",function () {
+        var id = $(this).attr("edit-id");
+        $.ajax({
+            url:rootPath+"getOrderInfo?id="+id,
+            type:"GET",
+            success:function (result) {
+                $("#edit_orderId").val(result.data.ordersId);
+                $("#edit_order_comicName").val(result.data.comic.comicName);
+                $("#edit_order_userName").val(result.data.user.userName);
+                $("edit_order_status").val(result.data.status)
+            }
+        });
+        $("#ordersEditDialog").modal({
+            backdrop:"static"
+        });
+    });
+    $("#btn-updateOrder").click(function () {
+        if (confirm("确定要修改id为"+$("#edit_orderId").val()+"的订阅信息么？")){
+            var file = document.getElementById("edit_orders_form");
+            var formData = new FormData(file);
+            $.ajax({
+                url:rootPath+"editOrder",
+                type:"POST",
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    if (result.code=200){
+                        $("#ordersEditDialog").modal('hide');
+                        orderTo_page($("#orderCurrent").text())
+                    }else {
+                        alert(result.msg);
+                    }
+                }
+            })
+        }
+    });
+    //删除订阅请求
+    $("tbody").on("click","#btn-delOrder",function (){
+        if (confirm("确定要删除id为【"+$(this).attr("del-id")+"】的订阅信息么？")){
+            var id = $(this).attr("del-id");
+            $.ajax({
+                url:rootPath+"delOrder?id="+id,
+                type:"GET",
+                success:function (result) {
+                    alert(result.msg);
+                    orderTo_page($("#orderCurrent").text())
+                }
+            })
+        }
+    });
+
+    //添加章节请求
+    $("div .modal-footer").on("click","#btn-addDetail",function () {
+        var formData = new FormData($("#new_detail_form")[0]);
+        $.ajax({
+            url:rootPath+"addDetail",
+            type:"POST",
+            data:formData,
+            processData:false,
+            contentType:false,
+            success:function (result) {
+                if (result.code==200){
+                    $("#addDetailDialog").modal("hide");
+                    detailTo_page(1);
+                }else {
+                    confirm(result.msg)
+                }
+            }
+        })
+    });
+    //修改章节请求 1.获取指定章节信息 2.修改指定章节id
+    $("tbody").on("click","#btn-editDetail",function () {
+        var id = $(this).attr("edit-id");
+        $.ajax({
+            url:rootPath+"getDetailInfo?id="+id,
+            type:"GET",
+            success:function (result) {
+                $("#edit_id").val(result.data.detailId);
+                $("#edit_showPhotos").attr("src","/images/details/"+result.data.path+"/cover.jpg");
+                $("#edit_coverPath").val(result.data.path);
+                $("#edit_detailName").val(result.data.detailName);
+                $("#edit_author").val(result.data.author);
+                $("#edit_location").val(result.data.location);
+                $("#introduction").val(result.data.introduction);
+                $("#edit_update").val(result.data.newUpdate);
+                $("#edit_ChapterName").val(result.data.newChapterName);
+                $("#edit_mark").val(result.data.mark);
+                $("#edit_detailStatus").val(result.data.status);
+                $("#edit_typeName").val(result.data.type);
+                $("#edit_typeCheck input:checkbox").each(function () {
+                    if (result.data.type.indexOf($(this).val())!=-1){
+                        $(this).prop("checked",true);
+                    }
+                });
+            }
+        });
+        $("#detailEditDialog").modal({
+            backdrop:"static"
+        });
+    });
+    $("#btn-updateDetail").click(function () {
+        if (confirm("确定要修改"+$("#edit_detailName").val()+"的信息么？")){
+            var file = document.getElementById("edit_detail_form");
+            var formData = new FormData(file);
+            $.ajax({
+                url:rootPath+"editDetail",
+                type:"POST",
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    if (result.code=200){
+                        $("#detailEditDialog").modal('hide');
+                        detailTo_page($("#detailCurrent").text())
+                    }else {
+                        alert(result.msg);
+                    }
+                }
+            })
+        }
+    });
+    //删除章节请求
+    $("tbody").on("click","#btn-delDetail",function (){
+        if (confirm("确定要删除id为【"+$(this).attr("del-id")+"】的章节信息么？")){
+            var id = $(this).attr("del-id");
+            $.ajax({
+                url:rootPath+"delDetail?id="+id,
+                type:"GET",
+                success:function (result) {
+                    alert(result.msg);
+                    detailTo_page($("#detailCurrent").text())
+                }
+            })
+        }
+    });
    });
 //Ajax请求
 

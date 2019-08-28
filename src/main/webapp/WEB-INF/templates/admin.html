@@ -154,7 +154,7 @@
                             </form>
                         </div>
                     </div>
-                    <a href="#" class="btn btn-primary left" data-toggle="modal" data-target="#addUserDialog">新建用户</a>
+                    <a href="#" class="btn btn-primary left add"  dialog="#addUserDialog">新建用户</a>
                 <div class="right userPageInfo mr40">当前第2页，总共2页，共10条记录 </div>
                  <!-- 添加用户模态框 -->
                 <div class="modal fade" id="addUserDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -288,20 +288,20 @@
                                 <h4 class="modal-title" id="editUserModalLabel">修改用户信息</h4>
                             </div>
                             <div class="modal-body">
-                                <form class="form-horizontal" id="edit_user_form">
+                                <form class="form-horizontal" enctype="multipart/form-data" id="edit_user_form">
                                         <input type="hidden" id="edit_userId" name="userId">
-                                        <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="edit_photo" class="col-sm-2 control-label">更改头像</label>
                                                 <div class="col-sm-4">
-                                                    <input type="file" name="photo" class="user-icon newInputIcon" id="edit_photo">
+                                                    <input type="file" name="path" class="user-icon newInputIcon" id="edit_photo">
                                                 </div>
                                                 <label for="edit_showPhoto" class="col-sm-2 control-label">头像预览</label>
-                                                <img th:src="@{/static/images/blog_thumb.jpg}" alt="" id="edit_showPhoto" class="userPhoto">
+                                                <img src="" alt="" id="edit_showPhoto" class="userPhoto">
                                             </div>
                                             <div class="form-group">
                                                 <label for="edit_name" class="col-sm-2 control-label">用户名</label>
                                                 <div class="col-sm-4">
-                                                    <input type="text" class="form-control" id="edit_name" placeholder="用户名" name="userName">
+                                                    <input type="text" class="form-control" id="edit_name" name="userName">
                                                 </div>
                                                 <label for="edit_password" class="col-sm-2 control-label">密码</label>
                                                 <div class="col-sm-4">
@@ -346,7 +346,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="updateplayer()">保存修改</button>
+                                <button type="button" class="btn btn-primary"  id="btn-updateUser">保存修改</button>
                             </div>
                         </div>
                     </div>
@@ -391,7 +391,7 @@
                         </form>
                 </div>
                 </div>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#newOrdersDialog" onclick="clearDept()">添加订阅</a>
+                <a href="#" class="btn btn-primary add"  dialog="#newOrdersDialog">添加订阅</a>
                 <div class="right orderPageInfo mr40">当前第1页，总共2页，共10条记录 </div>
                 <div class="modal fade" id="newOrdersDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
@@ -430,7 +430,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="button" class="btn btn-primary" onclick="updateComic()">保存修改</button>
+                                    <button type="button" class="btn btn-primary" id="btn-addOrder">保存</button>
                                 </div>
                             </div>
                         </div>
@@ -515,7 +515,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="updateComic()">保存修改</button>
+                                <button type="button" class="btn btn-primary" id="btn-updateOrder">保存修改</button>
                             </div>
                         </div>
                     </div>
@@ -556,7 +556,7 @@
                         </form>
                     </div>
                 </div>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addComicDialog" onclick="clearDept()">添加漫画</a>
+                <a href="#" class="btn btn-primary add"  dialog="#addComicDialog" >添加漫画</a>
                 <div class="right comicPageInfo mr40">当前第1页，总共2页，共10条记录 </div>
                 <!-- 添加漫画模态框 -->
                <div class="modal fade" id="addComicDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -569,7 +569,7 @@
                                     <h4 class="modal-title" id="addComicModalLabel">添加动漫信息</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="form-horizontal" id="new_comic_form">
+                                    <form class="form-horizontal" method="post" enctype="multipart/form-data" id="new_comic_form">
                                         <div class="form-group">
                                             <label for="new_comicPhoto" class="col-sm-2 control-label">封面</label>
                                             <div class="col-sm-4">
@@ -583,26 +583,31 @@
                                             <div class="col-sm-4">
                                                 <input type="text" class="form-control" id="new_name" placeholder="漫画名" name="comicName">
                                             </div>
+                                            <label for="new_coverPath" class="col-sm-2 control-label">漫画目录</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="new_coverPath" placeholder="漫画资源目录" name="path">
+                                            </div>
+                                                <input type="hidden" class="form-control" id="new_typeName" name="type">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="new_typeName" class="col-sm-2 control-label">类别</label>
+                                            <div class="col-sm-10" id="add_typeCheck">
+                                                <input type="checkbox" class="check-box-table-cell" name="types" value="玄幻/">玄幻</input>
+                                                <input type="checkbox" class="check-box-table-cell " name="types" value="言情/">言情</input>
+                                                <input type="checkbox" class="check-box-table-cell " name="types" value="都市/">都市</input>
+                                                <input type="checkbox" class="check-box-table-cell " name="types" value="冒险/">冒险</input>
+                                                <input type="checkbox" class="check-box-table-cell " name="types" value="校园/">校园</input>
+                                                <input type="checkbox" class="check-box-table-cell " name="types" value="仙侠/">仙侠</input>
+                                                <input type="checkbox" class="check-box-table-cell " name="types" value="搞笑/">搞笑</input>
+                                                <input type="checkbox" class="check-box-table-cell " name="types" value="热血/">热血</input>
+                                                <input type="checkbox" class="check-box-table-cell " name="types" value="穿越/">穿越</input>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="new_author" class="col-sm-2 control-label">作者</label>
                                             <div class="col-sm-4">
                                                 <input type="text" class="form-control" id="new_author" placeholder="作者" name="author" >
                                             </div>
-                                        </div>  
-                                        <div class="form-group">
-                                                <label for="new_typeName" class="col-sm-2 control-label">类别</label>
-                                                <div class="col-sm-4">
-                                                    <select class="form-control" id="new_typeName" name="typeName">
-                                                            <option value="玄幻">玄幻</option>
-                                                            <option value="言情">言情</option>
-                                                            <option value="都市">都市</option>
-                                                            <option value="冒险">冒险</option>
-                                                            <option value="校园">校园</option>
-                                                            <option value="仙侠">仙侠</option>
-                                                            <option value="搞笑">搞笑</option>
-                                                            <option value="热血">热血</option>
-                                                            <option value="穿越">穿越</option>
-                                                    </select>
-                                                </div>
                                                 <label for="new_location" class="col-sm-2 control-label">地区</label>
                                                 <div class="col-sm-4">
                                                     <select class="form-control" id="new_location" name="location">
@@ -646,7 +651,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="button" class="btn btn-primary" onclick="createplayer()">添加漫画</button>
+                                    <button type="button" class="btn btn-primary" id="btn-addComic">添加漫画</button>
                                 </div>
                             </div>
                     </div>
@@ -689,7 +694,7 @@
                                 </td>
                                 <td th:text="${comic.mark}">评分</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#comicEditDialog" id="btn-editComic" th:attr="editId=${comic.comicId}">修改</a>
+                                    <a href="#" class="btn btn-primary btn-xs"  id="btn-editComic" th:attr="editId=${comic.comicId}">修改</a>
                                     <a href="#" class="btn btn-danger btn-xs"  id="btn-delComic" th:attr="delId=${comic.comicId}">删除</a>
                                </td>
                             </tr>
@@ -716,7 +721,7 @@
                                 <h4 class="modal-title" id="editComicModalLabel">修改漫画信息</h4>
                             </div>
                             <div class="modal-body">
-                                <form class="form-horizontal" id="edit_comic_form">
+                                <form class="form-horizontal" method="post" enctype="multipart/form-data" id="edit_comic_form">
                                     <input type="hidden" id="edit_id" name="comicId">
                                     <div class="form-group">
                                         <label for="edit_ComicPhoto" class="col-sm-2 control-label">封面</label>
@@ -724,32 +729,37 @@
                                             <input type="file" name="photo" class="comic-icon newInputIcon" id="edit_ComicPhoto">
                                         </div>
                                         <label for="edit_showPhotos" class="col-sm-2 control-label">封面预览</label>
-                                        <img th:src="@{/static/images/comics/480687201872.jpg}" alt="" id="edit_showPhotos" class="comicPhoto">
+                                        <img src="" alt="" id="edit_showPhotos" class="comicPhoto">
                                     </div>
                                     <div class="form-group">
                                         <label for="edit_comicName" class="col-sm-2 control-label">漫画名</label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" id="edit_comicName" placeholder="漫画名" name="comicName">
                                         </div>
-                                        <label for="edit_author" class="col-sm-2 control-label">作者</label>
+                                        <label for="edit_coverPath" class="col-sm-2 control-label">漫画目录</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="edit_author" placeholder="作者" name="author">
+                                            <input type="text" class="form-control" id="edit_coverPath" placeholder="漫画资源目录" name="path">
+                                        </div>
+                                            <input type="hidden" class="form-control" id="edit_typeName" name="type">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new_typeName" class="col-sm-2 control-label">类别</label>
+                                        <div class="col-sm-10" id="edit_typeCheck">
+                                            <input type="checkbox" class="check-box-table-cell" name="types" value="玄幻/">玄幻</input>
+                                            <input type="checkbox" class="check-box-table-cell " name="types" value="言情/">言情</input>
+                                            <input type="checkbox" class="check-box-table-cell " name="types" value="都市/">都市</input>
+                                            <input type="checkbox" class="check-box-table-cell " name="types" value="冒险/">冒险</input>
+                                            <input type="checkbox" class="check-box-table-cell " name="types" value="校园/">校园</input>
+                                            <input type="checkbox" class="check-box-table-cell " name="types" value="仙侠/">仙侠</input>
+                                            <input type="checkbox" class="check-box-table-cell " name="types" value="搞笑/">搞笑</input>
+                                            <input type="checkbox" class="check-box-table-cell " name="types" value="热血/">热血</input>
+                                            <input type="checkbox" class="check-box-table-cell " name="types" value="穿越/">穿越</input>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="edit_typeName" class="col-sm-2 control-label">类别</label>
+                                        <label for="edit_author" class="col-sm-2 control-label">作者</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control" id="edit_typeName" name="typeName">
-                                                <option value="玄幻">玄幻</option>
-                                                <option value="言情">言情</option>
-                                                <option value="都市">都市</option>
-                                                <option value="冒险">冒险</option>
-                                                <option value="校园">校园</option>
-                                                <option value="仙侠">仙侠</option>
-                                                <option value="搞笑">搞笑</option>
-                                                <option value="热血">热血</option>
-                                                <option value="穿越">穿越</option>
-                                            </select>
+                                            <input type="text" class="form-control" id="edit_author" placeholder="作者" name="author">
                                         </div>
                                         <label for="edit_location" class="col-sm-2 control-label">地区</label>
                                         <div class="col-sm-4">
@@ -795,7 +805,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="updateComic()">保存修改</button>
+                                <button type="button" class="btn btn-primary" id="btn-updateComic">保存修改</button>
                             </div>
                         </div>
                     </div>
@@ -836,7 +846,7 @@
                          </form>
                      </div>
                  </div>
-                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addDetailDialog" onclick="clearDept()">添加章节</a>
+                 <a href="#" class="btn btn-primary add" dialog="#addDetailDialog" >添加章节</a>
                 <div class="right detailPageInfo mr40">当前第1页，总共2页，共10条记录 </div>
                  <!-- 添加章节模态框 -->
                  <div class="modal fade" id="addDetailDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -849,7 +859,7 @@
                                  <h4 class="modal-title" id="detailAddModalLabel">添加章节信息</h4>
                              </div>
                              <div class="modal-body">
-                                 <form class="form-horizontal" id="new_detail_form">
+                                 <form class="form-horizontal" method="post" enctype="multipart/form-data" id="new_detail_form">
                                      <div class="form-group">
                                          <label for="new_detail_comicname" class="col-sm-2 control-label">漫画名</label>
                                          <div class="col-sm-4">
@@ -857,7 +867,7 @@
                                          </div>
                                          <label for="new_detail_chaptername" class="col-sm-2 control-label">章节名</label>
                                          <div class="col-sm-4">
-                                             <input type="text" class="form-control" id="new_detail_chaptername" placeholder="章节名" name="chaptername">
+                                             <input type="text" class="form-control" id="new_detail_chaptername" placeholder="章节名" name="chapterName">
                                          </div>
                                      </div>
                                      <div class="form-group">
@@ -869,7 +879,7 @@
                                      <div class="form-group">
                                          <label for="new_generalize" class="col-sm-2 control-label">章节概况</label>
                                          <div class="col-sm-10">
-                                             <textarea name="introduction" id="new_generalize" class="form-control" cols="55" placeholder="章节概况" rows="10"></textarea>
+                                             <textarea name="generalize" id="new_generalize" class="form-control" cols="55" placeholder="章节概况" rows="10"></textarea>
                                          </div>
                                      </div>
                                      <div class="form-group">
@@ -889,7 +899,7 @@
                              </div>
                              <div class="modal-footer">
                                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                 <button type="button" class="btn btn-primary" onclick="createplayer()">添加漫画</button>
+                                 <button type="button" class="btn btn-primary" id="btn-addDetail">添加章节</button>
                              </div>
                          </div>
                      </div>
@@ -949,7 +959,7 @@
                                  <h4 class="modal-title" id="myModalLabel">修改章节信息</h4>
                              </div>
                              <div class="modal-body">
-                                 <form class="form-horizontal" id="edit_detail_form">
+                                 <form class="form-horizontal" method="post" enctype="multipart/form-data" id="edit_detail_form">
                                      <input type="hidden" name="detailId" value="id">
                                      <div class="form-group">
                                          <label for="edit_detail_comicname" class="col-sm-2 control-label">漫画名</label>
@@ -990,7 +1000,7 @@
                              </div>
                              <div class="modal-footer">
                                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                 <button type="button" class="btn btn-primary" onclick="createplayer()">添加漫画</button>
+                                 <button type="button" class="btn btn-primary" id="btn-updateDetail">修改章节</button>
                              </div>
                          </div>
                      </div>
