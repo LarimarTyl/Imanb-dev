@@ -43,6 +43,16 @@ public class ComicServiceImpl implements ComicService {
     }
 
     @Override
+    public Comic getComicById(Integer comicId) {
+        return comicMapper.selectComicById(comicId);
+    }
+
+    @Override
+    public Comic getComicByName(String comicName) {
+        return comicMapper.selectComicByName(comicName);
+    }
+
+    @Override
     public List<Comic> queryAllComic() {
         return comicMapper.selectAllComics();
     }

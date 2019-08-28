@@ -32,6 +32,7 @@ public interface OrdersMapper {
      */
     public int updateOrders(@Param("comicId") Integer comicId,@Param("status") Integer status);
 
+    public int updateOrderInfo(Orders orders);
     /**
      * 更改用户订阅状态（是否已读）
      * @param comicId 漫画id
@@ -59,4 +60,6 @@ public interface OrdersMapper {
      * @return
      */
     public List<Orders> selectAllOrdersByStatus(@Param("userId") Integer userId,@Param("status") Integer status);
+
+    public Orders getOrdersById(Integer ordersId);
 }

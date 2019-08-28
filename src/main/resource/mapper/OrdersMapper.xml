@@ -22,6 +22,21 @@
         </if>
     </where>
     </update>
+    <update id="updateOrderInfo">
+        update orders
+        <set>
+            <if test="comicId!=null">
+                comic_id = #{comicId} ,
+            </if>
+            <if test="userId!=null">
+                user_id= #{userId},
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </set>
+        where orders_id = #{ordersId}
+    </update>
     <update id="updateUserOrders">
         update orders
         <set>
@@ -56,6 +71,16 @@
         where comic.comic_id = orders.comic_id
           and orders.user_id = `user`.user_id
             order by orders_id desc
+    </select>
+    <select id="getOrdersById" resultMap="BaseResultMap">
+        select *
+        from orders,
+             user,
+             comic
+        where comic.comic_id = orders.comic_id
+          and orders.user_id = `user`.user_id
+        and orders_id=#{ordersId}
+        order by orders_id desc
     </select>
     <resultMap id="BaseResultMap" type="orders">
         <id property="ordersId" column="orders_id"/>

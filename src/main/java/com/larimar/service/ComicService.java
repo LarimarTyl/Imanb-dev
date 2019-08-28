@@ -15,6 +15,8 @@ public interface ComicService {
     public boolean updateComicInfo(Comic comic);
     public boolean updateComicStatus(Integer comicId,Integer status);
     public boolean updateNewComicDetail(Integer comicId,String comicName,String newUpdateTime);
+    public Comic getComicById(Integer comicId);
+    public Comic getComicByName(String comicName);
     public List<Comic> queryAllComic();
     public List<Comic> findLikestComic();
     public List<Comic> findNewComic();

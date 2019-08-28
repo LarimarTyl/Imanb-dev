@@ -32,8 +32,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public boolean updateOrdersInfo(Orders orders) {
+        return ordersMapper.updateOrderInfo(orders)>0;
+    }
+
+    @Override
     public boolean updateUsersComicStatus(Integer comicId, Integer userId, Integer status) {
         return ordersMapper.updateUserOrders(comicId, userId, status)>0;
+    }
+
+    @Override
+    public Orders getOrdersById(Integer ordersId) {
+        return ordersMapper.getOrdersById(ordersId);
     }
 
     @Override

@@ -56,13 +56,13 @@ public interface ComicMapper {
      * @return 漫画对象
      */
     public Comic selectComicById(Integer comicId);
-
+    public Comic selectComicByName(String comicName);
     /**
      * 根据漫画名字查找漫画
      * @param name 漫画名
      * @return 漫画集合
      */
-    public List<Comic> selectComicByName(String name);
+    public List<Comic> selectComicLikeName(String name);
 
     /**
      * 根据漫画类型查找漫画

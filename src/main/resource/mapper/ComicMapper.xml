@@ -18,9 +18,16 @@
     <insert id="addComic" parameterType="comic">
         insert into comic
         (comic_id, path, comicname, author, status, type, location,
-         newupdate, newchaptername, introduction, mark)
+        newchaptername, introduction, mark ,newUpdate )
         VALUES (#{comicId}, #{path}, #{comicName}, #{author},#{status}, #{type},
-                #{location}, #{newUpdate}, #{newChapterName}, #{introduction}, #{mark})
+                #{location},#{newChapterName}, #{introduction}, #{mark}
+                    <if test="newUpdate!=null">
+                        ,#{newUpdate}
+                    </if>
+                    <if test="newUpdate=null">
+                        ,null
+                    </if>
+                )
     </insert>
 
     <delete id="delComic" parameterType="Integer">
@@ -52,6 +59,9 @@
             </if>
             <if test="newUpdate!=null">
                 newupdate=#{newUpdate},
+            </if>
+            <if test="newUpdate=null">
+                newupdate=null,
             </if>
             <if test="newChapterName!=null">
                 newchaptername=#{newChapterName},
@@ -117,9 +127,12 @@
     select * from comic where location = #{location}
   </select>
 
-  <select id="selectComicByName" resultMap="BaseResultMap">
+  <select id="selectComicLikeName" resultMap="BaseResultMap">
     <bind name="likeName" value="'%' +name+ '%'"/>
     select * from comic where comicname like #{likename}
+  </select>
+    <select id="selectComicByName" resultMap="BaseResultMap">
+    select * from comic where comicname=#{comicName}
   </select>
 
   <select id="selectComicByTypeName" resultMap="BaseResultMap">

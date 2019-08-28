@@ -60,6 +60,6 @@ public class OrdersMapperTest {
 
     @Test
     public void selectAllOrdersByStatus() {
-        System.out.println(mapper.selectAllOrdersByStatus(1,0));
+        System.out.println(mapper.getOrdersById(1));
     }
 }

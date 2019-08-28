@@ -35,9 +35,14 @@
     <insert id="saveUser" parameterType="user">
         insert into user(user_id,username, password, gender, email, QQ, nickname,photo,status)
         values (#{userId},#{userName}, #{password}, #{gender}, #{email}, #{qq}, #{nickName}
-        <if test="photo!=null">
-            ,#{photo}
-        </if>
+        <choose>
+            <when test="photo!=null">
+                ,#{photo}
+            </when>
+            <otherwise>
+                ,"user"
+            </otherwise>
+        </choose>
         <if test="status!=null">
             ,#{status}
         </if>
