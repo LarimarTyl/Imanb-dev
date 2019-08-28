@@ -48,7 +48,7 @@ public interface ComicMapper {
      * @param status 漫画状态
      * @return 修改数量
      */
-    public int updateComicNewsUpdateTime(@Param("comicId")Integer comicId,@Param("newUpdateTime") String newUpdateTime,@Param("newChapter") String newChapter);
+    public int updateComicNewsUpdateTime(@Param("comicId")Integer comicId,@Param("newChapter") String newChapter,@Param("newUpdateTime") String newUpdateTime);
 
     /**
      * 根据漫画id查找漫画

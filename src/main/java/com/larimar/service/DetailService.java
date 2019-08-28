@@ -15,4 +15,6 @@ public interface DetailService {
     public List<Detail> queryAllDetail();
     public List<Detail> queryComicDetail(Integer comicId);
     public List<Detail> selectComicDetailByType(String typeName);
+
+    public Detail getDetailById(Integer id);
 }

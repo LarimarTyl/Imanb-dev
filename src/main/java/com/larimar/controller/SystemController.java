@@ -28,7 +28,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.larimar.util.FileUtil.deleteDir;
+import static com.larimar.util.FileUtil.deleteFile;
+
 
 /**
  * @author Larimar
@@ -283,8 +284,8 @@ public class SystemController {
     public Msg delComic(Integer id){
             Comic comic = comicService.getComicById(id);
             File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getPath());
-        if (deleteDir(dest)) {
-            dest.delete();
+        if (dest.exists()) {
+           deleteFile(dest);
         }
         if (comicService.delComic(id)) {
             return Msg.success().add("删除漫画信息成功！",null);
@@ -312,19 +313,19 @@ public class SystemController {
 
     @RequestMapping("/addDetail")
     @ResponseBody
-    public Msg addDetail(Detail detail,@RequestParam("pictures") MultipartFile[] files,@RequestParam("comicName")String comicName){
+    public Msg addDetail(Detail detail, @RequestParam("pictures") MultipartFile[] files, @RequestParam("comicName") String comicName) {
         Comic comic = comicService.getComicByName(comicName);
-        if (comic==null){
-            return Msg.fail().add("该漫画不存在，请检查漫画名后重试！",null);
-        }else {
-            if (files!=null && files.length>0){
+        if (comic == null) {
+            return Msg.fail().add("该漫画不存在，请检查漫画名后重试！", null);
+        } else {
+            if (files != null && files.length > 1) {
                 String comicPath = comic.getPath();
-                if (detail.getPath()!=null){
+                if (!detail.getPath().equals("")) {
                     for (int i = 0; i < files.length; i++) {
                         MultipartFile file = files[i];
                         String filename = file.getOriginalFilename();
                         String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
-                        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" +comicPath + "\\"+detail.getPath() + "\\"+i+suffix);
+                        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comicPath + "\\" + detail.getPath() + "\\" + (i+1) + suffix);
                         try {
                             if (dest.delete()) {
                                 System.out.println("原图片删除成功");
@@ -332,17 +333,85 @@ public class SystemController {
                             file.transferTo(dest);
                         } catch (IOException e) {
                             e.printStackTrace();
-                            return Msg.fail().add("漫画图片上传失败，请检查后重试",null);
+                            return Msg.fail().add("漫画图片上传失败，请检查后重试", null);
                         }
-                    }}else {
-                    return Msg.fail().add("请填写章节图片存放路径，检查后重试",null);
+                    }
+                    detail.setComicId(comic.getComicId());
+                    detail.setComic(comic);
+                    detailService.addDetail(detail);
+                    return Msg.success().add("添加章节成功！", null);
+                } else {
+                    return Msg.fail().add("请填写章节图片存放路径，检查后重试", null);
                 }
-                detail.setComicId(comic.getComicId());
-                detail.setComic(comic);
-        }else {
-                return Msg.fail().add("未检测到图片资源，请添加漫画图片后重试",null);
+            } else {
+                return Msg.fail().add("未检测到图片资源，请添加漫画图片后重试", null);
             }
-    } return Msg.success().add("添加章节成功！",null);
+        }
+    }
+
+    @RequestMapping("/delDetail")
+    @ResponseBody
+    public Msg delDetail(Integer id){
+        Detail detail = detailService.getDetailById(id);
+        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + detail.getComic().getPath() + "\\" + detail.getPath());
+        if (dest.exists()){
+            deleteFile(dest);
+        }
+
+        if (detailService.delDetail(id)) {
+            return Msg.success().add("删除订阅信息成功！",null);
+        }else {
+            return Msg.success().add("删除订阅信息失败！",null);
+        }
+    }
+
+    @RequestMapping("/getDetailInfo")
+    @ResponseBody
+    public Msg getDetailInfo(Integer id){
+        Detail detailById = detailService.getDetailById(id);
+        if (detailById!=null){
+            return Msg.success().add(null,detailById);
+        }else {
+            return Msg.fail().add("获取信息失败",null);
+        }
+    }
+
+    @RequestMapping("/editDetail")
+    @ResponseBody
+    public Msg editDetail(Detail detail, @RequestParam("pictures") MultipartFile[] files, @RequestParam("comicName") String comicName){
+        Comic comic = comicService.getComicByName(comicName);
+        if (comic == null) {
+            return Msg.fail().add("该漫画不存在，请检查漫画名后重试！", null);
+        } else {
+            if (files != null && files.length > 1) {
+                String comicPath = comic.getPath();
+                if (!detail.getPath().equals("")) {
+                    for (int i = 0; i < files.length; i++) {
+                        MultipartFile file = files[i];
+                        String filename = file.getOriginalFilename();
+                        String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
+                        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comicPath + "\\" + detail.getPath() + "\\" + (i+1) + suffix);
+                        try {
+                            if (dest.delete()) {
+                                System.out.println("原图片删除成功");
+                            }
+                            file.transferTo(dest);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return Msg.fail().add("漫画图片上传失败，请检查后重试", null);
+                        }
+                    }
+                    detail.setComicId(comic.getComicId());
+                    detail.setComic(comic);
+                    detailService.updateDetail(detail);
+                    return Msg.success().add("修改章节成功！", null);
+                } else {
+                    return Msg.fail().add("请填写章节图片存放路径，检查后重试", null);
+                }
+            } else {
+                return Msg.fail().add("未检测到图片资源，请添加漫画图片后重试", null);
+            }
+        }
     }
     /*
     章节详情管理

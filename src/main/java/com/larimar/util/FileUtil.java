@@ -20,26 +20,16 @@ public class FileUtil {
         }
     }
 
-    /**
-     * 递归删除目录下的所有文件及子目录下所有文件
-     * @param dir 将要删除的文件目录
-     * @return boolean Returns "true" if all deletions were successful.
-     *                 If a deletion fails, the method stops attempting to
-     *                 delete and returns "false".
-     */
-    public static boolean deleteDir(File dir) {
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
-            //递归删除目录中的子目录下
-            for (int i=0; i<children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
+    public static void deleteFile(File file){
+        if (file.isFile()){//判断是否为文件，是，则删除
+            file.delete();
+        }else{//不为文件，则为文件夹
+            String[] childFilePath = file.list();//获取文件夹下所有文件相对路径
+            for (String path:childFilePath){
+                File childFile= new File(file.getAbsoluteFile()+"/"+path);
+                deleteFile(childFile);//递归，对每个都进行判断
             }
+            file.delete();
         }
-        // 目录此时为空，可以删除
-        System.out.println("目录已经清空");
-        return dir.delete();
     }
 }

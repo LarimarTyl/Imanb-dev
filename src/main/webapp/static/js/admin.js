@@ -634,6 +634,7 @@ $(function () {
                 if (result.code==200){
                     $("#addDetailDialog").modal("hide");
                     detailTo_page(1);
+                    $("#new_detail_form .showImg").empty();
                 }else {
                     confirm(result.msg)
                 }
@@ -647,23 +648,17 @@ $(function () {
             url:rootPath+"getDetailInfo?id="+id,
             type:"GET",
             success:function (result) {
-                $("#edit_id").val(result.data.detailId);
-                $("#edit_showPhotos").attr("src","/images/details/"+result.data.path+"/cover.jpg");
-                $("#edit_coverPath").val(result.data.path);
-                $("#edit_detailName").val(result.data.detailName);
-                $("#edit_author").val(result.data.author);
-                $("#edit_location").val(result.data.location);
-                $("#introduction").val(result.data.introduction);
-                $("#edit_update").val(result.data.newUpdate);
-                $("#edit_ChapterName").val(result.data.newChapterName);
-                $("#edit_mark").val(result.data.mark);
-                $("#edit_detailStatus").val(result.data.status);
-                $("#edit_typeName").val(result.data.type);
-                $("#edit_typeCheck input:checkbox").each(function () {
-                    if (result.data.type.indexOf($(this).val())!=-1){
-                        $(this).prop("checked",true);
-                    }
-                });
+                console.log(result);
+                $("#edit_detailId").val(result.data.detailId);
+                $("#edit_detail_comicname").val(result.data.comic.comicName);
+                $("#edit_detail_chaptername").val(result.data.chapterName);
+                console.log(result.data.updateTime);
+                //需要分割 只能设置年月日 不能设置时分秒 2019-8-29 00:00:00 不可以 要切割为 2019-8-29
+                $("#edit_detail_updateTime").val(result.data.updateTime.substring(0,result.data.updateTime.indexOf(" ")));
+                $("#generalize").val(result.data.generalize);
+                var path = result.data.path;
+                var root = result.data.comic.path;
+                console.log(root+"/"+path)
             }
         });
         $("#detailEditDialog").modal({
@@ -671,7 +666,7 @@ $(function () {
         });
     });
     $("#btn-updateDetail").click(function () {
-        if (confirm("确定要修改"+$("#edit_detailName").val()+"的信息么？")){
+        if (confirm("确定要修改章节名为"+$("#edit_detail_chaptername").val()+"的信息么？")){
             var file = document.getElementById("edit_detail_form");
             var formData = new FormData(file);
             $.ajax({
