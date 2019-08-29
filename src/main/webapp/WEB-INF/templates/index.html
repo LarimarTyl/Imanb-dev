@@ -56,9 +56,7 @@
                     </div>
                     <div th:if="${session.user}!=null" th:object="${session.user}"  class="user">
                         <div class="left">
-<!--                            <a href="#" class="user-ican"><img th:attr="src='@{/static/images/'+*{photo}+'.jpg'" th:src="@{/static/images/user.jpg}" alt=""></a>-->
                             <a th:href="@{/user}" class="user-ican"><img th:src="|/images/user/*{photo}.jpg|" alt=""></a>
-<!--                            <a href="#" class="user-ican"><img th:src="@{/static/images/}*{photo}.jpg|" alt=""></a>-->
                             <p class="center username mytext-p" th:text="*{nickName}">读者老爷</p>
                         </div>
                         <a class="loginOut right" th:href="@{/loginOut}" >退出</a>
@@ -105,386 +103,70 @@
     <div class="elastic">
 
         <!-- HERE START PROJECTS BLOCK -->
+        <!-- popular人气漫画 -->
         <div id="projects">
-            <h1 class="title-line blue settings-text"><span class="current-bg pr5">超人气漫画</span>
-                <small class="current-bg right" style="float:right;margin-top:5px"><a class="arrow-left"
-                                                                                      data-arrows="left">&nbsp;</a><a
-                        class="arrow-right" data-arrows="right">&nbsp;</a></small>
+            <h1 class="title-line blue settings-text"><span class="current-bg pr5">优作推荐</span>
+                <small class="current-bg right" style="float:right;margin-top:5px"><a class="arrow-left">&nbsp</a>
+                    <a class="arrow-right" >&nbsp</a></small>
             </h1>
-
-            <div class="projects-band">
-                <ul class="scroll-band">
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_1.jpg}" alt="" width="200"
-                            height="225"/></a>
+            <div class="scroll-left">
+                <ul class="popular">
+                    <li th:each="comic:${application.likestComic}">
+                        <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
+                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt=""/></a>
                         <div class="info">
                             <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗破苍穹</h4>
+                                <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>
                             </a>
-                            <p class="author center mytext-p">【天蚕土豆】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_2.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                            </a>
-                            <p class="author center mytext-p">【唐家三少】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_3.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">魔道祖师</h4>
-                            </a>
-                            <p class="author center mytext-p">【墨香铜臭】</p>
-                            <p class="type center mytext-p">玄幻/修仙/高虐</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_4.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">海贼王</h4>
-                            </a>
-                            <p class="author center mytext-p">【尾田荣一郎】</p>
-                            <p class="type center mytext-p">冒险/热血/男生</p>
-                        </div>
-                    </li>
-
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_1.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">火影忍者</h4>
-                            </a>
-                            <p class="author center mytext-p">【岸本齐史】</p>
-                            <p class="type center mytext-p">忍者/冒险/日漫</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_2.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                            </a>
-                            <p class="author center mytext-p">【唐家三少】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_3.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">海贼王</h4>
-                            </a>
-                            <p class="author center mytext-p">【尾田荣一郎】</p>
-                            <p class="type center mytext-p">冒险/热血/男生</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_4.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">魔道祖师</h4>
-                            </a>
-                            <p class="author center mytext-p">【墨香铜臭】</p>
-                            <p class="type center mytext-p">玄幻/修仙/高虐</p>
-                        </div>
-                    </li>
-
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_1.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">火影忍者</h4>
-                            </a>
-                            <p class="author center mytext-p">【岸本齐史】</p>
-                            <p class="type center mytext-p">忍者/冒险/日漫</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_2.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                            </a>
-                            <p class="author center mytext-p">【唐家三少】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_3.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">魔道祖师</h4>
-                            </a>
-                            <p class="author center mytext-p">【墨香铜臭】</p>
-                            <p class="type center mytext-p">玄幻/修仙/高虐</p>
+                            <p class="author center mytext-p" th:text="${comic.author}">【天蚕土豆】</p>
+                            <p class="type center mytext-p" th:text="${comic.type}">玄幻/冒险/热血</p>
                         </div>
                     </li>
                 </ul>
             </div>
-            <!-- popular人气漫画 -->
 
+            <!-- new item新作推送 -->
             <h1 class="title-line blue settings-text"><span class="current-bg pr5">新作推送</span>
                 <a class="reset" href="#"><small class="current-bg right">换一批</small></a>
             </h1>
-
             <div class="projects-band-nohidden">
                 <ul class="newitem">
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_1.jpg}" alt="" width="200"
-                            height="225"/></a>
+                    <li th:each="comic:${application.newComic}">
+                        <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
+                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" />
+                        </a>
                         <div class="info">
                             <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗破苍穹</h4>
+                                <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>
                             </a>
-                            <p class="author center mytext-p">【天蚕土豆】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_2.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">海贼王</h4>
-                            </a>
-                            <p class="author center mytext-p">【尾田荣一郎】</p>
-                            <p class="type center mytext-p">冒险/热血/男生</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_3.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">海贼王</h4>
-                            </a>
-                            <p class="author center mytext-p">【尾田荣一郎】</p>
-                            <p class="type center mytext-p">冒险/热血/男生</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_4.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                            </a>
-                            <p class="author center mytext-p">【唐家三少】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_1.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">海贼王</h4>
-                            </a>
-                            <p class="author center mytext-p">【尾田荣一郎】</p>
-                            <p class="type center mytext-p">冒险/热血/男生</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_2.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">火影忍者</h4>
-                            </a>
-                            <p class="author center mytext-p">【岸本齐史】</p>
-                            <p class="type center mytext-p">忍者/冒险/日漫</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_3.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                            </a>
-                            <p class="author center mytext-p">【唐家三少】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_4.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">火影忍者</h4>
-                            </a>
-                            <p class="author center mytext-p">【岸本齐史】</p>
-                            <p class="type center mytext-p">忍者/冒险/日漫</p>
-                        </div>
-                    </li>
-
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_1.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                            </a>
-                            <p class="author center mytext-p">【唐家三少】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_2.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">海贼王</h4>
-                            </a>
-                            <p class="author center mytext-p">【尾田荣一郎】</p>
-                            <p class="type center mytext-p">冒险/热血/男生</p>
+                            <p class="author center mytext-p" th:text="${comic.author}">【天蚕土豆】</p>
+                            <p class="type center mytext-p" th:text="${comic.type}">玄幻/冒险/热血</p>
                         </div>
                     </li>
                 </ul>
             </div>
-            <!-- new item新作推送 -->
 
-            <h1 class="title-line blue settings-text"><span class="current-bg pr5">订阅漫画</span>
+            <!-- new item热门订阅漫画 -->
+            <h1 class="title-line blue settings-text"><span class="current-bg pr5">热门订阅</span>
                 <a class="reset" href="#"><small class="current-bg right">更多</small></a>
             </h1>
             <div class="projects-band-nohidden">
                 <ul class="newitem">
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_1.jpg}" alt="" width="200"
-                            height="225"/></a>
+                    <li th:each="comic:${application.comicByOrderNum}">
+                        <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
+                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" />
+                        </a>
                         <div class="info">
                             <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗破苍穹</h4>
+                                <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>
                             </a>
-                            <p class="author center mytext-p">【天蚕土豆】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_2.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                            </a>
-                            <p class="author center mytext-p">【唐家三少】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_3.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">火影忍者</h4>
-                            </a>
-                            <p class="author center mytext-p">【岸本齐史】</p>
-                            <p class="type center mytext-p">忍者/冒险/日漫</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_4.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">海贼王</h4>
-                            </a>
-                            <p class="author center mytext-p">【尾田荣一郎】</p>
-                            <p class="type center mytext-p">冒险/热血/男生</p>
-                        </div>
-                    </li>
-
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_1.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">魔道祖师</h4>
-                            </a>
-                            <p class="author center mytext-p">【墨香铜臭】</p>
-                            <p class="type center mytext-p">玄幻/修仙/高虐</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_2.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗破苍穹</h4>
-                            </a>
-                            <p class="author center mytext-p">【天蚕土豆】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_3.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                            </a>
-                            <p class="author center mytext-p">【唐家三少】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_4.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">海贼王</h4>
-                            </a>
-                            <p class="author center mytext-p">【尾田荣一郎】</p>
-                            <p class="type center mytext-p">冒险/热血/男生</p>
-                        </div>
-                    </li>
-
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_1.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">魔道祖师</h4>
-                            </a>
-                            <p class="author center mytext-p">【墨香铜臭】</p>
-                            <p class="type center mytext-p">玄幻/修仙/高虐</p>
-                        </div>
-                    </li>
-                    <li><a th:href="@{detail.html}" class="inline-border"><img
-                            th:src="@{/static/images/slider/project_2.jpg}" alt="" width="200"
-                            height="225"/></a>
-                        <div class="info">
-                            <a href="#" class="description center">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                            </a>
-                            <p class="author center mytext-p">【唐家三少】</p>
-                            <p class="type center mytext-p">玄幻/冒险/热血</p>
+                            <p class="author center mytext-p" th:text="${comic.author}">【天蚕土豆】</p>
+                            <p class="type center mytext-p" th:text="${comic.type}">玄幻/冒险/热血</p>
                         </div>
                     </li>
                 </ul>
             </div>
-            <!-- new item订阅漫画 -->
+
         </div> <!-- #projects end -->
 
         <!-- 排行榜 -->
@@ -494,36 +176,19 @@
                 <h1 class="title-line blue f14 settings-text">
                     <span class="current-bg pr5">国漫热门排行</span></h1>
                 <ul class="nav nav-stacked">
-                    <li class="rank-items"><a href="#">
-                        <img th:src="@{/static/images/slider/2.jpg}" alt="" class="rank-ican left">
+                    <li class="rank-items" th:each="comic:${application.chineseRank}">
+                        <a th:href="@{/detail(id=${comic.comicId})}">
+                        <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
                         <div class="rank-info left">
-                            <span class="rank-num left">1</span>
+                            <!--获取下标-->
+                            <span class="rank-num left" th:text="${comicStat.count}">1</span>
                             <div class="left">
-                                <h4 class="title mytext-title">斗破苍穹</h4>
-                                <p class="mytext-p">四个忍者神龟的故事,大龟二龟五是是</p>
+                                <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>
+                                <p class="mytext-p3" th:text="${comic.introduction}">简介</p>
                             </div>
                         </div>
-                    </a></li>
-                    <li class="rank-items"><a href="#">
-                        <img th:src="@{/static/images/slider/3.jpg}" alt="" class="rank-ican left">
-                        <div class="rank-info left">
-                            <span class="rank-num left">2</span>
-                            <div class="left">
-                                <h4 class="title mytext-title">斗罗大陆</h4>
-                                <p class="mytext-p">超强的赛亚人站士，龙神的传说，寻找失落的遗迹</p>
-                            </div>
-                        </div>
-                    </a></li>
-                    <li class="rank-items"><a href="#">
-                        <img th:src="@{/static/images/slider/4.jpg}" alt="" class="rank-ican left">
-                        <div class="rank-info left">
-                            <span class="rank-num left">2</span>
-                            <div class="left">
-                                <h4 class="title mytext-title">魔道祖师</h4>
-                                <p class="mytext-p">我欲求魔，仙死神殇，我即是天，我即是道</p>
-                            </div>
-                        </div>
-                    </a></li>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="rank2">
@@ -531,72 +196,37 @@
                     <span class="current-bg pr5">日漫热门排行</span>
                 </h1>
                 <ul class="nav nav-stacked">
-                    <li class="rank-items"><a href="#">
-                        <img th:src="@{/static/images/slider/7.jpg}" alt="" class="rank-ican left">
-                        <div class="rank-info left">
-                            <span class="rank-num left">1</span>
-                            <div class="left">
-                                <h4 class="title mytext-title">海贼王</h4>
-                                <p class="mytext-p">寻找海贼王的宝藏，索隆牛逼！！！！</p>
+                    <li class="rank-items" th:each="comic:${application.japaneseRank}">
+                        <a th:href="@{/comic(id=${comic.comicId})}">
+                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
+                            <div class="rank-info left">
+
+                                <span class="rank-num left" th:text="${comicStat.count}">1</span>
+                                <div class="left">
+                                    <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>
+                                    <p class="mytext-p3" th:text="${comic.introduction}">简介</p>
+                                </div>
                             </div>
-                        </div>
-                    </a></li>
-                    <li class="rank-items"><a href="#">
-                        <img th:src="@{/static/images/slider/5.jpg}" alt="" class="rank-ican left">
-                        <div class="rank-info left">
-                            <span class="rank-num left">2</span>
-                            <div class="left">
-                                <h4 class="title mytext-title">火隐忍者</h4>
-                                <p class="mytext-p">我已成影，待你称王，鸣人牛逼！！！！</p>
-                            </div>
-                        </div>
-                    </a></li>
-                    <li class="rank-items"><a href="#">
-                        <img th:src="@{/static/images/slider/6.jpg}" alt="" class="rank-ican left">
-                        <div class="rank-info left">
-                            <span class="rank-num left">2</span>
-                            <div class="left">
-                                <h4 class="title mytext-title">进击的巨人</h4>
-                                <p class="mytext-p">三笠·阿克曼，性感小妹，在线装逼</p>
-                            </div>
-                        </div>
-                    </a></li>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="rank3">
                 <h1 class="title-line blue f14 settings-text">
                     <span class="current-bg pr5">热门综合排行</span></h1>
                 <ul class="nav nav-stacked">
-                    <li class="rank-items"><a href="#">
-                        <img th:src="@{/static/images/slider/2.jpg}" alt="" class="rank-ican left">
-                        <div class="rank-info left">
-                            <span class="rank-num left">1</span>
-                            <div class="left">
-                                <h4 class="title mytext-title">斗破苍穹</h4>
-                                <p class="mytext-p">四个忍者神龟的故事,大龟二龟五是是</p>
+                    <li class="rank-items" th:each="comic:${application.allRank}">
+                        <a th:href="@{/detail(id=${comic.comicId})}">
+                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
+                            <div class="rank-info left">
+                                <span class="rank-num left" th:text="${comicStat.count}">1</span>
+                                <div class="left">
+                                    <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>
+                                    <p class="mytext-p3" th:text="${comic.introduction}">简介</p>
+                                </div>
                             </div>
-                        </div>
-                    </a></li>
-                    <li class="rank-items"><a href="#">
-                        <img th:src="@{/static/images/slider/3.jpg}" alt="" class="rank-ican left">
-                        <div class="rank-info left">
-                            <span class="rank-num left">2</span>
-                            <div class="left">
-                                <h4 class="title mytext-title">火隐忍者</h4>
-                                <p class="mytext-p">我已成影，待你称王，鸣人牛逼！！！！</p>
-                            </div>
-                        </div>
-                    </a></li>
-                    <li class="rank-items"><a href="#">
-                        <img th:src="@{/static/images/slider/4.jpg}" alt="" class="rank-ican left">
-                        <div class="rank-info left">
-                            <span class="rank-num left">2</span>
-                            <div class="left">
-                                <h4 class="title mytext-title">魔道祖师</h4>
-                                <p class="mytext-p">我欲求魔，仙死神殇，我即是天，我即是道</p>
-                            </div>
-                        </div>
-                    </a></li>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -629,54 +259,23 @@
                             class="over5">联系我们</span></a>
                 </div>
             </div> <!-- end of our team -->
-
             <!-- 日志类信息 -->
             <!-- HERE START RECENT BLOG -->
             <div class="threecol">
                 <h1 class="title-line blue"><span class="current-bg pr5 settings-text">更新日志</span></h1>
-                <div class="blog-entry">
+                <div class="blog-entry" th:each="detail:${application.details}">
                     <div class="circle-area circle-inline-border settings-clr no-second">
                         <div class="date-blog">
-                            <p class="day">11</p>
-                            <p class="month">FEB</p>
-                            <p class="year">2012</p>
+                            <p class="day" th:text="${#strings.substring(detail.updateTime,9,10)}">
+                                12
+                            </p>
+                            <p class="month" th:text="${#strings.substring(detail.updateTime,5,7)}">FEB</p>
+                            <p class="year" th:text="${#strings.substring(detail.updateTime,0,4)}">2012</p>
                         </div>
                     </div>
                     <div class="blog-excerpt">
-                        <h2><a href="#">海贼王第972话：索隆的暴走！！！</a></h2>
-                        <p class="mytext-p2">索隆霸气鬼刀全开，对战大蛇将军，路飞正在赶来路上，他们能否战胜敌人帮助小桃拿回属于他的和之国呢 </p>
-                        <p class="blog-excerpt-bottom"><a href="#" class="comments">113</a><a href="#"
-                                                                                              class="likes">206</a></p>
-                    </div>
-                </div>
-                <span class="dotted-line">&nbsp;</span>
-                <div class="blog-entry">
-                    <div class="circle-area circle-inline-border settings-clr no-second">
-                        <div class="date-blog">
-                            <p class="day">11</p>
-                            <p class="month">FEB</p>
-                            <p class="year">2012</p>
-                        </div>
-                    </div>
-                    <div class="blog-excerpt">
-                        <h2><a href="#">火影忍者第872话：鸣人VS佐助！！！</a></h2>
-                        <p class="mytext-p2">友谊？羁绊?仇恨? 昔日最好的朋友展开了决斗，鸣人能否唤回佐助把他带回木叶村，还是历史重演，仇恨的战斗又开始了 </p>
-                        <p class="blog-excerpt-bottom"><a href="#" class="comments">113</a><a href="#"
-                                                                                              class="likes">206</a></p>
-                    </div>
-                </div>
-                <span class="dotted-line">&nbsp;</span>
-                <div class="blog-entry">
-                    <div class="circle-area circle-inline-border settings-clr no-second">
-                        <div class="date-blog">
-                            <p class="day">11</p>
-                            <p class="month">FEB</p>
-                            <p class="year">2012</p>
-                        </div>
-                    </div>
-                    <div class="blog-excerpt">
-                        <h2><a href="#">斗破苍穹第680话：萧炎XO美杜莎</a></h2>
-                        <p class="mytext-p2">大军来袭，陨落心炎彻底爆发，萧炎掉入焚气塔底层，当面列异火的攻击时，美杜莎女王突然苏醒了，在和异火斗争后他们居然。。。。</p>
+                        <h2><a th:href="@{/detail(id=${detail.detailId})}" th:text="${detail.chapterName}">海贼王第972话：索隆的暴走！！！</a></h2>
+                        <p class="mytext-p2" th:text="${detail.generalize}">索隆霸气鬼刀全开，对战大蛇将军，路飞正在赶来路上，他们能否战胜敌人帮助小桃拿回属于他的和之国呢 </p>
                         <p class="blog-excerpt-bottom"><a href="#" class="comments">113</a><a href="#"
                                                                                               class="likes">206</a></p>
                     </div>

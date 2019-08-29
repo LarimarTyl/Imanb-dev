@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/static/css/admin.css}">
     <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/static/js/admin.js}"></script>
+<!--    <script type="text/javascript" th:src="@{/static/js/admin.js}"></script>-->
 </head>
 <body>
     <div id="head" class="head">
@@ -247,25 +247,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="user:${session.users}">
-                            <td th:text="${user.userId}">1</td>
-                            <th><img th:src="|/images/user/${user.photo}.jpg|" alt=""  class="userPhoto"></th>
-                            <th th:text="${user.userName}">用户名</th>
-                            <th th:text="${user.password}">密码</th>
-                            <th th:text="${user.gender}">性别</th>
-                            <th th:text="${user.email}">邮箱</th>
-                            <th th:text="${user.qq}">QQ</th>
-                            <th th:text="${user.nickName}">昵称</th>
-                            <td th:switch="${user.status}">
-                                <p th:case="0">未激活</p>
-                                <p th:case="1">已激活</p>
-                                <p th:case="-1">封禁</p>
-                            </td>
-                            <td>
-                                <a href="#" class="btn btn-primary btn-xs" th:attr="editId=${user.userId}" id="btn-editUser" data-toggle="modal" data-target="#userEditDialog">修改</a>
-                                <a href="#" class="btn btn-danger btn-xs" th:attr="delId=${user.userId}" id="btn-delUser">删除</a>
-                           </td>
-                        </tr>
+<!--                        <tr th:each="user:${session.users}">-->
+<!--                            <td th:text="${user.userId}">1</td>-->
+<!--                            <th><img th:src="|/images/user/${user.photo}.jpg|" alt=""  class="userPhoto"></th>-->
+<!--                            <th th:text="${user.userName}">用户名</th>-->
+<!--                            <th th:text="${user.password}">密码</th>-->
+<!--                            <th th:text="${user.gender}">性别</th>-->
+<!--                            <th th:text="${user.email}">邮箱</th>-->
+<!--                            <th th:text="${user.qq}">QQ</th>-->
+<!--                            <th th:text="${user.nickName}">昵称</th>-->
+<!--                            <td th:switch="${user.status}">-->
+<!--                                <p th:case="0">未激活</p>-->
+<!--                                <p th:case="1">已激活</p>-->
+<!--                                <p th:case="-1">封禁</p>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <a href="#" class="btn btn-primary btn-xs" th:attr="editId=${user.userId}" id="btn-editUser" data-toggle="modal" data-target="#userEditDialog">修改</a>-->
+<!--                                <a href="#" class="btn btn-danger btn-xs" th:attr="delId=${user.userId}" id="btn-delUser">删除</a>-->
+<!--                           </td>-->
+<!--                        </tr>-->
                     </tbody>
                 </table>
                 <div id="userPageControl" class="col-md-12 pagination-center center">
@@ -452,22 +452,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="order:${session.orders}">
-                                <td th:text="${order.ordersId}">1</td>
-                                <th th:text="${order.comic.comicName}">漫画名</th>
-                                <th><img th:src="|/images/comics/${order.comic.path}/cover.jpg|" alt="" class="comicPhoto"></th>
-                                <th th:text="${order.user.userName}">用户名</th>
-                                <th><img th:src="|/images/user/${order.user.photo}.jpg|" alt=""  class="userPhoto"></th>
-                                <th th:switch="${order.status}">
-                                    <p th:case="0">未更新</p>
-                                    <p th:case="1">已更新</p>
-                                    <p th:case="-1">已读更新</p>
-                                </th>
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ordersEditDialog" id="btn-editOrder" th:attr="editId=${order.ordersId}">修改</a>
-                                    <a href="#" class="btn btn-danger btn-xs" id="btn-delOrder" th:attr="delId=${order.ordersId}">删除</a>
-                               </td>
-                            </tr>
+<!--                            <tr th:each="order:${session.orders}">-->
+<!--                                <td th:text="${order.ordersId}">1</td>-->
+<!--                                <th th:text="${order.comic.comicName}">漫画名</th>-->
+<!--                                <th><img th:src="|/images/comics/${order.comic.path}/cover.jpg|" alt="" class="comicPhoto"></th>-->
+<!--                                <th th:text="${order.user.userName}">用户名</th>-->
+<!--                                <th><img th:src="|/images/user/${order.user.photo}.jpg|" alt=""  class="userPhoto"></th>-->
+<!--                                <th th:switch="${order.status}">-->
+<!--                                    <p th:case="0">未更新</p>-->
+<!--                                    <p th:case="1">已更新</p>-->
+<!--                                    <p th:case="-1">已读更新</p>-->
+<!--                                </th>-->
+<!--                                <td>-->
+<!--                                    <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ordersEditDialog" id="btn-editOrder" th:attr="editId=${order.ordersId}">修改</a>-->
+<!--                                    <a href="#" class="btn btn-danger btn-xs" id="btn-delOrder" th:attr="delId=${order.ordersId}">删除</a>-->
+<!--                               </td>-->
+<!--                            </tr>-->
                         </tbody>
                 </table>
                 <div id="orderPageControl" class="col-md-12 pagination-center center">
@@ -670,6 +670,7 @@
                                 <th>漫画名</th>
                                 <th>作者</th>
                                 <th>漫画类型</th>
+                                <th>存放路径</th>
                                 <th>地区</th>
                                 <th>最近更新时间</th>
                                 <th>最新章节</th>
@@ -680,30 +681,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="comic:${session.comics}">
-                                <td th:text="${comic.comicId}">1</td>
-                                <th> <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="comicPhoto"></th>
-                                <th th:text="${comic.comicName}">漫画名</th>
-                                <th th:text="${comic.author}">作者</th>
-                                <th th:text="${comic.type}">漫画类型</th>
-                                <th th:text="${comic.location}">地区</th>
-                                <th th:text="${comic.newUpdate}">最近更新时间</th>
-                                <th th:text="${comic.newChapterName}">最新章节</th>
-<!--                                <td th:text="${comic.introduction}">简介</td>-->
-                                <td><textarea name="introduction" style="border: none" id="text" class="form-control"
-                                              readonly rows="3" th:text="${comic.introduction}">
-                                </textarea></td>
-                                <td th:switch="${comic.status}">
-                                    <p th:case="1">连载中</p>
-                                    <p th:case="0">完结</p>
-                                    <p th:case="-1">停更</p>
-                                </td>
-                                <td th:text="${comic.mark}">评分</td>
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-xs"  id="btn-editComic" th:attr="editId=${comic.comicId}">修改</a>
-                                    <a href="#" class="btn btn-danger btn-xs"  id="btn-delComic" th:attr="delId=${comic.comicId}">删除</a>
-                               </td>
-                            </tr>
+<!--                            <tr th:each="comic:${session}">-->
+<!--                                <td th:text="${comic.comicId}">1</td>-->
+<!--                                <th> <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="comicPhoto"></th>-->
+<!--                                <th th:text="${comic.comicName}">漫画名</th>-->
+<!--                                <th th:text="${comic.author}">作者</th>-->
+<!--                                <th th:text="${comic.type}">漫画类型</th>-->
+<!--                                <th th:text="${comic.path}">存放路径</th>-->
+<!--                                <th th:text="${comic.location}">地区</th>-->
+<!--                                <th th:text="${comic.newUpdate}">最近更新时间</th>-->
+<!--                                <th th:text="${comic.newChapterName}">最新章节</th>-->
+<!--&lt;!&ndash;                                <td th:text="${comic.introduction}">简介</td>&ndash;&gt;-->
+<!--                                <td><textarea name="introduction" style="border: none" id="text" class="form-control"-->
+<!--                                              readonly rows="3" th:text="${comic.introduction}">-->
+<!--                                </textarea></td>-->
+<!--                                <td th:switch="${comic.status}">-->
+<!--                                    <p th:case="1">连载中</p>-->
+<!--                                    <p th:case="0">完结</p>-->
+<!--                                    <p th:case="-1">停更</p>-->
+<!--                                </td>-->
+<!--                                <td th:text="${comic.mark}">评分</td>-->
+<!--                                <td>-->
+<!--                                    <a href="#" class="btn btn-primary btn-xs"  id="btn-editComic" th:attr="editId=${comic.comicId}">修改</a>-->
+<!--                                    <a href="#" class="btn btn-danger btn-xs"  id="btn-delComic" th:attr="delId=${comic.comicId}">删除</a>-->
+<!--                               </td>-->
+<!--                            </tr>-->
                         </tbody>
                 </table>
                 <div id="comicPageControl" class="col-md-12 pagination-center center">
@@ -928,24 +930,24 @@
                      </tr>
                      </thead>
                      <tbody>
-                     <tr th:each="detail:${session.details}">
-                         <td th:text="${detail.detailId}">1</td>
-                         <th><img th:src="|/images/comics/${detail.comic.path}/cover.jpg|" alt="" class="comicPhoto"></th>
-                         <th th:text="${detail.comic.comicName}">漫画名</th>
-                         <th th:text="${detail.chapterName}">章节名</th>
-                         <th th:text="${detail.path}">章节路径</th>
-                         <th>
-                             <textarea name="introduction" style="border: none" class="form-control"
-                                       readonly rows="3" th:text="${detail.generalize}">
-                             </textarea>
-                         </th>
-                         <th th:text="${detail.updateTime}">更新时间</th>
-                         <th>章节预览</th>
-                         <td>
-                             <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#detailEditDialog" id="btn-editDetail" th:attr="editId=${detail.detailId}">修改</a>
-                             <a href="#" class="btn btn-danger btn-xs" id="btn-delDetail" th:attr="editId=${detail.detailId}">删除</a>
-                         </td>
-                     </tr>
+<!--                     <tr th:each="detail:${session.details}">-->
+<!--                         <td th:text="${detail.detailId}">1</td>-->
+<!--                         <th><img th:src="|/images/comics/${detail.comic.path}/cover.jpg|" alt="" class="comicPhoto"></th>-->
+<!--                         <th th:text="${detail.comic.comicName}">漫画名</th>-->
+<!--                         <th th:text="${detail.chapterName}">章节名</th>-->
+<!--                         <th th:text="${detail.path}">章节路径</th>-->
+<!--                         <th>-->
+<!--                             <textarea name="introduction" style="border: none" class="form-control"-->
+<!--                                       readonly rows="3" th:text="${detail.generalize}">-->
+<!--                             </textarea>-->
+<!--                         </th>-->
+<!--                         <th th:text="${detail.updateTime}">更新时间</th>-->
+<!--                         <th>章节预览</th>-->
+<!--                         <td>-->
+<!--                             <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#detailEditDialog" id="btn-editDetail" th:attr="editId=${detail.detailId}">修改</a>-->
+<!--                             <a href="#" class="btn btn-danger btn-xs" id="btn-delDetail" th:attr="editId=${detail.detailId}">删除</a>-->
+<!--                         </td>-->
+<!--                     </tr>-->
                      </tbody>
                  </table>
                 <div id="detailPageControl" class="col-md-12 pagination-center center">
@@ -978,7 +980,7 @@
                                          </div>
                                          <label for="edit_detail_chaptername" class="col-sm-2 control-label">章节名</label>
                                          <div class="col-sm-4">
-                                             <input type="text" class="form-control" id="edit_detail_chaptername" value="章节名" name="chaptername">
+                                             <input type="text" class="form-control" id="edit_detail_chaptername" value="章节名" name="chapterName">
                                          </div>
                                      </div>
                                      <div class="form-group">
@@ -990,7 +992,7 @@
                                      <div class="form-group">
                                          <label for="generalize" class="col-sm-2 control-label">章节概况</label>
                                          <div class="col-sm-10">
-                                             <textarea name="introduction" id="generalize" class="form-control" cols="55" value="章节概况" rows="10"></textarea>
+                                             <textarea name="generalize" id="generalize" class="form-control" cols="55" value="章节概况" rows="10"></textarea>
                                          </div>
                                      </div>
                                      <div class="inputSpace">
