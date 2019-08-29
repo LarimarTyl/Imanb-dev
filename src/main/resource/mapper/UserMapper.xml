@@ -20,16 +20,16 @@
     <delete id="delUserByName" parameterType="String">
         delete from user where username = #{username}
     </delete>
-    <select id="findUserById" parameterType="Integer" resultType="user">
+    <select id="findUserById" parameterType="Integer" resultType="com.larimar.entity.User">
         select user_id, username, password, gender, email, QQ, nickname, photo ,status from user where user_id=#{userId}
     </select>
     <select id="findUserByUserNameAndPsw" resultType="User">
         select user_id, username, password, gender, email, QQ, nickname, photo ,status from user where username = #{userName} and password = #{password}
     </select>
     <select id="findUserByName" resultType="User">
-        select user_id, username, password, gender, email, QQ, nickname, photo ,status from user where username = #{username}
+        select user_id, username, password, gender, email, QQ, nickname, photo ,status from user where username = #{userName}
     </select>
-    <select id="findUserStatus" resultType="Integer">
+    <select id="findUserStatus" resultType="java.lang.Integer">
         select status from user where username=#{userName}
     </select>
     <insert id="saveUser" parameterType="user">

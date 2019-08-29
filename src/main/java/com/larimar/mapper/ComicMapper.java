@@ -120,4 +120,10 @@ public interface ComicMapper {
      * @return 漫画集合
      */
     public List<Comic> selectAllComics();
+
+    public List<Comic> selectChineseComicRank();
+
+    public List<Comic> selectJapaneseRank();
+
+    public List<Comic> selectAllRank();
 }

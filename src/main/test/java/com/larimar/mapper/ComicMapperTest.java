@@ -33,6 +33,20 @@ public class ComicMapperTest {
             SqlSession sqlSession = factory.openSession();
             mapper = sqlSession.getMapper(ComicMapper.class);
         }
+        @Test
+        public void test(){
+            System.out.println(mapper.selectComicsByLikes());
+            System.out.println("=============");
+            System.out.println(mapper.selectNewComics());
+            System.out.println("=============");
+            System.out.println(mapper.selectComicByOrder());
+            System.out.println("=============");
+            System.out.println(mapper.selectChineseComicRank());
+            System.out.println("=============");
+            System.out.println(mapper.selectJapaneseRank());
+            System.out.println("=============");
+            System.out.println(mapper.selectAllRank());
+        }
     @Test
     public void addComic() {
         Comic comic = new Comic(5,"jstm","绝世唐门","唐家三少",0,"玄幻=热血=冒险","国漫","2019-08-21 14:44:36","第一话:百万年魂环","百万年魂环，伊莱克斯？？？",4.5);

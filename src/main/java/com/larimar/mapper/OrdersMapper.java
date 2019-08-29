@@ -62,4 +62,6 @@ public interface OrdersMapper {
     public List<Orders> selectAllOrdersByStatus(@Param("userId") Integer userId,@Param("status") Integer status);
 
     public Orders getOrdersById(Integer ordersId);
+
+    public Orders selectOrdersByUserAndComic(@Param("userId")Integer userId,@Param("comicId") Integer comicId);
 }

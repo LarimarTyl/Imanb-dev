@@ -23,11 +23,7 @@
                 #{location},#{newChapterName}, #{introduction}, #{mark}
                     <if test="newUpdate!=null">
                         ,#{newUpdate}
-                    </if>
-                    <if test="newUpdate=null">
-                        ,null
-                    </if>
-                )
+                    </if>)
     </insert>
 
     <delete id="delComic" parameterType="Integer">
@@ -59,9 +55,6 @@
             </if>
             <if test="newUpdate!=null">
                 newupdate=#{newUpdate},
-            </if>
-            <if test="newUpdate=null">
-                newupdate=null,
             </if>
             <if test="newChapterName!=null">
                 newchaptername=#{newChapterName},
@@ -141,7 +134,7 @@
   </select>
 
   <select id="selectComicByOrder" resultMap="BaseResultMap">
-    select * from comic as c,(select comic_id, COUNT(comic_id) as orderNum from orders group by comic_id  limit 10) as a
+    select * from comic as c,(select comic_id, COUNT(comic_id) as orderNum from orders group by comic_id  limit 30) as a
     where c.comic_id = a.comic_id
     ORDER BY orderNum DESC
   </select>
@@ -151,7 +144,7 @@
   </select>
 
   <select id="selectNewComics" resultMap="BaseResultMap">
-    select * from comic order by comic_id desc limit 10
+    select * from comic order by comic_id desc
   </select>
 
   <select id="selectOrderComic" resultMap="BaseResultMap">
@@ -164,10 +157,40 @@
     select * from
         comic as c,
         (SELECT comic_id ,number as likesNum from likes
-        where likes.comic_id is not null LIMIT 10)
+        where likes.comic_id is not null LIMIT 15)
         as a
     where c.comic_id = a.comic_id
     ORDER BY likesNum DESC
+    </select>
+
+    <select id="selectChineseComicRank" resultMap="BaseResultMap">
+        select * from
+                     comic as c,
+                     (SELECT likes.comic_id ,likes.number as likesNum from likes
+                      where likes.comic_id is not null)
+                         as a
+        where c.comic_id = a.comic_id and c.location="国漫"
+        ORDER BY a.likesNum DESC
+    </select>
+
+    <select id="selectJapaneseRank" resultMap="BaseResultMap">
+        select * from
+                     comic as c,
+                     (SELECT comic_id ,number as likesNum from likes
+                      where likes.comic_id is not null)
+                         as a
+        where c.comic_id = a.comic_id and c.location="日漫"
+        ORDER BY likesNum DESC
+    </select>
+
+    <select id="selectAllRank" resultMap="BaseResultMap">
+        select * from
+                     comic as c,
+                     (SELECT comic_id ,number as likesNum from likes
+                      where likes.comic_id is not null)
+                         as a
+        where c.comic_id = a.comic_id
+        ORDER BY likesNum DESC
     </select>
 
 </mapper>

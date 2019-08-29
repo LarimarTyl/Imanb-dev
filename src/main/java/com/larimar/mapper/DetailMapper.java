@@ -48,4 +48,5 @@ public interface DetailMapper {
     public List<Detail> selectDetailsByType(String type);
 
     public Detail getDetailById(Integer detailId);
+
 }

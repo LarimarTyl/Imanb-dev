@@ -100,4 +100,14 @@
           and orders.user_id = #{userId}
           and orders.status = #{status};
     </select>
+    <select id="selectOrdersByUserAndComic" resultMap="BaseResultMap">
+        select *
+        from orders,
+             user,
+             comic
+        where comic.comic_id = orders.comic_id
+          and orders.user_id = `user`.user_id
+          and orders.user_id = #{userId}
+          and orders.comic_id = #{comicId}
+    </select>
 </mapper>
