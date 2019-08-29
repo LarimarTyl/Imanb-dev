@@ -201,13 +201,29 @@ div.info{
     background: url(../images/pattern-bg.png);
     padding: 5px 0;
 }
+
+div.scroll-left{margin:25px 0 25px;width:100%;overflow:hidden}
+div.scroll-left ul {list-style:none;overflow:hidden;padding-top:15px;width:10000000px}
+div.scroll-left ul li {float:left;margin-right:36px;height:360px}
+div.scroll-left ul li a {display:block;width:220px;height:270px;position:relative}
+div.scroll-left ul li a img {width:220px;height:270px}
+div.scroll-left ul li:last-child a {margin-right:0}
+
+div.projects-band-nohidden {margin:25px 0 25px;width:100%}
+div.projects-band-nohidden ul {list-style:none;overflow:hidden;padding-top:15px;width:1280px;height: 790px;}
+div.projects-band-nohidden ul li {float:left;margin-bottom: 35px;margin-right:36px;height:360px}
+div.projects-band-nohidden ul li a {display:block;width:220px;height:270px;position:relative}
+div.projects-band-nohidden ul li a img {width:220px;height:270px}
+div.projects-band-nohidden ul li:last-child a {margin-right:0}
+
+
 /* 图片和简介区分 */
-div.projects-band-nohidden .description,div.projects-band .description{
+div.projects-band-nohidden .description,div.scroll-left .description{
     display: block;
-    height:40px;
+    height:30px;
 }
 /* 标题居中 */
-div.projects-band-nohidden .description .title,div.projects-band .description .title{
+div.projects-band-nohidden .description .title,div.scroll-left .description .title{
     font-weight: bolder;
     padding:5px 0px; 
     text-align: center;
@@ -279,8 +295,11 @@ div#rank .rank-items div .title{
 /* 文本介绍处理 */
 div#rank .rank-items div p{
     width: 227px;
-    white-space:nowrap;
-    text-overflow:ellipsis;
+    height: 45px;
+    margin-top: 5px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
 }
 .mytext-title{
@@ -297,7 +316,10 @@ div#rank .rank-items div p{
     font:16px HelveticaLTStdBold, sans-serif;
 }
 /* 排行榜内容 */
-
+/*日志日期处理*/
+div.date-blog {
+    margin-top: 5px;
+}
 /* 👆上面是主页样式 */
 /* *************************************************************** */
 /* 华丽的分割线 */

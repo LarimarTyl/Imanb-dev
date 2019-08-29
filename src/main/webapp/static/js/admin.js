@@ -213,6 +213,7 @@ $(function () {
             var comicName = $("<th></th>").append(item.comicName);
             var author = $("<th></th>").append(item.author);
             var type = $("<th></th>").append(item.type);
+            var path = $("<th></th>").append(item.path);
             var location = $("<th></th>").append(item.location);
             var newUpdate = $("<th></th>").append(item.newUpdate);
             var newChapterName = $("<th></th>").append(item.newChapterName);
@@ -225,11 +226,11 @@ $(function () {
                 case (-1):comicstatu="停更";
             }
             var status = $("<th></th>").append(comicstatu);
-            var mark = $("<th></th>").append(mark);
+            var mark = $("<th></th>").append(item.mark);
             var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editComic'>修改</a>").attr("edit-id",item.comicId);
             var del = $("<a  class='btn btn-danger btn-xs' id='btn-delComic'>删除</a>").attr("del-id",item.comicId);
             var handle = $("<td></td>").append(edit).append(" ").append(del);
-            $("<tr></tr>").append(id).append(comicImg).append(comicName).append(author).append(type)
+            $("<tr></tr>").append(id).append(comicImg).append(comicName).append(author).append(type).append(path)
                 .append(location).append(newUpdate).append(newChapterName).append(textarea).append(status)
                 .append(mark).append(handle).appendTo(".comic-table tbody");
             });
@@ -484,6 +485,7 @@ $(function () {
     //修改漫画请求 1.获取指定漫画信息 2.修改指定漫画id
     $("tbody").on("click","#btn-editComic",function () {
         var id = $(this).attr("edit-id");
+        $("#comicEditDialog form")[0].reset();
         $.ajax({
             url:rootPath+"getComicInfo?id="+id,
             type:"GET",
@@ -495,7 +497,10 @@ $(function () {
                 $("#edit_author").val(result.data.author);
                 $("#edit_location").val(result.data.location);
                 $("#introduction").val(result.data.introduction);
-                $("#edit_update").val(result.data.newUpdate);
+                //需要分割 只能设置年月日 不能设置时分秒 2019-8-29 00:00:00 不可以 要切割为 2019-8-29
+                if (result.data.newUpdate != null){
+                    $("#edit_update").val((result.data.newUpdate).substring(0,result.data.newUpdate.lastIndexOf(" ")));
+                }
                 $("#edit_ChapterName").val(result.data.newChapterName);
                 $("#edit_mark").val(result.data.mark);
                 $("#edit_comicStatus").val(result.data.status);
@@ -642,24 +647,25 @@ $(function () {
     //修改章节请求 1.获取指定章节信息 2.修改指定章节id
     $("tbody").on("click","#btn-editDetail",function () {
         var id = $(this).attr("edit-id");
+        $("#detailEditDialog form")[0].reset();
         $("#detailEditDialog .showImg").empty();
         $.ajax({
             url:rootPath+"getDetailInfo?id="+id,
             type:"GET",
             success:function (result) {
-                $("#edit_detailId").val(result.data.detailId);
-                $("#edit_detail_comicname").val(result.data.comic.comicName);
-                $("#edit_detail_chaptername").val(result.data.chapterName);
-                //需要分割 只能设置年月日 不能设置时分秒 2019-8-29 00:00:00 不可以 要切割为 2019-8-29
-                $("#edit_detail_updateTime").val(result.data.updateTime.substring(0,result.data.updateTime.indexOf(" ")));
-                $("#generalize").val(result.data.generalize);
-                $("#new_photo_path").val( result.data.path);
-
-                var root = result.data.comic.path;
-                $.each(result.data.images,function (index,item) {
-                    var src="\\images\\comics\\"+root+"\\"+path+"\\"+item;
-                    $("<img class='img'>").attr("src",src).appendTo($("#edit_detail_form .showImg"));
-                });
+                    $("#edit_detailId").val(result.data.detailId);
+                    $("#edit_detail_comicname").val(result.data.comic.comicName);
+                    $("#edit_detail_chaptername").val(result.data.chapterName);
+                    //需要分割 只能设置年月日 不能设置时分秒 2019-8-29 00:00:00 不可以 要切割为 2019-8-29
+                    $("#edit_detail_updateTime").val(result.data.updateTime.substring(0,result.data.updateTime.indexOf(" ")));
+                    $("#generalize").val(result.data.generalize);
+                    $("#new_photo_path").val( result.data.path);
+                    var path =result.data.path;
+                    var root = result.data.comic.path;
+                    $.each(result.data.images,function (index,item) {
+                        var src="\\images\\comics\\"+root+"\\"+path+"\\"+item;
+                        $("<img class='img'>").attr("src",src).appendTo($("#edit_detail_form .showImg"));
+                    });
             }
         });
         $("#detailEditDialog").modal({
