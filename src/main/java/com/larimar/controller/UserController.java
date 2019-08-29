@@ -24,10 +24,12 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private UserService userService;
-
+    @RequestMapping("/user")
+    public String userInfo(){
+        return "user";
+    }
     @RequestMapping("/doLogin")
     public String doLogin(String userName, String password, String validateCode, HttpServletRequest request){
-        System.out.println("传过来的参数是："+userName+"**"+password+"**"+validateCode);
         String code = (String) request.getSession().getAttribute("validateCode");
         
         // 1. 判断验证码
@@ -36,22 +38,21 @@ public class UserController {
             return "errors";
         //验证码成功  登陆验证
         }else {
-                // 2. 判断用户是否激活
+            User user = userService.doLogin(userName, password);
+            // 2. 登录判断 成功后判断是否激活
+            if (user!=null){
+                // 3. 判断用户是否激活
                 if (userService.isActive(userName)){
-                    User user = userService.doLogin(userName, password);
-                    // 3. 登录判断
-                    if (user!=null){
-                        request.getSession().setAttribute("user",user);
-                        System.out.println("登录成功");
-                        return "index";
-                    }else {
-                        request.getSession().setAttribute("msg","用户名或密码错误");
-                        return "errors";
-                    }
+                    request.getSession().setAttribute("user",user);
+                    return "index";
                 }else {
                     request.getSession().setAttribute("msg","该账号还未激活，请先去邮箱激活!");
                     return "active";
                 }
+            }else {
+                request.getSession().setAttribute("msg","用户名或密码错误");
+                return "errors";
+            }
             }
     }
     @RequestMapping("/doRegister")
@@ -62,8 +63,8 @@ public class UserController {
             System.out.println("注册成功，等待激活");
             return "active";
         }else {
-            request.getSession().setAttribute("msg","注册失败");
-            return "index";
+            request.getSession().setAttribute("msg","注册失败,该用户名已被占用。");
+            return "errors";
         }
     }
     @RequestMapping("/loginOut")

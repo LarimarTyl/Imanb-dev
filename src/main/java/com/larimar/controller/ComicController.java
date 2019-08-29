@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ComicController {
     @Autowired
     ComicService comicService;
-    @RequestMapping("/")
-    public String index(){
-        return "index";
-    }
+
     @RequestMapping("/portfolio")
     public String portfolio(){
         return "portfolio";
