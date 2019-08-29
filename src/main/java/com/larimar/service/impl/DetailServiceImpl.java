@@ -54,6 +54,7 @@ public class DetailServiceImpl implements DetailService {
         return detailMapper.selectAllDetails();
     }
 
+
     @Override
     public List<Detail> queryComicDetail(Integer comicId) {
         return detailMapper.selectComicAllDetails(comicId);

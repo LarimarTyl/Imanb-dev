@@ -87,4 +87,19 @@ public class ComicServiceImpl implements ComicService {
     public List<Comic> findComicByCondition(Conditon condition) {
         return null;
     }
+
+    @Override
+    public List<Comic> findChineseRank() {
+        return comicMapper.selectChineseComicRank();
+    }
+
+    @Override
+    public List<Comic> findJapaneseRank() {
+        return comicMapper.selectJapaneseRank();
+    }
+
+    @Override
+    public List<Comic> findAllRank() {
+        return comicMapper.selectAllRank();
+    }
 }

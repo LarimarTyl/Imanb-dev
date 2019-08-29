@@ -18,7 +18,11 @@ public class OrderServiceImpl implements OrderService {
     OrdersMapper ordersMapper;
     @Override
     public boolean addOrders(Orders orders) {
-        return ordersMapper.addOrders(orders)>0;
+        Orders findOrders = ordersMapper.selectOrdersByUserAndComic(orders.getUserId(), orders.getComicId());
+        //用户没有订阅该漫画才可以添加  已经订阅了的就不能重复订阅
+        if (findOrders==null) {
+             return ordersMapper.addOrders(orders)>0;
+        }else return false;
     }
 
     @Override

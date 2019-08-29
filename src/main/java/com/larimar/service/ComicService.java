@@ -24,4 +24,7 @@ public interface ComicService {
     public List<Comic> findComicByStatus(Integer status);
     public List<Comic> findUserOrderComic(Integer userId);
     public List<Comic> findComicByCondition(Conditon condition);
+    public List<Comic> findChineseRank();
+    public List<Comic> findJapaneseRank();
+    public List<Comic> findAllRank();
 }

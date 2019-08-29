@@ -24,12 +24,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean doRegister(User user) {
-       return userMapper.saveUser(user)>0;
+        if (!isExit(user.getUserName())) {
+            return userMapper.saveUser(user)>0;
+        }else {
+            return false;
+        }
     }
 
     @Override
     public boolean isExit(String userName) {
-        return userMapper.selectUserNameLike(userName)!=null;
+        return userMapper.findUserByName(userName)!=null;
     }
 
     @Override

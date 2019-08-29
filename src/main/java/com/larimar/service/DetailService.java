@@ -12,9 +12,8 @@ public interface DetailService {
     public boolean addDetail(Detail detail);
     public boolean delDetail(Integer detailId);
     public boolean updateDetail(Detail detail);
+    public Detail getDetailById(Integer id);
     public List<Detail> queryAllDetail();
     public List<Detail> queryComicDetail(Integer comicId);
     public List<Detail> selectComicDetailByType(String typeName);
-
-    public Detail getDetailById(Integer id);
 }
