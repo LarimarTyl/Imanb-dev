@@ -1,5 +1,7 @@
 package com.larimar.entity;
 
+import java.util.List;
+
 /**
  * @author Larimar
  * @time 2019/8/20 周二 17:52
@@ -12,6 +14,7 @@ public class Detail {
     private String path;//章节图片地址
     private String generalize;//章节概况
     private String updateTime;//章节更新时间
+    private List<String> images;//指定文件名
 
     public Detail() {
     }
@@ -80,6 +83,14 @@ public class Detail {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     @Override

@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.larimar.util.FileUtil.deleteFile;
+import static com.larimar.util.FileUtil.getImages;
 
 
 /**
@@ -369,6 +370,9 @@ public class SystemController {
     @ResponseBody
     public Msg getDetailInfo(Integer id){
         Detail detailById = detailService.getDetailById(id);
+        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + detailById.getComic().getPath() + "\\" + detailById.getPath());
+        // FIXME: 2019/8/29  detail添加了一个字段用于存放章节对应的目录下的 图片文件名
+        detailById.setImages(getImages(dest));
         if (detailById!=null){
             return Msg.success().add(null,detailById);
         }else {

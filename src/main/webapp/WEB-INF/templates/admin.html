@@ -170,11 +170,13 @@
                                 <form class="form-horizontal" method="post" enctype="multipart/form-data" id="new_user_form">
                                     <div class="form-group">
                                         <label for="new_photo" class="col-sm-2 control-label">头像</label>
-                                        <div class="col-sm-4">
-                                            <input type="file" name="file" class="user-icon newInputIcon" id="new_photo">
+                                        <div class="inputSpace">
+                                            <div class="col-sm-4">
+                                                <input type="file" name="file" class="user-icon newInputIcon" id="new_photo">
+                                            </div>
+                                            <label for="new_userPhoto" class="col-sm-2 control-label">头像预览</label>
+                                            <img src="" alt="" id="new_userPhoto" class="userPhoto">
                                         </div>
-                                        <label for="new_userPhoto" class="col-sm-2 control-label">头像预览</label>
-                                        <img src="" alt="" id="new_userPhoto" class="userPhoto">
                                     </div>
                                     <div class="form-group">
                                         <label for="new_username" class="col-sm-2 control-label">用户名</label>
@@ -291,12 +293,14 @@
                                 <form class="form-horizontal" enctype="multipart/form-data" id="edit_user_form">
                                         <input type="hidden" id="edit_userId" name="userId">
                                             <div class="form-group">
-                                                <label for="edit_photo" class="col-sm-2 control-label">更改头像</label>
-                                                <div class="col-sm-4">
-                                                    <input type="file" name="path" class="user-icon newInputIcon" id="edit_photo">
+                                                <div class="inputSpace">
+                                                    <label for="edit_photo" class="col-sm-2 control-label">更改头像</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="file" name="path" class="user-icon newInputIcon" id="edit_photo">
+                                                    </div>
+                                                    <label for="edit_showPhoto" class="col-sm-2 control-label">头像预览</label>
+                                                    <img src="" alt="" id="edit_showPhoto" class="userPhoto">
                                                 </div>
-                                                <label for="edit_showPhoto" class="col-sm-2 control-label">头像预览</label>
-                                                <img src="" alt="" id="edit_showPhoto" class="userPhoto">
                                             </div>
                                             <div class="form-group">
                                                 <label for="edit_name" class="col-sm-2 control-label">用户名</label>
@@ -571,12 +575,14 @@
                                 <div class="modal-body">
                                     <form class="form-horizontal" method="post" enctype="multipart/form-data" id="new_comic_form">
                                         <div class="form-group">
-                                            <label for="new_comicPhoto" class="col-sm-2 control-label">封面</label>
-                                            <div class="col-sm-4">
-                                                <input type="file" name="photo" class="comic-icon newInputIcon" id="new_comicPhoto">
+                                            <div class="inputSpace">
+                                                <label for="new_comicPhoto" class="col-sm-2 control-label">封面</label>
+                                                <div class="col-sm-4">
+                                                    <input type="file" name="photo" class="comic-icon newInputIcon" id="new_comicPhoto">
+                                                </div>
+                                                <label for="new_showPhoto" class="col-sm-2 control-label">封面预览</label>
+                                                <img src="" alt="" id="new_showPhoto" class="comicPhoto">
                                             </div>
-                                            <label for="new_showPhoto" class="col-sm-2 control-label">封面预览</label>
-                                            <img src="" alt="" id="new_showPhoto" class="comicPhoto">
                                         </div>
                                         <div class="form-group">
                                             <label for="new_name" class="col-sm-2 control-label">漫画名</label>
@@ -724,12 +730,14 @@
                                 <form class="form-horizontal" method="post" enctype="multipart/form-data" id="edit_comic_form">
                                     <input type="hidden" id="edit_id" name="comicId">
                                     <div class="form-group">
-                                        <label for="edit_ComicPhoto" class="col-sm-2 control-label">封面</label>
-                                        <div class="col-sm-4">
-                                            <input type="file" name="photo" class="comic-icon newInputIcon" id="edit_ComicPhoto">
+                                        <div class="inputSpace">
+                                            <label for="edit_ComicPhoto" class="col-sm-2 control-label">封面</label>
+                                            <div class="col-sm-4">
+                                                <input type="file" name="photo" class="comic-icon newInputIcon" id="edit_ComicPhoto">
+                                            </div>
+                                            <label for="edit_showPhotos" class="col-sm-2 control-label">封面预览</label>
+                                            <img src="" alt="" id="edit_showPhotos" class="comicPhoto">
                                         </div>
-                                        <label for="edit_showPhotos" class="col-sm-2 control-label">封面预览</label>
-                                        <img src="" alt="" id="edit_showPhotos" class="comicPhoto">
                                     </div>
                                     <div class="form-group">
                                         <label for="edit_comicName" class="col-sm-2 control-label">漫画名</label>
@@ -882,18 +890,20 @@
                                              <textarea name="generalize" id="new_generalize" class="form-control" cols="55" placeholder="章节概况" rows="10"></textarea>
                                          </div>
                                      </div>
-                                     <div class="form-group">
-                                         <label for="new_detail_ComicPhoto" class="col-sm-2 control-label">漫画图片</label>
-                                         <div class="col-sm-4">
-                                             <input type="file" multiple="multiple" name="pictures" class="comic-icon newInputPath" id="new_detail_ComicPhoto">
+                                     <div class="inputSpace">
+                                         <div class="form-group">
+                                             <label for="new_detail_ComicPhoto" class="col-sm-2 control-label">漫画图片</label>
+                                             <div class="col-sm-4">
+                                                 <input type="file" multiple="multiple" name="pictures" class="comic-icon newInputPath" id="new_detail_ComicPhoto">
+                                             </div>
+                                             <label for="new_path" class="col-sm-2 control-label">存放路径</label>
+                                             <div class="col-sm-4">
+                                                 <input type="text"  name="path" class="form-control " id="new_path">
+                                             </div>
                                          </div>
-                                         <label for="new_path" class="col-sm-2 control-label">存放路径</label>
-                                         <div class="col-sm-4">
-                                             <input type="text"  name="path" class="form-control " id="new_path">
+                                         <h3 class="center">预览</h3>
+                                         <div class="form-group center showImg">
                                          </div>
-                                     </div>
-                                     <h3 class="center">预览</h3>
-                                     <div class="form-group center showImg">
                                      </div>
                                  </form>
                              </div>
@@ -983,18 +993,20 @@
                                              <textarea name="introduction" id="generalize" class="form-control" cols="55" value="章节概况" rows="10"></textarea>
                                          </div>
                                      </div>
-                                     <div class="form-group">
-                                         <label for="edit_photo_path" class="col-sm-2 control-label">漫画图片</label>
-                                         <div class="col-sm-4">
-                                             <input type="file" multiple="multiple" name="pictures" class="comic-icon newInputPath" id="edit_photo_path">
+                                     <div class="inputSpace">
+                                         <div class="form-group">
+                                             <label for="edit_photo_path" class="col-sm-2 control-label">漫画图片</label>
+                                             <div class="col-sm-4">
+                                                 <input type="file" multiple="multiple" name="pictures" class="comic-icon newInputPath" id="edit_photo_path">
+                                             </div>
+                                             <label for="new_photo_path" class="col-sm-2 control-label">存放路径</label>
+                                             <div class="col-sm-4">
+                                                 <input type="text"  name="path" class="form-control " id="new_photo_path">
+                                             </div>
                                          </div>
-                                         <label for="new_photo_path" class="col-sm-2 control-label">存放路径</label>
-                                         <div class="col-sm-4">
-                                             <input type="text"  name="path" class="form-control " id="new_photo_path">
+                                         <h3 class="center">预览</h3>
+                                         <div class="form-group center showImg">
                                          </div>
-                                     </div>
-                                     <h3 class="center">预览</h3>
-                                     <div class="form-group center showImg">
                                      </div>
                                  </form>
                              </div>

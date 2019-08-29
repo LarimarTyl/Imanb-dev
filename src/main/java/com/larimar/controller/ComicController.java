@@ -14,7 +14,15 @@ public class ComicController {
     @Autowired
     ComicService comicService;
     @RequestMapping("/")
-    public String test(){
+    public String index(){
         return "index";
+    }
+    @RequestMapping("/portfolio")
+    public String portfolio(){
+        return "portfolio";
+    }
+    @RequestMapping("/detail")
+    public String detail(){
+        return "detail";
     }
 }

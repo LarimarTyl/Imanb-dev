@@ -1,6 +1,8 @@
 package com.larimar.util;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Larimar
@@ -20,6 +22,10 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 删除文件夹 及其子文件夹
+     * @param file
+     */
     public static void deleteFile(File file){
         if (file.isFile()){//判断是否为文件，是，则删除
             file.delete();
@@ -31,5 +37,30 @@ public class FileUtil {
             }
             file.delete();
         }
+    }
+
+    /**
+     * 返回指定文件夹中的图片文件名
+     * @param file
+     * @return
+     */
+    public static List<String> getImages(File file){
+        List<String> images = new ArrayList<>();
+        if (file.exists()) {
+            if (file.list()!=null){
+                String[] fileList = file.list();
+                for (String fileName:fileList){
+                    if (fileName.substring(fileName.lastIndexOf(".")).equalsIgnoreCase(".jpg")){
+                        images.add(fileName);
+                    }
+                }
+            }
+        }
+        return images;
+    }
+
+    public static void main(String[] args) {
+        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\dpcq\\1234");
+        System.out.println(getImages(dest));
     }
 }
