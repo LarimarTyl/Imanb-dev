@@ -84,5 +84,12 @@ public class SystemController {
         ValidateCodeUtil.getValidateCode(request,response);
     }
 
-
+    @RequestMapping("/about")
+    public String about(){
+        return "about";
+    }
+    @RequestMapping("/contact")
+    public String contact(){
+        return "contact";
+    }
 }

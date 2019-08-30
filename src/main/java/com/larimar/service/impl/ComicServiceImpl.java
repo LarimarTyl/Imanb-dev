@@ -53,6 +53,11 @@ public class ComicServiceImpl implements ComicService {
     }
 
     @Override
+    public List<Comic> queryComicTypeLike(String type) {
+        return comicMapper.selectComicByTypeName(type);
+    }
+
+    @Override
     public List<Comic> queryAllComic() {
         return comicMapper.selectAllComics();
     }

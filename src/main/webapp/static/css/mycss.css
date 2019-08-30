@@ -11,6 +11,12 @@ a:hover, a:focus {
 }
 /* a标签下划线 */
 /*字体设置*/
+a.thumb-blog {
+    position: relative;
+    width: 575px;
+    display: block;
+    margin-bottom: 20px;
+}
 .title-large{
     font-weight: bolder;
     text-align: center;
@@ -19,6 +25,11 @@ a:hover, a:focus {
 .mytext-title2{
     font-weight: bolder;
     font:28px HelveticaLTStdRoman, sans-serif;
+}
+.hideIt{display: none}
+.full{
+    height: 100%;
+    width: 100%;
 }
 .mytext-title2-ml{
     font-weight: bolder;
@@ -327,18 +338,6 @@ div.date-blog {
 
 /* 漫画列表页面样式 */
 /* 自定义图标 */
-[my-icon="gufeng"]
-{
-	display:block;
-	width:100%;
-	height:100%;
-    background:url(../images/icons/portfolio/gufeng.png);
-    background-size: cover;
-    position: relative;
-    top: 50%;
-    z-index: 99;
-	
-}
 [my-icon="gaoxiao"]
 {
 	display:block;
@@ -516,7 +515,7 @@ div.unLogin .unLogin-info{
     width: 200px;
     height: 50px;
     line-height: 50px;
-    margin: 0 auto;
+    margin-left: 50px;
     border-radius:50px;
     color: white;
     background-color: #1275ba;
@@ -605,7 +604,7 @@ div#catalog{
     margin: 60px 0 135px;
 }
 div#catalog .catalog-info{
-    padding:30px 0px 30px 20px;
+    padding:30px 0px 30px 10px;
     background-color: #fffefea1;
 }
 /* 排序按钮 */
@@ -637,11 +636,14 @@ div#catalog .catalog-info .clearfix{
 /* 相似推荐 */
 div#catalog .catalog-info .projects-band-nohidden,div#catalog .catalog-info .projects-band-nohidden ul{
     width: 870px;
+    height: 615px;
 }
 div#catalog .catalog-info div.projects-band-nohidden ul li{
-    height: 260px;
-    margin-right: 5px;
+    height: 290px;
+    margin-right: 12px;
+    margin-bottom: 10px;
 }
+
 div#catalog .catalog-info div.projects-band-nohidden .description{
     height: 35px;
 }
@@ -649,11 +651,12 @@ div#catalog .catalog-info div.projects-band-nohidden .description{
 div#catalog .catalog-info div.projects-band-nohidden ul li a {
     display: block;
     width: 160px;
-    height: 190px;
+    height: 200px;
     position: relative;
 }
 div#catalog .catalog-info div.projects-band-nohidden ul li img{
     width: 160px;
+    height:200px;
 }
 /* 右边内容 */
 div#catalog .ranks{
@@ -676,6 +679,7 @@ div.ranks .rank-items a{
 }
 div.ranks .rank-items img{
     width: 100px;
+    height: 120px;
     object-fit: cover;
     border: 1px solid #000;
 }

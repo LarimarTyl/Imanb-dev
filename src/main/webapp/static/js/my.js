@@ -23,21 +23,24 @@
 //漫画项选择案例
 // 点赞案例
 $(function () {
-    $(".focus .likes").text(" 喜欢 ❤")
-    $(".focus .unlike").text(" 不喜欢 💔")
+    $(".focus #like");
+    $(".focus #unlike").addClass("hideIt");
     $(".com-data").find(".likes").click(function(){
         $(this).attr("href","").toggleClass("likes-select")
     });
-    $(".blog-excerpt-bottom").find(".likes").click(function(){
-        $(this).attr("href","").toggleClass("likes-select")
+    $(".focus").on("click",".isLike",function(){
+        $(this).toggleClass("likes").toggleClass("unlike");
+        $(".focus span").toggleClass("hideIt");
     });
-    $(".focus").on("click",".likes",function(){
-        $(this).toggleClass("likes").toggleClass("unlike").text(" 不喜欢 💔");
+    $("#like").click(function () {
+        alert("点赞加1")
+    });
+    $("#unlike").click(function () {
+        alert("点赞减1")
     })
-    $(".focus").on("click",".unlike",function(){
-        $(this).toggleClass("unlike").toggleClass("like").text(" 喜欢 ❤");
-    })
-  })
+
+  });
+
 // 点赞案例
 // 个人中心信息列表选择案例
 $(function(){

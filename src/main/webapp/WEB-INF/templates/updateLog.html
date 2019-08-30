@@ -10,7 +10,6 @@
     <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/static/css/mycss.css}">
-    <!-- <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script> -->
     <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.js}"></script>
     <script th:src="@{/static/js/jquery-migrate-1.2.1.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
@@ -37,18 +36,8 @@
                     </form>
                 </li>
                 <li><a th:href="@{/index}" class="settings-txt">首页</a></li>
-                <li><a th:href="@{/portfolio}" class="settings-txt">分类</a></li>
-                <li><a th:href="@{/blog}" class="settings-txt">最近更新</a></li>
-                <li><a th:href="@{/services}" class="settings-txt">连载ing~</a>
-                    <ul>
-                        <li><span class="top_area">&nbsp;</span></li>
-                        <li><a th:href="@{columns.html}" class="settings-txt">Columns</a></li>
-                        <li><a th:href="@{404.html}" class="settings-txt">404 Error</a></li>
-                        <li><a th:href="@{/user}" class="settings-txt">Home 2</a></li>
-                        <li><a href="#" class="settings-txt">More</a></li>
-                        <li><span class="bottom_area">&nbsp;</span></li>
-                    </ul>
-                </li>
+                <li><a th:href="@{/list(pn=1)}" class="settings-txt">分类</a></li>
+                <li><a th:href="@{/updateLog}" class="settings-txt">更新日志</a></li>
                 <li><a th:href="@{/about}" class="settings-txt">说明</a></li>
                 <li><a th:href="@{/contact}" class="settings-txt">联系我们</a></li>
                 <li>
@@ -58,9 +47,7 @@
                     </div>
                     <div th:if="${session.user}!=null" th:object="${session.user}"  class="user">
                         <div class="left">
-                            <!--                            <a href="#" class="user-ican"><img th:attr="src='@{/static/images/'+*{photo}+'.jpg'" th:src="@{/static/images/user.jpg}" alt=""></a>-->
                             <a th:href="@{/user}" class="user-ican"><img th:src="|/images/user/*{photo}.jpg|" alt=""></a>
-                            <!--                            <a href="#" class="user-ican"><img th:src="@{/static/images/}*{photo}.jpg|" alt=""></a>-->
                             <p class="center username mytext-p" th:text="*{nickName}">读者老爷</p>
                         </div>
                         <a class="loginOut right" th:href="@{/loginOut}" >退出</a>
@@ -68,7 +55,7 @@
                 </li>
             </ul>
         </div>
-    </div> <!-- #header -->
+    </div>
 
 </div>
 
@@ -94,14 +81,17 @@
         <!-- HERE START LEFT SIDE BLOG -->
         <div class="grid w870 mr60 blog-content">
             <!-- 更新项 -->
-            <div class="article-blog grid-system log-item">
+            <div class="article-blog grid-system log-item" th:each="detail:${session.updateLog.list}">
                 <div class="grid comment-date w95">
                     <div class="circle-area circle-inline-border settings-clr no-second">
                         <!-- 更新时间 -->
                         <div class="date-blog">
-                            <p class="day">11</p>
-                            <p class="month">FEB</p>
-                            <p class="year">2012</p>
+                            <!--fixme 切割日期字符串-->
+                            <p class="day" th:text="${#strings.substring(detail.updateTime,9,10)}">
+                                12
+                            </p>
+                            <p class="month" th:text="${#strings.substring(detail.updateTime,5,7)}">FEB</p>
+                            <p class="year" th:text="${#strings.substring(detail.updateTime,0,4)}">2012</p>
                         </div>
                     </div>
                     <div class="com-data">
@@ -110,149 +100,32 @@
                     </div>
                 </div>
                 <div class="grid article-content w775">
-                    <p><a class="thumb-blog" href="single-blog.html"><span>&nbsp;</span><img class="inline-border "
-                                                                                             th:src="@{/static/images/blog_thumb.jpg}"
-                                                                                             alt=""/></a></p>
-                    <h2 class="blog-title">机械总动员第28话:孤独的伊娃</h2>
-                    <p class="blog-excerpt mytext-p2">机械之城被毁灭后，只有伊娃一个机器人活了下来，她提着矿灯在自己的小屋里面独自发呆，想起了之前和卡鲁一起玩耍的快乐时光。
-                        于是她决定动身去寻找他们曾经在一起的痕迹，把那些记忆永远的存下来。
+                    <p>
+                        <a class="thumb-blog" th:href="@{/showDetail(id=${detail.detailId})}">
+                        <img class="inline-border " th:src="|/images/comics/${detail.comic.path}/${detail.path}/1.jpg|" alt=""/>
+                        </a>
                     </p>
-                    <p class="blog-more"><a href="single-blog.html"
-                                            class="standart-button-style inline-border mln settings-clr"><span
-                            class="over5">查看更多</span></a></p>
-                </div>
-                <div class="clear"></div>
-                <span class="dotted-line">&nbsp;</span>
-            </div>
-
-            <div class="article-blog grid-system log-item">
-                <div class="grid comment-date w95">
-                    <div class="circle-area circle-inline-border settings-clr no-second">
-                        <div class="date-blog">
-                            <p class="day">11</p>
-                            <p class="month">FEB</p>
-                            <p class="year">2012</p>
-                        </div>
-                    </div>
-                    <div class="com-data">
-                        <a href="#" class="comments">113</a>
-                        <a href="#" class="likes">206</a>
-                    </div>
-                </div>
-                <div class="grid article-content w775">
-                    <p><a class="thumb-blog" href="single-blog.html"><span>&nbsp;</span><img class="inline-border "
-                                                                                             th:src="@{/static/images/blog_thumb_2.jpg}"
-                                                                                             alt=""/></a></p>
-                    <h2 class="blog-title">海贼王第972话：索隆的暴走！！</h2>
-                    <p class="blog-excerpt mytext-p2">索隆霸气鬼刀全开，对战大蛇将军，路飞正在赶来路上，他们能否战胜敌人帮助小桃拿回属于他的和之国呢</p>
-                    <p class="blog-more"><a href="single-blog.html"
-                                            class="standart-button-style inline-border mln settings-clr"><span
-                            class="over5">查看更多</span></a></p>
-                </div>
-                <div class="clear"></div>
-                <span class="dotted-line">&nbsp;</span>
-            </div>
-
-            <div class="article-blog grid-system log-item">
-                <div class="grid comment-date w95">
-                    <div class="circle-area circle-inline-border settings-clr no-second">
-                        <div class="date-blog">
-                            <p class="day">11</p>
-                            <p class="month">FEB</p>
-                            <p class="year">2012</p>
-                        </div>
-                    </div>
-                    <div class="com-data">
-                        <a href="#" class="comments">113</a>
-                        <a href="#" class="likes">206</a>
-                    </div>
-                </div>
-                <div class="grid article-content w775">
-                    <p><a class="thumb-blog" href="single-blog.html"><img class="inline-border image-slider "
-                                                                          th:src="@{/static/images/blog_thumb_3.jpg}"
-                                                                          alt=""/></a></p>
-                    <div class="slider_thumb">
-                        <a href="#"><img th:src="@{/static/images/slider_blog_1.jpg}" alt="" class="inline-border"/></a>
-                        <a href="#"><img th:src="@{/static/images/slider_blog_2.jpg}" alt="" class="inline-border"/></a>
-                        <a href="#"><img th:src="@{/static/images/slider_blog_3.jpg}" alt="" class="inline-border"/></a>
-                        <a href="#"><img th:src="@{/static/images/slider_blog_4.jpg}" alt="" class="inline-border"/></a>
-                        <a href="#"><img th:src="@{/static/images/slider_blog_5.jpg}" alt="" class="inline-border"/></a>
-                    </div>
-                    <h2 class="blog-title">>火影忍者第872话：鸣人VS佐助！！！</h2>
-                    <p class="blog-excerpt mytext-p2">友谊？羁绊?仇恨? 昔日最好的朋友展开了决斗，鸣人能否唤回佐助把他带回木叶村，还是历史重演，仇恨的战斗又开始了 </p>
-                    <p class="blog-more"><a href="single-blog.html"
-                                            class="standart-button-style inline-border mln settings-clr"><span
-                            class="over5">查看更多</span></a></p>
-                </div>
-                <div class="clear"></div>
-                <span class="dotted-line">&nbsp;</span>
-            </div>
-
-            <div class="article-blog grid-system log-item">
-                <div class="grid comment-date w95">
-                    <div class="circle-area circle-inline-border settings-clr no-second">
-                        <div class="date-blog">
-                            <p class="day">11</p>
-                            <p class="month">FEB</p>
-                            <p class="year">2012</p>
-                        </div>
-                    </div>
-                    <div class="com-data">
-                        <a href="#" class="comments">113</a>
-                        <a href="#" class="likes">206</a>
-                    </div>
-                </div>
-                <div class="grid article-content w775">
-                    <h2 class="blog-title">机械总动员第28话:孤独的伊娃</h2>
-                    <p class="blog-excerpt mytext-p2">机械之城被毁灭后，只有伊娃一个机器人活了下来，她提着矿灯在自己的小屋里面独自发呆，想起了之前和卡鲁一起玩耍的快乐时光。
-                        于是她决定动身去寻找他们曾经在一起的痕迹，把那些记忆永远的存下来。
+                    <h2 class="blog-title" th:text="${detail.chapterName}">机械总动员第28话:孤独的伊娃</h2>
+                    <p class="blog-excerpt mytext-p2" th:text="${detail.generalize}">机械之城被毁灭后</p>
+                    <p class="blog-more">
+                        <a th:href="@{/showDetail(id=${detail.detailId})}" class="standart-button-style inline-border mln settings-clr">
+                            <span class="over5">查看更多</span>
+                        </a>
                     </p>
-                    <p class="blog-more"><a href="single-blog.html"
-                                            class="standart-button-style inline-border mln settings-clr"><span
-                            class="over5">查看更多</span></a></p>
                 </div>
                 <div class="clear"></div>
                 <span class="dotted-line">&nbsp;</span>
             </div>
 
-            <div class="article-blog grid-system log-item">
-                <div class="grid comment-date w95">
-                    <div class="circle-area circle-inline-border settings-clr no-second">
-                        <div class="date-blog">
-                            <p class="day">11</p>
-                            <p class="month">FEB</p>
-                            <p class="year">2012</p>
-                        </div>
-                    </div>
-                    <div class="com-data">
-                        <a href="#" class="comments">113</a>
-                        <a href="#" class="likes">206</a>
-                    </div>
-                </div>
-                <div class="grid article-content w775">
-                    <p><a class="thumb-blog" href="single-blog.html"><span>&nbsp;</span><img class="inline-border "
-                                                                                             th:src="@{/static/images/blog_thumb_4.jpg}"
-                                                                                             alt=""/></a></p>
-                    <h2 class="blog-title">斗破苍穹第680话：萧炎XO美杜莎</h2>
-                    <p class="blog-excerpt mytext-p2">大军来袭，陨落心炎彻底爆发，萧炎掉入焚气塔底层，当面列异火的攻击时，美杜莎女王突然苏醒了，在和异火斗争后他们居然。。。。</p>
-                    <p class="blog-more"><a href="single-blog.html"
-                                            class="standart-button-style inline-border mln settings-clr"><span
-                            class="over5">查看更多</span></a></p>
-                </div>
-                <div class="clear"></div>
-                <span class="dotted-line">&nbsp;</span>
-            </div>
             <!--******************-->
             <!--页码控件-->
             <div class="pagecontroller pagination-small pagination-center center">
                 <ul class="pagination pagination-lg">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
+                    <li><a th:href="@{/updateLog(pn=1)}">&laquo;</a></li>
+                    <li><a th:href="@{/updateLog(pn=${session.updateLog.pageNum}-1)}">上一页</a></li>
+                    <li><a th:href="@{/updateLog(pn=${session.updateLog.pageNum})}" th:text="${session.updateLog.pageNum}">1</a></li>
+                    <li><a th:href="@{/updateLog(pn=${session.updateLog.pageNum}+1)}">下一页</a></li>
+                    <li><a th:href="@{/updateLog(pn=${session.updateLog.pages})}">&raquo;</a></li>
                 </ul>
             </div>
             <div class="space"></div>
@@ -278,7 +151,7 @@
                     在线漫画的相关版权归原作者及发行商所有！本站欢迎与各大公司进行内容及模式上的合作，如有侵犯到您的权益，请联系我们确认及删除。
                 </p>
             </div>
-
+            <!--分类检索-->
             <div class="widget-block">
                 <h1 class="title-line blue settings-text"><span class="current-bg pr5"
                                                                 style="font-size:20px">分类</span></h1>
@@ -312,7 +185,7 @@
                     <li><a href="#">December（十二月）</a></li>
                 </ul>
             </div>
-
+            <!--最新评论-->
             <div class="widget-block">
                 <h1 class="title-line blue settings-text"><span class="current-bg pr5"
                                                                 style="font-size:20px">最新评论</span></h1>
@@ -338,8 +211,8 @@
                     <li><a href="index.html">Home Page</a></li>
                     <li><a href="about.html">About Page</a></li>
                     <li><a href="services.html">Services Page</a></li>
-                    <li><a href="portfolio.html">Portfolio Page</a></li>
-                    <li><a href="blog.html">Blog Page</a></li>
+                    <li><a href="list.html">Portfolio Page</a></li>
+                    <li><a href="updateLog.html">Blog Page</a></li>
                     <li><a href="contact.html">Contact Page</a></li>
                 </ul>
             </div><!-- .footer_widget_1 -->
@@ -544,10 +417,6 @@
 </div>
 <!-- 注册登录模块框 -->
 
-<div style="display:none">
-    <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript'
-            charset='gb2312'></script>
-</div>
 </body>
 
 </html>

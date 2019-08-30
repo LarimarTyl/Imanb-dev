@@ -35,18 +35,8 @@
                     </form>
                 </li>
                 <li><a th:href="@{/index}" class="settings-txt">首页</a></li>
-                <li><a th:href="@{/portfolio}" class="settings-txt">分类</a></li>
-                <li><a th:href="@{/blog}" class="settings-txt">最近更新</a></li>
-                <li><a th:href="@{/services}" class="settings-txt">连载ing~</a>
-                    <ul>
-                        <li><span class="top_area">&nbsp;</span></li>
-                        <li><a th:href="@{columns.html}" class="settings-txt">Columns</a></li>
-                        <li><a th:href="@{404.html}" class="settings-txt">404 Error</a></li>
-                        <li><a th:href="@{/user}" class="settings-txt">Home 2</a></li>
-                        <li><a href="#" class="settings-txt">More</a></li>
-                        <li><span class="bottom_area">&nbsp;</span></li>
-                    </ul>
-                </li>
+                <li><a th:href="@{/list(pn=1)}" class="settings-txt">分类</a></li>
+                <li><a th:href="@{/updateLog(pn=1)}" class="settings-txt">更新日志</a></li>
                 <li><a th:href="@{/about}" class="settings-txt">说明</a></li>
                 <li><a th:href="@{/contact}" class="settings-txt">联系我们</a></li>
                 <li>
@@ -64,7 +54,7 @@
                 </li>
             </ul>
         </div>
-    </div> <!-- #header -->
+    </div>
 
     <div id="head-text">
         <h1 class="general-font">I (*´∀`)~♥ Comic <span class="china blue f80 settings-text"> Imanb 爱漫吧!</span></h1>
@@ -197,7 +187,7 @@
                 </h1>
                 <ul class="nav nav-stacked">
                     <li class="rank-items" th:each="comic:${application.japaneseRank}">
-                        <a th:href="@{/comic(id=${comic.comicId})}">
+                        <a th:href="@{/detail(id=${comic.comicId})}">
                             <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
                             <div class="rank-info left">
 
@@ -274,7 +264,7 @@
                         </div>
                     </div>
                     <div class="blog-excerpt">
-                        <h2><a th:href="@{/detail(id=${detail.detailId})}" th:text="${detail.chapterName}">海贼王第972话：索隆的暴走！！！</a></h2>
+                        <h2><a th:href="@{/showDetail(id=${detail.detailId})}" th:text="${detail.chapterName}">海贼王第972话：索隆的暴走！！！</a></h2>
                         <p class="mytext-p2" th:text="${detail.generalize}">索隆霸气鬼刀全开，对战大蛇将军，路飞正在赶来路上，他们能否战胜敌人帮助小桃拿回属于他的和之国呢 </p>
                         <p class="blog-excerpt-bottom"><a href="#" class="comments">113</a><a href="#"
                                                                                               class="likes">206</a></p>
@@ -328,22 +318,22 @@
                 <div class="clear"></div>
 
                 <div class="footer_image">
-                    <img class="inline-border active" th:src="@{/static/images/slider/footer_home.jpg}" alt=""
+                    <img class="inline-border active" th:src="|/images/slider/footer_home.jpg|" alt=""
                          width="450"
                          height="250"/>
-                    <img class="inline-border" th:src="@{/static/images/slider/footer_2.jpg}" alt="" width="450"
+                    <img class="inline-border" th:src="|/images/slider/footer_2.jpg|" alt="" width="450"
                          height="250"/>
-                    <img class="inline-border" th:src="@{/static/images/slider/footer_3.jpg}" alt="" width="450"
+                    <img class="inline-border" th:src="|/images/slider/footer_3.jpg|" alt="" width="450"
                          height="250"/>
-                    <img class="inline-border" th:src="@{/static/images/slider/footer_4.jpg}" alt="" width="450"
+                    <img class="inline-border" th:src="|/images/slider/footer_4.jpg|" alt="" width="450"
                          height="250"/>
-                    <img class="inline-border" th:src="@{/static/images/slider/footer_5.jpg}" alt="" width="450"
+                    <img class="inline-border" th:src="|/images/slider/footer_5.jpg|" alt="" width="450"
                          height="250"/>
-                    <img class="inline-border" th:src="@{/static/images/slider/footer_6.jpg}" alt="" width="450"
+                    <img class="inline-border" th:src="|/images/slider/footer_6.jpg|" alt="" width="450"
                          height="250"/>
-                    <img class="inline-border" th:src="@{/static/images/slider/footer_7.jpg}" alt="" width="450"
+                    <img class="inline-border" th:src="|/images/slider/footer_7.jpg|" alt="" width="450"
                          height="250"/>
-                    <img class="inline-border" th:src="@{/static/images/slider/footer_8.jpg}" alt="" width="450"
+                    <img class="inline-border" th:src="|/images/slider/footer_8.jpg|" alt="" width="450"
                          height="250"/>
 
                     <ul class="social-icons">
@@ -497,12 +487,7 @@
         </div><!-- /.modal -->
     </div>
     <!-- 注册登录模块框 -->
-    <!-- js 部分 -->
 
-    <div style="display:none">
-        <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript'
-                charset='gb2312'></script>
-    </div>
     </div>
 </body>
 

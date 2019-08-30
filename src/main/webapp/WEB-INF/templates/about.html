@@ -37,20 +37,10 @@
                     </form>
                 </li>
                 <li><a th:href="@{/index}" class="settings-txt">首页</a></li>
-                <li><a th:href="@{/portfolio}" class="settings-txt">分类</a></li>
-                <li><a th:href="@{/blog}" class="settings-txt">最近更新</a></li>
-                <li><a th:href="@{/services}" class="settings-txt">连载ing~</a>
-                    <ul>
-                        <li><span class="top_area">&nbsp;</span></li>
-                        <li><a th:href="@{columns.html}" class="settings-txt">Columns</a></li>
-                        <li><a th:href="@{404.html}" class="settings-txt">404 Error</a></li>
-                        <li><a th:href="@{/user}" class="settings-txt">Home 2</a></li>
-                        <li><a href="#" class="settings-txt">More</a></li>
-                        <li><span class="bottom_area">&nbsp;</span></li>
-                    </ul>
-                </li>
-                <li><a th:href="@{about.html}" class="settings-txt">说明</a></li>
-                <li><a th:href="@{contact.html}" class="settings-txt">联系我们</a></li>
+                <li><a th:href="@{/list(pn=1)}" class="settings-txt">分类</a></li>
+                <li><a th:href="@{/updateLog}" class="settings-txt">更新日志</a></li>
+                <li><a th:href="@{/about}" class="settings-txt">说明</a></li>
+                <li><a th:href="@{/contact}" class="settings-txt">联系我们</a></li>
                 <li>
                     <div th:unless="${session.user}!=null">
                         <button  class="btn btn-primary btn-lg" data-toggle="modal"
@@ -58,15 +48,15 @@
                     </div>
                     <div th:if="${session.user}!=null" th:object="${session.user}"  class="user">
                         <div class="left">
-                            <a href="#" class="user-ican"><img th:src="|/images/user/*{photo}.jpg|" alt=""></a>
-                            <p class="center username mytext-p" th:text="*{userName}">larimar</p>
+                            <a th:href="@{/user}" class="user-ican"><img th:src="|/images/user/*{photo}.jpg|" alt=""></a>
+                            <p class="center username mytext-p" th:text="*{nickName}">读者老爷</p>
                         </div>
                         <a class="loginOut right" th:href="@{/loginOut}" >退出</a>
                     </div>
                 </li>
             </ul>
         </div>
-    </div> <!-- #header -->
+    </div>
 
 </div>
 
@@ -153,18 +143,6 @@
     <div class="space30"></div>
     <div class="column-grid">
         <div class="threecol">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
-                leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
-                leap into electronic typesetting, remaining essentially unchanged. </p>
-        </div>
-        <div class="threecol">
             <div class="project-complete-rate">
                 <p><a href="#" class="inline-border standart-button-style mln settings-clr"><span
                         class="left">言情</span> <span class="right">39%</span></a></p>
@@ -195,8 +173,8 @@
                     <li><a href="index.html">Home Page</a></li>
                     <li><a href="about.html">About Page</a></li>
                     <li><a href="services.html">Services Page</a></li>
-                    <li><a href="portfolio.html">Portfolio Page</a></li>
-                    <li><a href="blog.html">Blog Page</a></li>
+                    <li><a href="list.html">Portfolio Page</a></li>
+                    <li><a href="updateLog.html">Blog Page</a></li>
                     <li><a href="contact.html">Contact Page</a></li>
                 </ul>
             </div><!-- .footer_widget_1 -->
@@ -398,11 +376,6 @@
 </div>
 <!-- 注册登录模块框 -->
 
-
-<div style="display:none">
-    <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript'
-            charset='gb2312'></script>
-</div>
 </body>
 
 </html>

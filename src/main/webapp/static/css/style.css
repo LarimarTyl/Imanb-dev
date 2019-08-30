@@ -437,7 +437,7 @@ div.com-data {display:block;width:70px;margin:80px auto 0;padding-top:15px; }
 div.com-data a {display:block}
 
 /* Blog-style*/
-div.article-blog {display:block;margin-bottom:50px}
+div.article-blog {display:block;margin-bottom:20px}
 div.article-content {margin-bottom:50px}
 a.thumb-blog {position:relative;width:575px;height:310px;display:block;margin-bottom:20px}
 a.thumb-blog > span {display:none}

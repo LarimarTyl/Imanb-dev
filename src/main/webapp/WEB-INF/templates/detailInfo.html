@@ -1,6 +1,4 @@
-<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
 
 <head>
     <meta charset="UTF-8">
@@ -23,8 +21,7 @@
     <![endif]-->
 </head>
 
-<body class="portfolio">
-
+<body class="blog">
 
 <div class="elastic">
     <!-- 头部 -->
@@ -40,18 +37,8 @@
                     </form>
                 </li>
                 <li><a th:href="@{/index}" class="settings-txt">首页</a></li>
-                <li><a th:href="@{/portfolio}" class="settings-txt">分类</a></li>
-                <li><a th:href="@{/blog}" class="settings-txt">最近更新</a></li>
-                <li><a th:href="@{/services}" class="settings-txt">连载ing~</a>
-                    <ul>
-                        <li><span class="top_area">&nbsp;</span></li>
-                        <li><a th:href="@{columns.html}" class="settings-txt">Columns</a></li>
-                        <li><a th:href="@{404.html}" class="settings-txt">404 Error</a></li>
-                        <li><a th:href="@{/user}" class="settings-txt">Home 2</a></li>
-                        <li><a href="#" class="settings-txt">More</a></li>
-                        <li><span class="bottom_area">&nbsp;</span></li>
-                    </ul>
-                </li>
+                <li><a th:href="@{/list(pn=1)}" class="settings-txt">分类</a></li>
+                <li><a th:href="@{/updateLog}" class="settings-txt">更新日志</a></li>
                 <li><a th:href="@{/about}" class="settings-txt">说明</a></li>
                 <li><a th:href="@{/contact}" class="settings-txt">联系我们</a></li>
                 <li>
@@ -61,9 +48,7 @@
                     </div>
                     <div th:if="${session.user}!=null" th:object="${session.user}"  class="user">
                         <div class="left">
-                            <!--                            <a href="#" class="user-ican"><img th:attr="src='@{/static/images/'+*{photo}+'.jpg'" th:src="@{/static/images/user.jpg}" alt=""></a>-->
                             <a th:href="@{/user}" class="user-ican"><img th:src="|/images/user/*{photo}.jpg|" alt=""></a>
-                            <!--                            <a href="#" class="user-ican"><img th:src="@{/static/images/}*{photo}.jpg|" alt=""></a>-->
                             <p class="center username mytext-p" th:text="*{nickName}">读者老爷</p>
                         </div>
                         <a class="loginOut right" th:href="@{/loginOut}" >退出</a>
@@ -71,8 +56,7 @@
                 </li>
             </ul>
         </div>
-    </div> <!-- #header -->
-
+    </div>
 
 </div>
 
@@ -80,10 +64,13 @@
 <div id="all_page_header">
     <div class="bg_wood_page circle-inline-border"></div>
     <div class="elastic inline-border settings-clr no-second" id="page_header">
-        <h1 class="over5">漫画列表</h1>
+        <!--漫画名-->
+        <h1 class="over5" th:text="${session.detail.comic.comicName}">机械迷城</h1>
         <div class="intro-description over5">
-            <p>我们的网站收录了大量的精品漫画</p>
-            <p>言情、玄幻、都市、冒险、仙侠等~ &emsp;总有一款适合你</p>
+            <!--章节-->
+            <p class="mytext-title" th:text="${session.detail.chapterName}">第28话:孤独的伊娃</p>
+            <!--简述-->
+            <p th:text="${session.detail.generalize}">机械之城被毁灭后，只有伊娃一个机器人活了下来。</p>
         </div>
     </div>
 </div>
@@ -91,179 +78,205 @@
 
 <!-- HERE START CONTENT -->
 <div class="content elastic">
-    <div id="book-list">
-        <ul class="list">
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="yanqing"></span></div>
-                <p class="book_name mytext-title">言情</p></a></li>
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="xuanhuan"></span></div>
-                <p class="book_name mytext-title">玄幻</p></a></li>
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="dushi"></span></div>
-                <p class="book_name mytext-title">都市</p></a></li>
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="maoxian"></span></div>
-                <p class="book_name mytext-title">冒险</p></a></li>
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="xiaoyuan"></span></div>
-                <p class="book_name mytext-title">校园</p></a></li>
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="xianxia"></span></div>
-                <p class="book_name mytext-title">仙侠</p></a></li>
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="gaoxiao"></span></div>
-                <p class="book_name mytext-title">搞笑</p></a></li>
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="guoman"></span></div>
-                <p class="book_name mytext-title">国漫</p></a></li>
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="riman"></span></div>
-                <p class="book_name mytext-title">日漫</p></a></li>
-            <li><a href="#">
-                <div class="list-noset"><span my-icon="more"></span></div>
-                <p class="book_name mytext-title">更多</p></a></li>
-        </ul>
+    <div class="grid-system">
+        <div class="grid w870 mr60 blog-content">
+            <div class="article-blog grid-system new-pic">
+                <div class="grid comment-date w95">
+                    <!--更新日期-->
+                    <div class="circle-area circle-inline-border settings-clr no-second">
+                        <div class="date-blog">
+                            <p class="day" th:text="${#strings.substring(session.detail.updateTime,9,10)}">
+                                12
+                            </p>
+                            <p class="month" th:text="${#strings.substring(session.detail.updateTime,5,7)}">FEB</p>
+                            <p class="year" th:text="${#strings.substring(session.detail.updateTime,0,4)}">2012</p>
+                        </div>
+                    </div>
+                    <div class="com-data">
+                        <a href="#" class="comments">113</a>
+                        <a href="#" class="likes">206</a>
+                    </div>
+                </div>
+                <div class="grid article-content w775 pic-items" style="margin-bottom:0">
+                    <ul class="pic-items">
+                        <li class="item" th:each="image:${session.detail.getImages()}">
+                            <img th:src="|/images/comics/${session.detail.comic.path}/${session.detail.path}/${image}|" width="800" alt="">
+                        </li>
+                    </ul>
+                    <!--标题-->
+                    <h2 class="blog-title" th:text="${session.detail.chapterName}">第28话:孤独的伊娃</h2>
+                    <!--描述-->
+                    <p class="blog-excerpt" th:text="${session.detail.generalize}">机械之城被毁灭后，只有伊娃一个机器人活了下来，她提着矿灯在自己的小屋里面独自发呆，
+                        想起了之前和卡鲁一起玩耍的快乐时光。 于是她决定动身去寻找他们曾经在一起的痕迹，把那些记忆永远的存下来。</p>
+                </div>
+            </div>
 
-        <div class="clear"></div>
-    </div>
-    <div class="space30"></div>
-    <h1 class="title-line">&nbsp;</h1>
-    <div class="space50"></div>
-    <div class="space"></div>
-    <div class="projects-band-nohidden">
-        <ul class="book-item">
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_1.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">斗破苍穹</h4>
-                    </a>
-                    <p class="author center mytext-p">【天蚕土豆】</p>
-                    <p class="type center mytext-p">玄幻/冒险/热血</p>
+            <!--分享-->
+            <div class="share-this">
+                <span class="dotted-line">&nbsp;</span>
+                <div class="inside-share">
+                    <div class="social-info left">
+                        <p class="blue settings-text">分享这章</p>
+                        <small>By: <strong>Larimar</strong></small>
+                    </div>
+                    <!--判断是否关注-->
+                    <div class="focus right">
+                        <button type="button" class="btn btn-danger" th:attr="comic-id=${session.detail.detailId}">关注漫画</button>
+                    </div>
+                    <div class="social-media right">
+                        <!--//th标签中直接写字符串可以用||括起来-->
+                        <a href="#"><img th:src="|/images/social-media/fb.png|" alt=""/></a>
+                        <a href="#"><img th:src="|/images/social-media/twitter.png|" alt=""/></a>
+                        <a href="#"><img th:src="|/images/social-media/youtube.png|" alt=""/></a>
+                        <a href="#"><img th:src="|/images/social-media/deviant.png|" alt=""/></a>
+                        <a href="#"><img th:src="|/images/social-media/flickr.png|" alt=""/></a>
+                        <a href="#"><img th:src="|/images/social-media/delicious.png|" alt=""/></a>
+                        <a href="#"><img th:src="|/images/social-media/linkedin.png|" alt=""/></a>
+                        <a href="#"><img th:src="|/images/social-media/googlebuzz.png|" alt=""/></a>
+                        <a href="#"><img th:src="|/images/social-media/stumbleupon.png|" alt=""/></a>
+                        <a href="#"><img th:src="|/images/social-media/digg.png|" alt=""/></a>
+                    </div>
+                    <div class="clear"></div>
                 </div>
-            </li>
+                <span class="dotted-line">&nbsp;</span>
+            </div>
 
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_2.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">海贼王</h4>
-                    </a>
-                    <p class="author center mytext-p">【尾田荣一郎】</p>
-                    <p class="type center mytext-p">冒险/热血/男生</p>
+            <!--评论内容-->
+            <!-- HERE START COMMENTS AREA -->
+            <h1 class="title-line blue"><span class="current-bg pr5 settings-text">漫画评论</span></h1>
+            <div class="comments-area">
+                <div class="comments-block">
+                    <!--用户名-->
+                    <h3 class="com-author">用户:@小小骚猪</h3>
+                    <!--评论时间-->
+                    <p class="com-text mytext-p3">
+                        这一章节的内容太好了
+                    </p>
+                    <small>Feb, 20 2012 at 3:00 pm - <a href="#" class="blue reply-button">回复</a></small>
+                    <a class="avatar" href="#"><img class="inline-border" th:src="|/images/avatar_1.jpg|"
+                                                    alt=""/></a>
                 </div>
-            </li>
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_3.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">海贼王</h4>
-                    </a>
-                    <p class="author center mytext-p">【尾田荣一郎】</p>
-                    <p class="type center mytext-p">冒险/热血/男生</p>
+                <!--回复内容用 class reply-comment-->
+                <div class="comments-block reply-comment">
+                    <h3 class="com-author">用户:@皮皮虾</h3>
+                    <p class="com-text mytext-p3">
+                        画质也特别赞！
+                    </p>
+                    <small>Feb, 20 2012 at 3:00 pm - <a href="#" class="blue reply-button">回复</a></small>
+                    <a class="avatar" href="#"><img class="inline-border" th:src="|/images/avatar_2.jpg|"
+                                                    alt=""/></a>
                 </div>
-            </li>
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_4.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">斗罗大陆</h4>
-                    </a>
-                    <p class="author center mytext-p">【唐家三少】</p>
-                    <p class="type center mytext-p">玄幻/冒险/热血</p>
-                </div>
-            </li>
 
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_1.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">海贼王</h4>
-                    </a>
-                    <p class="author center mytext-p">【尾田荣一郎】</p>
-                    <p class="type center mytext-p">冒险/热血/男生</p>
+                <div class="comments-block">
+                    <h3 class="com-author">用户:@乐乐</h3>
+                    <p class="com-text mytext-p3">
+                        好惨一只伊娃。 哭撩。。。。
+                    </p>
+                    <small>Feb, 20 2012 at 3:00 pm - <a href="#" class="blue reply-button">回复</a></small>
+                    <a class="avatar" href="#"><img class="inline-border" th:src="|/images/avatar_3.jpg|"
+                                                    alt=""/></a>
                 </div>
-            </li>
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_2.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">火影忍者</h4>
-                    </a>
-                    <p class="author center mytext-p">【岸本齐史】</p>
-                    <p class="type center mytext-p">忍者/冒险/日漫</p>
-                </div>
-            </li>
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_3.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">斗罗大陆</h4>
-                    </a>
-                    <p class="author center mytext-p">【唐家三少】</p>
-                    <p class="type center mytext-p">玄幻/冒险/热血</p>
-                </div>
-            </li>
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_4.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">火影忍者</h4>
-                    </a>
-                    <p class="author center mytext-p">【岸本齐史】</p>
-                    <p class="type center mytext-p">忍者/冒险/日漫</p>
-                </div>
-            </li>
 
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_1.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">斗罗大陆</h4>
-                    </a>
-                    <p class="author center mytext-p">【唐家三少】</p>
-                    <p class="type center mytext-p">玄幻/冒险/热血</p>
+                <div class="comments-block">
+                    <h3 class="com-author">用户:@Larimar</h3>
+                    <p class="com-text mytext-p3">
+                        这么好的一只Eva给我也整一只好么！
+                    </p>
+                    <small>Feb, 20 2012 at 3:00 pm - <a href="#" class="blue reply-button">回复</a></small>
+                    <a class="avatar" href="#"><img class="inline-border" th:src="|/images/avatar_4.jpg|"
+                                                    alt=""/></a>
                 </div>
-            </li>
-            <li><a href="#" class="inline-border"><img th:src="@{/static/images/slider/project_2.jpg}" alt=""
-                                                       width="200"
-                                                       height="225"/></a>
-                <div class="info">
-                    <a href="#" class="description center">
-                        <h4 class="title mytext-title">海贼王</h4>
-                    </a>
-                    <p class="author center mytext-p">【尾田荣一郎】</p>
-                    <p class="type center mytext-p">冒险/热血/男生</p>
+                <div class="space30"></div>
+                <h1 class="title-line blue"><span class="current-bg pr5 settings-text">发送评论</span></h1>
+                <div class="space30"></div>
+
+                <div class="contact-form">
+                    <form action="/" method="post">
+                        <div class="block-form">
+								<textarea name="message" id="message" cols="30" rows="10"
+                                          placeholder="评论..."></textarea>
+                        </div>
+                        <div class="block-form" th:if="${session.user}!=null">
+                            <input type="submit" value="发送" id="submit-form" class="settings-clr"/>
+                        </div>
+                    </form>
+                    <div class="unLogin" th:unless="${session.user}!=null">
+                        <button class="title-large unLogin-info">请先登录！！！</button>
+                    </div>
                 </div>
-            </li>
-        </ul>
-    </div>
-    <span class="dotted-line">&nbsp;</span>
-    <span class="dotted-line">&nbsp;</span>
-    <br>
-    <div class="space50"></div>
-    <div class="pagecontroller pagination-small pagination-center center">
-        <ul class="pagination pagination-lg">
-            <li><a href="#">&laquo;</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&raquo;</a></li>
-        </ul>
+            </div> <!-- .comments-area end of comment area block -->
+        </div>
+
+        <!--右边部分-->
+        <!-- HERE START RIGHT SIDE BLOG -->
+        <div class="grid w330 blog-aside">
+            <div class="search-field">
+                <form action="/" method="get">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="查找更新...">
+                    </div>
+                    <input type="submit" class="loop-search" value=""/>
+                </form>
+            </div>
+
+            <div class="widget-block">
+                <h1 class="title-line blue settings-text"><span class="current-bg pr5"
+                                                                style="font-size:20px">关于我们</span></h1>
+                <p>爱漫吧为纯属个人学习项目，仅作为学习网站部署搭建学习所用，并不具备版权。本站的所有内容均来自网友分享和上传，本站禁止任何形式的下载，
+                    在线漫画的相关版权归原作者及发行商所有！本站欢迎与各大公司进行内容及模式上的合作，如有侵犯到您的权益，请联系我们确认及删除。
+                </p>
+            </div>
+
+            <div class="widget-block">
+                <h1 class="title-line blue settings-text"><span class="current-bg pr5"
+                                                                style="font-size:20px">分类</span></h1>
+                <ul class="circle-bullet-list">
+                    <li><a href="#">全部</a></li>
+                    <li><a href="#">言情</a></li>
+                    <li><a href="#">玄幻</a></li>
+                    <li><a href="#">都市</a></li>
+                    <li><a href="#">冒险</a></li>
+                    <li><a href="#">校园</a></li>
+                    <li><a href="#">仙侠</a></li>
+                    <li><a href="#">搞笑</a></li>
+                </ul>
+            </div>
+
+            <div class="widget-block">
+                <h1 class="title-line blue settings-text"><span class="current-bg pr5"
+                                                                style="font-size:20px">每月更新</span></h1>
+                <ul class="circle-bullet-list">
+                    <li><a href="#">January（一月）</a></li>
+                    <li><a href="#">February（二月）</a></li>
+                    <li><a href="#">March（三月）</a></li>
+                    <li><a href="#">April（四月）</a></li>
+                    <li><a href="#">May（五月）</a></li>
+                    <li><a href="#">June（六月）</a></li>
+                    <li><a href="#">July（七月）</a></li>
+                    <li><a href="#">August（八月）</a></li>
+                    <li><a href="#">September（九月）</a></li>
+                    <li><a href="#">October（十月）</a></li>
+                    <li><a href="#">November（十一月）</a></li>
+                    <li><a href="#">December（十二月）</a></li>
+                </ul>
+            </div>
+
+            <div class="widget-block">
+                <h1 class="title-line blue settings-text"><span class="current-bg pr5"
+                                                                style="font-size:20px">最新评论</span></h1>
+                <div class="tweet">
+                    <p><a href="#">@爱音思坛:</a> 这个网站太棒了，闲暇之余可以看看漫画打发时间</p>
+                    <p class="tweet-hour blue">2 hours ago</p>
+                </div>
+                <div class="tweet">
+                    <p><a href="#">@神漫联盟:</a> 加油加油！！！很不错哦</p>
+                    <p class="tweet-hour blue">2 hours ago</p>
+                </div>
+            </div>
+        </div> <!-- end of right side blog -->
     </div>
 </div> <!-- #content -->
+
 
 <!-- HERE START FOOTER -->
 <div id="footer" class="circle-inline-border">
@@ -272,12 +285,12 @@
             <div class="footer_widget">
                 <h3 class="general-font">Pages</h3>
                 <ul>
-                    <li><a href="index.html">Home Page</a></li>
-                    <li><a href="about.html">About Page</a></li>
-                    <li><a href="services.html">Services Page</a></li>
-                    <li><a href="portfolio.html">Portfolio Page</a></li>
-                    <li><a href="blog.html">Blog Page</a></li>
-                    <li><a href="contact.html">Contact Page</a></li>
+                    <li><a th:href="@{index.html}">Home Page</a></li>
+                    <li><a th:href="@{about.html}">About Page</a></li>
+                    <li><a th:href="@{services.html}">Services Page</a></li>
+                    <li><a th:href="@{list.html}">Portfolio Page</a></li>
+                    <li><a th:href="@{updateLog.html}">Blog Page</a></li>
+                    <li><a th:href="@{contact.html}">Contact Page</a></li>
                 </ul>
             </div><!-- .footer_widget_1 -->
 
@@ -305,23 +318,23 @@
                 </ul>
             </div><!-- .footer_widget_3 -->
             <div class="clear"></div>
-
             <div class="footer_image">
-                <img class="inline-border active" th:src="@{/static/images/slider/footer_home.jpg}" alt="" width="450"
+                <img class="inline-border active" th:src="|/images/slider/footer_home.jpg|" alt=""
+                     width="450"
                      height="250"/>
-                <img class="inline-border" th:src="@{/static/images/slider/footer_2.jpg}" alt="" width="450"
+                <img class="inline-border" th:src="|/images/slider/footer_2.jpg|" alt="" width="450"
                      height="250"/>
-                <img class="inline-border" th:src="@{/static/images/slider/footer_3.jpg}" alt="" width="450"
+                <img class="inline-border" th:src="|/images/slider/footer_3.jpg|" alt="" width="450"
                      height="250"/>
-                <img class="inline-border" th:src="@{/static/images/slider/footer_4.jpg}" alt="" width="450"
+                <img class="inline-border" th:src="|/images/slider/footer_4.jpg|" alt="" width="450"
                      height="250"/>
-                <img class="inline-border" th:src="@{/static/images/slider/footer_5.jpg}" alt="" width="450"
+                <img class="inline-border" th:src="|/images/slider/footer_5.jpg|" alt="" width="450"
                      height="250"/>
-                <img class="inline-border" th:src="@{/static/images/slider/footer_6.jpg}" alt="" width="450"
+                <img class="inline-border" th:src="|/images/slider/footer_6.jpg|" alt="" width="450"
                      height="250"/>
-                <img class="inline-border" th:src="@{/static/images/slider/footer_7.jpg}" alt="" width="450"
+                <img class="inline-border" th:src="|/images/slider/footer_7.jpg|" alt="" width="450"
                      height="250"/>
-                <img class="inline-border" th:src="@{/static/images/slider/footer_8.jpg}" alt="" width="450"
+                <img class="inline-border" th:src="|/images/slider/footer_8.jpg|" alt="" width="450"
                      height="250"/>
 
                 <ul class="social-icons">
