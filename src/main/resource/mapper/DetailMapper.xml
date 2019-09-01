@@ -5,7 +5,7 @@
     <id column="detail_id" property="detailId" />
     <result column="comic_id"  property="comicId" />
     <result column="chaptername"  property="chapterName" />
-    <result column="dpath" property="path" />
+    <result column="path" property="path" />
     <result column="generalize" property="generalize"/>
     <result column="updatetime"  property="updateTime" />
       <association property="comic" javaType="comic" column="comic_id" resultMap="com.larimar.mapper.ComicMapper.BaseResultMap"/>
@@ -49,8 +49,8 @@
 
     <select id="selectAllDetails" resultMap="BaseResultMap">
         select detail_id,detail.comic_id, chaptername,
-               detail.path as dpath, generalize, updatetime,
-               comic.comic_id, comic.path, comicname, author,
+               detail.path as path, generalize, updatetime,
+               comic.comic_id, comic.root, comicname, author,
                status, type, location, newupdate,
                newchaptername, introduction, mark
         from detail,comic
@@ -60,8 +60,8 @@
 
   <select id="selectComicAllDetails" parameterType="Integer" resultMap="BaseResultMap">
       select detail_id,detail.comic_id, chaptername,
-             detail.path as dpath, generalize, updatetime,
-             comic.comic_id, comic.path, comicname, author,
+             detail.path as path, generalize, updatetime,
+             comic.comic_id, comic.root, comicname, author,
              status, type, location, newupdate,
              newchaptername, introduction, mark
     from detail,comic
@@ -73,8 +73,8 @@
   <select id="selectDetailsByType" parameterType="String" resultMap="BaseResultMap">
     <bind name="likeType" value="'%' +type+ '%'"/>
       select detail_id,detail.comic_id, chaptername,
-      detail.path as dpath, generalize, updatetime,
-      comic.comic_id, comic.path, comicname, author,
+      detail.path as path, generalize, updatetime,
+      comic.comic_id, comic.root, comicname, author,
       status, type, location, newupdate,
       newchaptername, introduction, mark
     from detail,comic
@@ -85,11 +85,21 @@
   </select>
     <select id="getDetailById" resultMap="BaseResultMap">
         select detail_id,detail.comic_id, chaptername,
-               detail.path as dpath, generalize, updatetime,
-               comic.comic_id, comic.path, comicname, author,
+               detail.path as path, generalize, updatetime,
+               comic.comic_id, comic.root, comicname, author,
                status, type, location, newupdate,
                newchaptername, introduction, mark
         from detail,comic
         where detail.comic_id=comic.comic_id and detail_id = #{detailId}
+    </select>
+    <select id="selectDetailByComicIdAndChapter" resultMap="BaseResultMap">
+        select detail_id,detail.comic_id, chaptername,
+               detail.path as path, generalize, updatetime,
+               comic.comic_id, comic.root, comicname, author,
+               status, type, location, newupdate,
+               newchaptername, introduction, mark
+        from detail,comic
+        where detail.comic_id=comic.comic_id and detail.comic_id = #{comicId}
+        and chapterName = #{chapterName}
     </select>
 </mapper>

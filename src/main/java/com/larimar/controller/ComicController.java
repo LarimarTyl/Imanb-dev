@@ -70,7 +70,7 @@ public class ComicController {
     public String showDetail(Integer id,HttpServletRequest request){
         String comicRoot = "F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\";
         Detail detailById = detailService.getDetailById(id);
-        File dest = new File( comicRoot+ detailById.getComic().getPath() + "\\" + detailById.getPath());
+        File dest = new File( comicRoot+ detailById.getComic().getRoot() + "\\" + detailById.getPath());
         // FIXME: 2019/8/29  detail添加了一个字段用于存放章节对应的目录下的 图片文件名
         detailById.setImages(getImages(dest));
         request.getSession().setAttribute("detail",detailById);

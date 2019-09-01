@@ -41,7 +41,7 @@ public class CommentMapperTest {
 
     @Test
     public void test(){
-        System.out.println(mapper.selectCommentById(3));
+        System.out.println(mapper.queryAllComments());
     }
     @Test
     public void addComicComment() {

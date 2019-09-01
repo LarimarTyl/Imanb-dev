@@ -92,4 +92,6 @@ public interface CommentMapper {
      * @return 回复评论集合
      */
     public List<Comment> selectUsersRevertComments(Integer userId);
+
+    public int updateComment(Comment comment);
 }

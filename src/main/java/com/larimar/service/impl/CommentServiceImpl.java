@@ -48,6 +48,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public boolean updateComment(Comment comment) {
+        return commentMapper.updateComment(comment)>0;
+    }
+
+    @Override
     public boolean updateCommentStatus(Integer commentId, Integer userId,Integer status) {
         return commentMapper.updateCommentStatus(commentId, userId, status)>0;
     }

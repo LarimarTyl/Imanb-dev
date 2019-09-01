@@ -100,7 +100,7 @@
                 <div class="grid article-content w775 pic-items" style="margin-bottom:0">
                     <ul class="pic-items">
                         <li class="item" th:each="image:${session.detail.getImages()}">
-                            <img th:src="|/images/comics/${session.detail.comic.path}/${session.detail.path}/${image}|" width="800" alt="">
+                            <img th:src="|/images/comics/${session.detail.comic.root}/${session.detail.path}/${image}|" width="800" alt="">
                         </li>
                     </ul>
                     <!--标题-->

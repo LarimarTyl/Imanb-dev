@@ -1,7 +1,5 @@
 package com.larimar.entity;
 
-import java.util.List;
-
 /**
  * @author Larimar
  * @time 2019/8/20 周二 17:37
@@ -9,7 +7,7 @@ import java.util.List;
 public class Comic {
     private Integer comicId;//漫画id
     private String comicName;//漫画名
-    private String path;//漫画路径地址
+    private String root;//漫画路径地址
     private String author;//作者
     private Integer status;//状态 1连载中 0完结 -1停更
     private String type; //类型名
@@ -22,9 +20,9 @@ public class Comic {
     public Comic() {
     }
 
-    public Comic(Integer comicId, String path,String comicName, String author, Integer status, String type, String location, String newUpdate, String newChapterName, String introduction, Double mark) {
+    public Comic(Integer comicId, String root, String comicName, String author, Integer status, String type, String location, String newUpdate, String newChapterName, String introduction, Double mark) {
         this.comicId = comicId;
-        this.path = path;
+        this.root = root;
         this.comicName = comicName;
         this.author = author;
         this.status = status;
@@ -44,12 +42,12 @@ public class Comic {
         this.comicId = comicId;
     }
 
-    public String getPath() {
-        return path;
+    public String getRoot() {
+        return root;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setRoot(String root) {
+        this.root = root;
     }
 
     public String getComicName() {
@@ -129,7 +127,7 @@ public class Comic {
         return "Comic{" +
                 "comicId=" + comicId +
                 ", comicName='" + comicName + '\'' +
-                ", path='" + path + '\'' +
+                ", path='" + root + '\'' +
                 ", author='" + author + '\'' +
                 ", status=" + status +
                 ", type='" + type + '\'' +

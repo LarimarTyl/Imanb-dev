@@ -2,10 +2,7 @@ package com.larimar.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.larimar.entity.Comic;
-import com.larimar.entity.Detail;
-import com.larimar.entity.Orders;
-import com.larimar.entity.User;
+import com.larimar.entity.*;
 import com.larimar.service.*;
 import com.larimar.util.Msg;
 import org.apache.ibatis.annotations.Param;
@@ -43,6 +40,8 @@ public class AdminController {
     OrderService orderService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    HistoryService historyService;
 
 
     @RequestMapping("/admin")
@@ -185,14 +184,14 @@ public class AdminController {
         if (comicService.getComicByName(comic.getComicName()) == null) {
             if (!comic.getNewUpdate().equals("")) {
                 //判断是否有长传目录
-                if (!comic.getPath().equals("")) {
+                if (!comic.getRoot().equals("")) {
                     //获取文件名
                     String filename = file.getOriginalFilename();
                     //判断是否选择了封面
                     if (!filename.equals("")) {
                         //获取文件后缀
                         String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
-                        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getPath() + "\\cover" + suffix);
+                        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getRoot() + "\\cover" + suffix);
                         try {
                             if (dest.delete()) {
                                 System.out.println("原封面删除成功");
@@ -252,7 +251,7 @@ public class AdminController {
         if (!filename.equals("")) {
             //获取文件后缀
             String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
-            File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getPath() + "\\cover" + suffix);
+            File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getRoot() + "\\cover" + suffix);
             try {
                 if (dest.delete()) {
                     System.out.println("原封面删除成功");
@@ -280,7 +279,7 @@ public class AdminController {
     @ResponseBody
     public Msg delComic(Integer id) {
         Comic comic = comicService.getComicById(id);
-        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getPath());
+        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comic.getRoot());
         if (dest.exists()) {
             deleteFile(dest);
         }
@@ -314,7 +313,7 @@ public class AdminController {
             return Msg.fail().add("该漫画不存在，请检查漫画名后重试！", null);
         } else {
             if (files != null && files.length > 0) {
-                String comicPath = comic.getPath();
+                String comicPath = comic.getRoot();
                 if (!detail.getPath().equals("")) {
                     for (int i = 0; i < files.length; i++) {
                         MultipartFile file = files[i];
@@ -352,7 +351,7 @@ public class AdminController {
     @ResponseBody
     public Msg delDetail(Integer id) {
         Detail detail = detailService.getDetailById(id);
-        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + detail.getComic().getPath() + "\\" + detail.getPath());
+        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + detail.getComic().getRoot() + "\\" + detail.getPath());
         if (dest.exists()) {
             deleteFile(dest);
         }
@@ -368,7 +367,7 @@ public class AdminController {
     @ResponseBody
     public Msg getDetailInfo(Integer id) {
         Detail detailById = detailService.getDetailById(id);
-        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + detailById.getComic().getPath() + "\\" + detailById.getPath());
+        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + detailById.getComic().getRoot() + "\\" + detailById.getPath());
         // FIXME: 2019/8/29  detail添加了一个字段用于存放章节对应的目录下的 图片文件名
         detailById.setImages(getImages(dest));
         if (detailById != null) {
@@ -386,7 +385,7 @@ public class AdminController {
             return Msg.fail().add("该漫画不存在，请检查漫画名后重试！", null);
         } else {
             if (files != null && files.length > 0) {
-                String comicPath = comic.getPath();
+                String comicPath = comic.getRoot();
                 if (!detail.getPath().equals("")) {
                     for (int i = 0; i < files.length; i++) {
                         MultipartFile file = files[i];
@@ -421,7 +420,7 @@ public class AdminController {
      */
     @RequestMapping("/orderInfo")
     @ResponseBody
-    public Msg orderInfo(@RequestParam(value = "pn", defaultValue = "1") int pn) {
+    public Msg orderInfo(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         // 引入PageHelper分页插件
         // 在查询之前只需要调用，传入页码，以及每页的大小
         PageHelper.startPage(pn, 5);
@@ -493,6 +492,232 @@ public class AdminController {
             return Msg.success().add("删除订阅信息成功！", null);
         } else {
             return Msg.success().add("删除订阅信息失败！", null);
+        }
+    }
+
+    /**
+     * 评论管理
+     */
+    @RequestMapping("/commentInfo")
+    @ResponseBody
+    public Msg commentInfo(@RequestParam(value = "pn", defaultValue = "1")Integer pn){
+        PageHelper.startPage(pn,5);
+        List<Comment> comments = commentService.getAllComment();
+        PageInfo comment = new PageInfo(comments,5);
+        return Msg.success().add("成功",comment);
+    }
+    @RequestMapping("/addComment")
+    @ResponseBody
+    public Msg addComment(Comment comment, @RequestParam("userName")String userName,@RequestParam("commentType")Integer commentType,@RequestParam("aimId")Integer aimId){
+        User user = userService.findUserByName(userName);
+        if (user!=null){
+            switch (commentType){
+                case 1:
+                    Detail detail = detailService.getDetailById(aimId);
+                    if (detail==null){
+                        return Msg.fail().add("添加失败，评论对象不存在。",null);
+                    }else {
+                        comment.setUser(user);
+                        comment.setUserId(user.getUserId());
+                        comment.setDetailId(detail.getDetailId());
+                        if (commentService.addDetailComment(comment)){
+                            return Msg.success();
+                        }else {
+                            return Msg.fail().add("添加失败",null);
+                        }
+                    }
+                case -1:
+                    Comment revert = commentService.getCommentById(aimId);
+                    if (revert==null){
+                        return Msg.fail().add("添加失败，评论对象不存在。",null);
+                    }else {
+                        comment.setUser(user);
+                        comment.setUserId(user.getUserId());
+                        comment.setCommentAim(revert.getCommentId());
+                        if (commentService.addRevertComment(comment)){
+                            return Msg.success();
+                        }else {
+                            return Msg.fail().add("添加失败",null);
+                        }
+                    }
+                case 0:
+                    Comic comic = comicService.getComicById(aimId);
+                    if (comic==null){
+                        return Msg.fail().add("添加失败，评论对象不存在。",null);
+                    }else {
+                        comment.setUser(user);
+                        comment.setUserId(user.getUserId());
+                        comment.setComicId(comic.getComicId());
+                        if (commentService.addComicComment(comment)){
+                            return Msg.success();
+                        }else {
+                            return Msg.fail().add("添加失败",null);
+                        }
+                    }
+                default:
+                    return Msg.fail().add("添加失败",null);
+            }
+        }else {
+            return Msg.fail().add("添加失败，该用户不存在。",null);
+        }
+    }
+    @RequestMapping("/getCommentInfo")
+    @ResponseBody
+    public Msg getCommentInfo(Integer id){
+        Comment comment = commentService.getCommentById(id);
+        if (comment!=null){
+            return Msg.success().add(null,comment);
+        }else {
+            return Msg.fail().add("获取信息失败",null);
+        }
+    }
+    @RequestMapping("/editComment")
+    @ResponseBody
+    public Msg editComment(Comment comment, @RequestParam("userName")String userName,@RequestParam("commentType")Integer commentType,@RequestParam("aimId")Integer aimId){
+        User user = userService.findUserByName(userName);
+        if (user!=null){
+            switch (commentType){
+                case 1:
+                    Detail detail = detailService.getDetailById(aimId);
+                    if (detail==null){
+                        return Msg.fail().add("修改失败，评论对象不存在。",null);
+                    }else {
+                        comment.setUser(user);
+                        comment.setUserId(user.getUserId());
+                        comment.setDetailId(detail.getDetailId());
+                        if (commentService.updateComment(comment)){
+                            return Msg.success();
+                        }else {
+                            return Msg.fail().add("修改失败",null);
+                        }
+                    }
+                case -1:
+                    Comment revert = commentService.getCommentById(aimId);
+                    if (revert==null){
+                        return Msg.fail().add("修改失败，评论对象不存在。",null);
+                    }else {
+                        comment.setUser(user);
+                        comment.setUserId(user.getUserId());
+                        comment.setCommentAim(revert.getCommentId());
+                        if (commentService.addRevertComment(comment)){
+                            return Msg.success();
+                        }else {
+                            return Msg.fail().add("修改失败",null);
+                        }
+                    }
+                case 0:
+                    Comic comic = comicService.getComicById(aimId);
+                    if (comic==null){
+                        return Msg.fail().add("修改失败，评论对象不存在。",null);
+                    }else {
+                        comment.setUser(user);
+                        comment.setUserId(user.getUserId());
+                        comment.setComicId(comic.getComicId());
+                        if (commentService.addComicComment(comment)){
+                            return Msg.success();
+                        }else {
+                            return Msg.fail().add("修改失败",null);
+                        }
+                    }
+                default:
+                    return Msg.fail().add("修改失败",null);
+            }
+        }else {
+            return Msg.fail().add("修改失败，该用户不存在。",null);
+        }
+    }
+    @RequestMapping("/delComment")
+    @ResponseBody
+    public Msg delComment(Integer id){
+        if (commentService.delComment(id)) {
+            return Msg.success().add("删除评论成功",null);
+        }else {
+            return Msg.fail().add("删除评论失败",null);
+        }
+    }
+
+    /**
+     * 历史管理
+     */
+    @RequestMapping("/historyInfo")
+    @ResponseBody
+    public Msg historyInfo(@RequestParam(value = "pn", defaultValue = "1") Integer pn){
+        PageHelper.startPage(pn,5);
+        List<History> histories = historyService.queryAllHistory();
+        PageInfo history = new PageInfo(histories,5);
+        return Msg.success().add("成功",history);
+    }
+    @RequestMapping("/addHistory")
+    @ResponseBody
+    public Msg addHistory(History history,@RequestParam("userName")String userName,@RequestParam("comicName")String comicName,@RequestParam("chapterName")String chapterName){
+        User user = userService.findUserByName(userName);
+        if (user!=null){
+            Comic comic = comicService.getComicByName(comicName);
+            if (comic!=null){
+                Detail detail = detailService.getDetailByComicAndChapter(comic.getComicId(), chapterName);
+                if (detail!=null){
+                    history.setUserId(user.getUserId());
+                    history.setComicId(comic.getComicId());
+                    history.setDetailId(detail.getDetailId());
+                    if (historyService.addHistory(history)) {
+                        return Msg.success().add("添加浏览历史成功",null);
+                    }else {
+                        return Msg.fail().add("添加浏览历史失败",null);
+                    }
+                }else {
+                    return Msg.fail().add("添加失败,该漫画不存在此章节。",null);
+                }
+            }else {
+                return Msg.fail().add("添加失败,该漫画不存在。",null);
+            }
+        }else {
+            return Msg.fail().add("添加失败，该用户不存在",null);
+        }
+    }
+    @RequestMapping("/getHistoryInfo")
+    @ResponseBody
+    public Msg getHistoryInfo(Integer id){
+        History history = historyService.selectHistoryById(id);
+        if (history!=null){
+            return Msg.success().add("成功获取信息",history);
+        }else {
+            return Msg.fail().add("获取信息失败",null);
+        }
+    }
+    @RequestMapping("/editHistory")
+    @ResponseBody
+    public Msg editHistory(History history,@RequestParam("userName")String userName,@RequestParam("comicName")String comicName,@RequestParam("chapterName")String chapterName){
+        User user = userService.findUserByName(userName);
+        if (user!=null){
+            Comic comic = comicService.getComicByName(comicName);
+            if (comic!=null){
+                Detail detail = detailService.getDetailByComicAndChapter(comic.getComicId(), chapterName);
+                if (detail!=null){
+                    history.setUserId(user.getUserId());
+                    history.setComicId(comic.getComicId());
+                    history.setDetailId(detail.getDetailId());
+                    if (historyService.addHistory(history)) {
+                        return Msg.success().add("修改浏览历史成功",null);
+                    }else {
+                        return Msg.fail().add("修改浏览历史失败",null);
+                    }
+                }else {
+                    return Msg.fail().add("修改失败,该漫画不存在此章节。",null);
+                }
+            }else {
+                return Msg.fail().add("修改失败,该漫画不存在。",null);
+            }
+        }else {
+            return Msg.fail().add("修改失败，该用户不存在",null);
+        }
+    }
+    @RequestMapping("/delHistory")
+    @ResponseBody
+    public Msg delHistory(Integer id){
+        if (historyService.delHistory(id)) {
+            return Msg.success().add("删除该浏览历史成功",null);
+        }else {
+            return Msg.fail().add("删除该浏览历史失败",null);
         }
     }
 }

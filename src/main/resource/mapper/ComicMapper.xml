@@ -3,7 +3,7 @@
 <mapper namespace="com.larimar.mapper.ComicMapper">
     <resultMap id="BaseResultMap" type="comic">
         <id column="comic_id" property="comicId"/>
-        <result column="path" property="path"/>
+        <result column="root" property="root"/>
         <result column="comicname" property="comicName"/>
         <result column="author" property="author"/>
         <result column="status" property="status"/>
@@ -17,9 +17,9 @@
 
     <insert id="addComic" parameterType="comic">
         insert into comic
-        (comic_id, path, comicname, author, status, type, location,
+        (comic_id, root, comicname, author, status, type, location,
         newchaptername, introduction, mark ,newUpdate )
-        VALUES (#{comicId}, #{path}, #{comicName}, #{author},#{status}, #{type},
+        VALUES (#{comicId}, #{root}, #{comicName}, #{author},#{status}, #{type},
                 #{location},#{newChapterName}, #{introduction}, #{mark}
                     <if test="newUpdate!=null">
                         ,#{newUpdate}
@@ -35,8 +35,8 @@
     <update id="updateComic" parameterType="comic">
         update comic
         <set>
-            <if test="path!=null">
-                path=#{path},
+            <if test="root!=null">
+                root=#{root},
             </if>
             <if test="comicName!=null">
                 comicname=#{comicName},

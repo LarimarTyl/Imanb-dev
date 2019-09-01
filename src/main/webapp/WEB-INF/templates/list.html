@@ -123,7 +123,7 @@
         <ul class="book-item">
             <li th:each="comic:${session.comics.list}">
                 <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
-                    <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt=""/>
+                    <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt=""/>
                 </a>
                 <div class="info">
                     <a th:href="@{/detail(id=${comic.comicId})}" class="description center">

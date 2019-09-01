@@ -38,6 +38,11 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
+    public History selectHistoryById(Integer id) {
+        return historyMapper.selectHistoryById(id);
+    }
+
+    @Override
     public List<History> queryAllHistory() {
         return historyMapper.selectAllHistory();
     }

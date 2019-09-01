@@ -67,7 +67,7 @@
         <div id="item-info" th:object="${session.comic}">
             <!-- 漫画图片 -->
             <div class="icon">
-                <img th:src="|/images/comics/*{path}/cover.jpg|" alt="">
+                <img th:src="|/images/comics/*{root}/cover.jpg|" alt="">
             </div>
             <div class="more-info">
                 <h1 class="mytext-title2" th:text="*{comicName}">斗破苍穹</h1>
@@ -130,7 +130,7 @@
                 <ul class="likes">
                     <li th:each="comic:${session.typeLike}">
                         <a th:href="@{/showDetail(id=${comic.comicId})}" class="inline-border">
-                        <img th:src="|/images/comics/${comic.path}/cover.jpg|" width="160" height="200" alt=""/>
+                        <img th:src="|/images/comics/${comic.root}/cover.jpg|" width="160" height="200" alt=""/>
                          </a>
                         <div class="info">
                             <a th:href="@{/showDetail(id=${comic.comicId})}" class="description center">
@@ -214,7 +214,7 @@
                     <span class="mytext-title2-ml">国漫热门排行</span>
                     <li class="rank-items" th:each="comic:${application.chineseRank}">
                         <a th:href="@{/detail(id=${comic.comicId})}">
-                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
+                            <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" class="rank-ican left">
                             <div class="rank-info right">
                                 <div class="left">
                                     <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>
@@ -231,7 +231,7 @@
                     <span class="mytext-title2-ml">日漫热门排行</span>
                     <li class="rank-items" th:each="comic:${application.japaneseRank}">
                         <a th:href="@{/detail(id=${comic.comicId})}">
-                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
+                            <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" class="rank-ican left">
                             <div class="rank-info right">
                                 <div class="left">
                                     <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>
@@ -248,7 +248,7 @@
                     <span class="mytext-title2-ml">综合热门排行</span></h1>
                     <li class="rank-items" th:each="comic:${application.japaneseRank}">
                         <a th:href="@{/detail(id=${comic.comicId})}">
-                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
+                            <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" class="rank-ican left">
                             <div class="rank-info right">
                                 <div class="left">
                                     <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>

@@ -69,8 +69,42 @@
         </if>
     </where>
   </update>
+    <update id="updateComment">
+        update comment
+        <set>
+            <if test="userId!=null">
+                user_id = #{userId}
+            </if>
+            <if test="commentAim!=null">
+                aim = #{commentAim}
+            </if>
+            <if test="comicId!=null">
+                comic_id = #{comicId}
+            </if>
+            <if test="detailId!=null">
+                detail_id = #{detailId}
+            </if>
+            <if test="content!=null">
+                content = #{content}
+            </if>
+            <if test="time!=null">
+                time = #{time}
+            </if>
+            <if test="status!=null">
+                status = #{status}
+            </if>
+            <if test="status=null">
+                status = 0
+            </if>
+        </set>
+        <where>
+            <if test="commentId!=null">
+                and comment_id = #{commentId}
+            </if>
+        </where>
+    </update>
 
-  <select id="selectUsersComments" parameterType="Integer" resultMap="BaseResultMap">
+    <select id="selectUsersComments" parameterType="Integer" resultMap="BaseResultMap">
     select *
     from comment,user
     where user.user_id = comment.user_id and comment.user_id = #{userId} order by time desc

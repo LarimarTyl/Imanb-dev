@@ -69,4 +69,9 @@ public class DetailServiceImpl implements DetailService {
     public Detail getDetailById(Integer id) {
         return detailMapper.getDetailById(id);
     }
+
+    @Override
+    public Detail getDetailByComicAndChapter(Integer comicId, String chapterName) {
+        return detailMapper.selectDetailByComicIdAndChapter(comicId,chapterName);
+    }
 }

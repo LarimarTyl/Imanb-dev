@@ -33,8 +33,12 @@ public class HistoryMapperTest {
             mapper = sqlSession.getMapper(HistoryMapper.class);
         }
     @Test
+    public void test() {
+        System.out.println(mapper.selectHistoryById(3));
+    }
+    @Test
     public void addHistory() {
-//        System.out.println(mapper.addHistory(new History(3,1,"张三",3,"海贼王",17,"第3话：海贼猎人索隆","2019-08-21 14:49:06",0)));
+        System.out.println(mapper.addHistory(new History(3,1,null,3,null,17,null,"2019-08-21 14:49:06",0)));
     }
 
     @Test

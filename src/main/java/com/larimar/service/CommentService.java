@@ -15,6 +15,7 @@ public interface CommentService {
     public boolean addRevertComment(Comment comment);
     public boolean delComment(Integer commentId);
     public boolean delUserComment(Integer commentId,Integer userId);
+    public boolean updateComment(Comment comment);
     public boolean updateCommentStatus(Integer commentId,Integer userId,Integer status);
     public Comment getCommentById(Integer commentId);
     public List<Comment> getAllComment();

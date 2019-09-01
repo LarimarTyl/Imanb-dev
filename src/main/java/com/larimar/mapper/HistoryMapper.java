@@ -56,4 +56,6 @@ public interface HistoryMapper {
      * @return 历史记录集合
      */
     public List<History> selectHistoryByStatus(@Param("userId") Integer userId,@Param("status") Integer status);
+
+    public History selectHistoryById(Integer HistoryId);
 }

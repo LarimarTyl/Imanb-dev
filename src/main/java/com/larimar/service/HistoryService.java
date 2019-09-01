@@ -13,6 +13,7 @@ public interface HistoryService {
     public boolean delHistory(Integer historyId);
     public boolean updateHistory(History history);
     public boolean updateHistoryStatus(Integer comicId,Integer status);
+    public History selectHistoryById(Integer id);
     public List<History> queryAllHistory();
     public List<History> selectUsersAllHistory(Integer userId);
     public List<History> selectUsersHistoryByStatus(Integer userId,Integer status);

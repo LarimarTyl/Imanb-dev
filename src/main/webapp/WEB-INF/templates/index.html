@@ -103,7 +103,7 @@
                 <ul class="popular">
                     <li th:each="comic:${application.likestComic}">
                         <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
-                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt=""/></a>
+                            <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt=""/></a>
                         <div class="info">
                             <a href="#" class="description center">
                                 <h4 class="title mytext-title" th:text="${comic.comicName}">斗破苍穹</h4>
@@ -123,7 +123,7 @@
                 <ul class="newitem">
                     <li th:each="comic:${application.newComic}">
                         <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
-                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" />
+                            <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" />
                         </a>
                         <div class="info">
                             <a href="#" class="description center">
@@ -144,7 +144,7 @@
                 <ul class="newitem">
                     <li th:each="comic:${application.comicByOrderNum}">
                         <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
-                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" />
+                            <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" />
                         </a>
                         <div class="info">
                             <a href="#" class="description center">
@@ -168,7 +168,7 @@
                 <ul class="nav nav-stacked">
                     <li class="rank-items" th:each="comic:${application.chineseRank}">
                         <a th:href="@{/detail(id=${comic.comicId})}">
-                        <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
+                        <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" class="rank-ican left">
                         <div class="rank-info left">
                             <!--获取下标-->
                             <span class="rank-num left" th:text="${comicStat.count}">1</span>
@@ -188,7 +188,7 @@
                 <ul class="nav nav-stacked">
                     <li class="rank-items" th:each="comic:${application.japaneseRank}">
                         <a th:href="@{/detail(id=${comic.comicId})}">
-                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
+                            <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" class="rank-ican left">
                             <div class="rank-info left">
 
                                 <span class="rank-num left" th:text="${comicStat.count}">1</span>
@@ -207,7 +207,7 @@
                 <ul class="nav nav-stacked">
                     <li class="rank-items" th:each="comic:${application.allRank}">
                         <a th:href="@{/detail(id=${comic.comicId})}">
-                            <img th:src="|/images/comics/${comic.path}/cover.jpg|" alt="" class="rank-ican left">
+                            <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" class="rank-ican left">
                             <div class="rank-info left">
                                 <span class="rank-num left" th:text="${comicStat.count}">1</span>
                                 <div class="left">

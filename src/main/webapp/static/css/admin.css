@@ -282,3 +282,11 @@ table.detail-table> thead > tr > th, table.detail-table> tbody > tr > th, table.
 {
     line-height: 80px;
 }
+table.comment-table> thead > tr > th, table.comment-table> tbody > tr > th, table.comment-table> tfoot > tr > th, table.comment-table> thead > tr > td, table.comment-table> tbody > tr > td, table.comment-table> tfoot > tr > td
+{
+    line-height: 80px;
+}
+table.history-table> thead > tr > th, table.history-table> tbody > tr > th, table.history-table> tfoot > tr > th, table.history-table> thead > tr > td, table.history-table> tbody > tr > td, table.history-table> tfoot > tr > td
+{
+    line-height: 80px;
+}

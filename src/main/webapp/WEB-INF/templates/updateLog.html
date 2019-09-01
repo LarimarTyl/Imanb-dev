@@ -102,7 +102,7 @@
                 <div class="grid article-content w775">
                     <p>
                         <a class="thumb-blog" th:href="@{/showDetail(id=${detail.detailId})}">
-                        <img class="inline-border " th:src="|/images/comics/${detail.comic.path}/${detail.path}/1.jpg|" alt=""/>
+                        <img class="inline-border " th:src="|/images/comics/${detail.comic.root}/${detail.path}/1.jpg|" alt=""/>
                         </a>
                     </p>
                     <h2 class="blog-title" th:text="${detail.chapterName}">机械总动员第28话:孤独的伊娃</h2>

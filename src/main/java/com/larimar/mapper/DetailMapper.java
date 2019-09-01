@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.Detail;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -48,5 +49,7 @@ public interface DetailMapper {
     public List<Detail> selectDetailsByType(String type);
 
     public Detail getDetailById(Integer detailId);
+
+    public Detail selectDetailByComicIdAndChapter(@Param("comicId") Integer comicId,@Param("chapterName") String chapterName);
 
 }

@@ -38,23 +38,31 @@
     set detail_id = #{detailId},lastreadtime = #{lastReadTime},status = #{status}
     where comic_id = #{comicId} and user_id = #{userId} and history_id=#{historyId}
   </update>
-  <select id="selectAllHistory" parameterType="Integer" resultMap="BaseResultMap">
+  <select id="selectAllHistory" resultMap="BaseResultMap">
     select *
     from history,comic,user,detail
-    where history.comic_id = comic.comic_id = detail.comic_id and
+    where history.comic_id = comic.comic_id and history.comic_id  = detail.comic_id and
       history.detail_id = detail.detail_id and user.user_id = history.user_id
+    order by history_id desc
+  </select>
+  <select id="selectHistoryById" resultMap="BaseResultMap">
+    select *
+    from history,comic,user,detail
+    where history.comic_id = comic.comic_id and history.comic_id  = detail.comic_id and
+      history.detail_id = detail.detail_id and user.user_id = history.user_id
+      and history_id=#{historyId}
   </select>
     <select id="selectUsersAllHistory" parameterType="Integer" resultMap="BaseResultMap">
       select *
       from history,comic,user,detail
-      where history.comic_id = comic.comic_id = detail.comic_id and
+      where history.comic_id = comic.comic_id and history.comic_id  = detail.comic_id and
            history.detail_id = detail.detail_id and user.user_id = history.user_id
         and history.user_id=#{userId}
     </select>
   <select id="selectHistoryByStatus" resultMap="BaseResultMap">
     select *
     from history,comic,user,detail
-    where history.comic_id = comic.comic_id = detail.comic_id and
+    where history.comic_id = comic.comic_id and history.comic_id  = detail.comic_id and
       history.detail_id = detail.detail_id and user.user_id = history.user_id
       and history.user_id=#{userId} and history.status=#{status}
   </select>
