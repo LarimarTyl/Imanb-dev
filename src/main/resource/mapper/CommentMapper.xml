@@ -27,16 +27,38 @@
     insert into comment(comment_id, user_id, aim, content, status, time)
     values (#{commentId},#{userId},#{commentAim},#{content},#{status},#{time})
   </insert>
+  <insert id="addComment">
+    insert into comment(comment_id, user_id, aim,comic_id,detail_id, content, status, time)
+    values (#{commentId},#{userId},
+            <if test="commentAim!=null">
+                aim=#{commentAim},
+            </if>
+            <if test="comicId!=null">
+                 comic_id=#{comicId},
+            </if>
+            <if test="detailId!=null">
+              comic_id=#{detailId},
+            </if>
+            #{content},#{status},#{time})
+  </insert>
 
-  <delete id="delComment" parameterType="Integer">
+  <delete id="delUserComment" parameterType="Integer">
     delete from comment
     where comment_id = #{commentId} and user_id=#{userId}
   </delete>
-
+  <delete id="delComment" parameterType="Integer">
+        delete from comment
+        where comment_id = #{commentId}
+  </delete>
   <update id="updateCommentStatus" >
     update comment
     <set>
-            status = 1
+        <if test="status!=null">
+            status = #{status}
+        </if>
+        <if test="status=null">
+            status = 0
+        </if>
     </set>
     <where>
         <if test="userId!=null">
@@ -48,7 +70,7 @@
     </where>
   </update>
 
-  <select id="selectAllComments" parameterType="Integer" resultMap="BaseResultMap">
+  <select id="selectUsersComments" parameterType="Integer" resultMap="BaseResultMap">
     select *
     from comment,user
     where user.user_id = comment.user_id and comment.user_id = #{userId} order by time desc
@@ -71,7 +93,16 @@
     from comment,user
     where user.user_id = comment.user_id and aim = #{commentAim} order by time
   </select>
-
+  <select id="selectUsersRevertComments" resultMap="BaseResultMap">
+    select *
+    from comment,user
+    where user.user_id = comment.user_id
+      and aim in
+          (SELECT comment_id
+          FROM comment WHERE
+            user_id = 1)
+    order by time
+  </select>
 <!--  查看用户对应状态的评论-->
   <select id="selectCommentsByStatus" parameterType="Integer" resultMap="BaseResultMap">
     select *
@@ -81,5 +112,14 @@
       and comment.status=#{status}
     order by time desc;
   </select>
-
+    <select id="queryAllComments" resultMap="BaseResultMap">
+      select *
+      from comment,user
+      where user.user_id = comment.user_id order by time desc
+    </select>
+  <select id="selectCommentById" resultMap="BaseResultMap">
+      select *
+      from comment,user
+      where user.user_id = comment.user_id and comment_id = #{commentId}
+  </select>
 </mapper>

@@ -38,6 +38,11 @@ public class CommentMapperTest {
             SqlSession sqlSession = factory.openSession();
             mapper = sqlSession.getMapper(CommentMapper.class);
         }
+
+    @Test
+    public void test(){
+        System.out.println(mapper.selectCommentById(3));
+    }
     @Test
     public void addComicComment() {
 //        System.out.println(mapper.addComicComment(new Comment(12,3,"larimar","larimar",null,2,null,"666",0,"2019-08-21 15:30:21")));
@@ -55,17 +60,17 @@ public class CommentMapperTest {
 
     @Test
     public void delComment() {
-        System.out.println(mapper.delComment(11,3));
+        System.out.println(mapper.delComment(11));
     }
 
     @Test
     public void updateCommentStatus() {
-        System.out.println(mapper.updateCommentStatus(12,3));
+        System.out.println(mapper.updateCommentStatus(12,3,2));
     }
 
     @Test
     public void selectAllComments() {
-        System.out.println(mapper.selectAllComments(1));
+        System.out.println(mapper.selectUsersComments(1));
     }
 
     @Test
@@ -88,7 +93,7 @@ public class CommentMapperTest {
     @Test
     // TODO: 2019/8/22 测试留言系统
     public void testCommentsSystem(){
-        List<Comment> comments = mapper.selectAllComments(1);
+        List<Comment> comments = mapper.selectUsersComments(1);
 
         for (Comment c : comments) {
             Reply reply = new Reply(c);

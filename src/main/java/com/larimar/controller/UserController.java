@@ -1,6 +1,14 @@
 package com.larimar.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.larimar.entity.Comment;
+import com.larimar.entity.History;
+import com.larimar.entity.Orders;
 import com.larimar.entity.User;
+import com.larimar.service.CommentService;
+import com.larimar.service.HistoryService;
+import com.larimar.service.OrderService;
 import com.larimar.service.UserService;
 import com.larimar.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -24,10 +33,44 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private HistoryService historyService;
+
     @RequestMapping("/user")
-    public String userInfo(){
+    public String userInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn, HttpServletRequest request){
         return "user";
     }
+
+    // TODO: 2019/9/1 待处理 用户的回复 订阅 浏览历史通过ajax获取和刷新
+    @RequestMapping("/userRevert")
+    public Msg getUserRevert(@RequestParam(value = "pn",defaultValue = "1")Integer pn, HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,10);
+        List<Comment> usersRevertComment = commentService.getUsersRevertComment(user.getUserId());
+        PageInfo userRevent = new PageInfo(usersRevertComment);
+        return null;
+    }
+    @RequestMapping("/userOrder")
+    public Msg getUserOrder(@RequestParam(value = "pn",defaultValue = "1")Integer pn, HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,8);
+        List<Orders> userOrders = orderService.selectUsersAllOrders(user.getUserId());
+        PageInfo userOrder = new PageInfo( userOrders);
+        return null;
+    }
+    @RequestMapping("/userHistory")
+    public Msg getUserHistory(@RequestParam(value = "pn",defaultValue = "1")Integer pn, HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,8);
+        List<History> userHistorys = historyService.selectUsersAllHistory(user.getUserId());
+        PageInfo userHistory = new PageInfo( userHistorys);
+        return null;
+    }
+
     @RequestMapping("/doLogin")
     public String doLogin(String userName, String password, String validateCode, HttpServletRequest request){
         String code = (String) request.getSession().getAttribute("validateCode");
