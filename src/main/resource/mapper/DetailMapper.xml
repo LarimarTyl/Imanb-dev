@@ -102,4 +102,24 @@
         where detail.comic_id=comic.comic_id and detail.comic_id = #{comicId}
         and chapterName = #{chapterName}
     </select>
+    <select id="selectByOptions" parameterType="com.larimar.selectPojo.DetailSelect" resultMap="BaseResultMap">
+
+        select * from detail,comic
+        where detail.comic_id=comic.comic_id
+        <if test="comicName!=null">
+            <bind name="comicLike" value="'%'+comicName+'%'"/>
+            <if test="comicName!=''">
+                and comic.comicname like #{comicLike}
+            </if>
+        </if>
+        <if test="typeName!=null">
+            <bind name="likeType" value="'%' +typeName+ '%'"/>
+            <if test="typeName!=''">
+                and comic.type like #{likeType}
+            </if>
+        </if>
+          <if test="location!=''">
+            and comic.location=#{location}
+        </if>
+    </select>
 </mapper>

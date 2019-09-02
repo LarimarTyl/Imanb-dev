@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.User;
+import com.larimar.selectPojo.UserSelect;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
@@ -31,11 +32,10 @@ public class UserMapperTest {
          mapper = sqlSession.getMapper(UserMapper.class);
     }
 
-//    @Test
-//    public void saveUser() {
-//        System.out.println(mapper.saveUser(new User(99,"test","女","yue","875843160@qq.com","875843160","que","user",0)));
-//        System.out.println(mapper.saveUser(new User(100,"test","女","yue","875843160@qq.com","875843160","que","user",0)));
-//    }
+    @Test
+    public void saveUser() {
+        System.out.println(mapper.selectByOptions(new UserSelect("root","男")));
+    }
 
 //    @Test
 //    public void delUser() {

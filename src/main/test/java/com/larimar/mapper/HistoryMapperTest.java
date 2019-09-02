@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.History;
+import com.larimar.selectPojo.HistorySelect;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
@@ -11,8 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import static org.junit.Assert.*;
 
 /**
  * @author Larimar
@@ -34,7 +33,7 @@ public class HistoryMapperTest {
         }
     @Test
     public void test() {
-        System.out.println(mapper.selectHistoryById(3));
+        System.out.println(mapper.selectByOptions(new HistorySelect("admin","海贼王",0)));
     }
     @Test
     public void addHistory() {

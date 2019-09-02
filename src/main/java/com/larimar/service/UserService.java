@@ -1,6 +1,7 @@
 package com.larimar.service;
 
 import com.larimar.entity.User;
+import com.larimar.selectPojo.UserSelect;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public interface UserService {
     public boolean updatePassWord(String newPassWord,Integer userId);
     public boolean updatePhoto(String newPhoto,Integer userId);
     public List<User> queryAllUsers();
+    public List<User> selectByOption(UserSelect userSelect);
     public User findUserById(Integer userId);
     public User findUserByName(String userName);
 }

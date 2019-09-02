@@ -1,6 +1,7 @@
 package com.larimar.service;
 
 import com.larimar.entity.History;
+import com.larimar.selectPojo.HistorySelect;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface HistoryService {
     public boolean updateHistoryStatus(Integer comicId,Integer status);
     public History selectHistoryById(Integer id);
     public List<History> queryAllHistory();
+    public List<History> selectByOption(HistorySelect historySelect);
     public List<History> selectUsersAllHistory(Integer userId);
     public List<History> selectUsersHistoryByStatus(Integer userId,Integer status);
 }

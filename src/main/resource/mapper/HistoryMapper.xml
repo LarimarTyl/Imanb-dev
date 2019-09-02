@@ -66,4 +66,25 @@
       history.detail_id = detail.detail_id and user.user_id = history.user_id
       and history.user_id=#{userId} and history.status=#{status}
   </select>
+    <select id="selectByOptions" parameterType="com.larimar.selectPojo.HistorySelect" resultMap="BaseResultMap">
+      select *
+      from history,comic,user,detail
+      where history.comic_id = comic.comic_id and history.comic_id  = detail.comic_id and
+        history.detail_id = detail.detail_id and user.user_id = history.user_id
+      <if test="status!=null">
+        and history.status=#{status}
+      </if>
+      <if test="userName!=null">
+        <bind name="userLike" value="'%'+userName+'%'"/>
+        <if test="userName!=''">
+          and user.username like #{userLike}
+        </if>
+      </if>
+      <if test="comicName!=null">
+        <bind name="comicLike" value="'%'+comicName+'%'"/>
+        <if test="comicName!=''">
+          and comic.comicname like #{comicLike}
+        </if>
+      </if>
+    </select>
 </mapper>

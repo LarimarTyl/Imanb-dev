@@ -73,25 +73,26 @@
         update comment
         <set>
             <if test="userId!=null">
-                user_id = #{userId}
+                comment.user_id = #{userId},
             </if>
+
             <if test="commentAim!=null">
-                aim = #{commentAim}
+                comment.aim = #{commentAim},
             </if>
             <if test="comicId!=null">
-                comic_id = #{comicId}
+                comment.comic_id = #{comicId},
             </if>
             <if test="detailId!=null">
-                detail_id = #{detailId}
+                comment.detail_id = #{detailId},
             </if>
             <if test="content!=null">
-                content = #{content}
+                comment.content = #{content},
             </if>
             <if test="time!=null">
-                time = #{time}
+                time = #{time},
             </if>
             <if test="status!=null">
-                status = #{status}
+                status = #{status},
             </if>
             <if test="status=null">
                 status = 0
@@ -156,4 +157,41 @@
       from comment,user
       where user.user_id = comment.user_id and comment_id = #{commentId}
   </select>
+    <select id="selectByOptions" parameterType="com.larimar.selectPojo.CommentSelect" resultMap="BaseResultMap">
+        select *
+        from comment,user
+        where user.user_id = comment.user_id
+        <if test="commentType!=''">
+                <if test="commentType eq 0">
+                    <if test="aimId!=null">
+                        and comment.comic_id = #{aimId}
+                    </if>
+                    <if test="aimId==null">
+                        and comment.comic_id is not null
+                    </if>
+                </if>
+                <if test="commentType gt 0">
+                    <if test="aimId!=null">
+                        and comment.detail_id = #{aimId}
+                    </if>
+                    <if test="aimId==null">
+                        and comment.detail_id is not null
+                    </if>
+                </if>
+                <if test="commentType lt 0">
+                    <if test="aimId!=null">
+                        and comment.aim = #{aimId}
+                    </if>
+                    <if test="aimId==null">
+                        and comment.aim is not null
+                    </if>
+                </if>
+        </if>
+        <if test="userName!=null">
+            <bind name="userLike" value="'%' + userName + '%'"/>
+            <if test="userName!=''">
+                    and  user.username like #{userLike}
+            </if>
+        </if>
+    </select>
 </mapper>

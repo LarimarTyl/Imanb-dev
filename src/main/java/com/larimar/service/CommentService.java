@@ -1,6 +1,7 @@
 package com.larimar.service;
 
 import com.larimar.entity.Comment;
+import com.larimar.selectPojo.CommentSelect;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public interface CommentService {
     public boolean updateCommentStatus(Integer commentId,Integer userId,Integer status);
     public Comment getCommentById(Integer commentId);
     public List<Comment> getAllComment();
+    public List<Comment> selectByOption(CommentSelect commentSelect);
     public List<Comment> getUsersComment(Integer userId);
     public List<Comment> getUsersCommentByStatus(Integer userId,Integer status);
     public List<Comment> getUsersRevertComment(Integer userId);

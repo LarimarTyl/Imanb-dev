@@ -2,6 +2,8 @@ package com.larimar.service;
 
 import com.larimar.entity.Comic;
 import com.larimar.entity.Conditon;
+import com.larimar.selectPojo.ComicSelect;
+import com.larimar.selectPojo.CommentSelect;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public interface ComicService {
     public Comic getComicByName(String comicName);
     public List<Comic> queryComicTypeLike(String type);
     public List<Comic> queryAllComic();
+    public List<Comic> selectByOption(ComicSelect comicSelect);
     public List<Comic> findLikestComic();
     public List<Comic> findNewComic();
     public List<Comic> findComicByOrderNum();

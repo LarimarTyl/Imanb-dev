@@ -14,7 +14,6 @@
         <result column="introduction" property="introduction"/>
         <result column="mark" property="mark"/>
     </resultMap>
-
     <insert id="addComic" parameterType="comic">
         insert into comic
         (comic_id, root, comicname, author, status, type, location,
@@ -192,5 +191,27 @@
         where c.comic_id = a.comic_id
         ORDER BY likesNum DESC
     </select>
-
+    <select id="selectByOptions" parameterType="com.larimar.selectPojo.ComicSelect" resultMap="BaseResultMap">
+        select * from comic
+        <where>
+            <if test="comicName!=null">
+                <bind name="comicLike" value="'%'+comicName+'%'"/>
+                <if test="comicName!=''">
+                    and comic.comicname like #{comicLike}
+                </if>
+            </if>
+            <if test="typeName!=null">
+                <bind name="likeType" value="'%' +typeName+ '%'"/>
+                <if test="typeName!=''">
+                     and comic.type like #{likeType}
+                </if>
+            </if>
+            <if test="location!=''">
+                and comic.location=#{location}
+            </if>
+            <if test="status!=null">
+                and comic.status=#{status}
+            </if>
+        </where>
+    </select>
 </mapper>

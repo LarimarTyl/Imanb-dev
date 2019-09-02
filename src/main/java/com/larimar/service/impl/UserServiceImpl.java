@@ -2,6 +2,7 @@ package com.larimar.service.impl;
 
 import com.larimar.entity.User;
 import com.larimar.mapper.UserMapper;
+import com.larimar.selectPojo.UserSelect;
 import com.larimar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,6 +75,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> queryAllUsers() {
         return userMapper.selectAllUsers();
+    }
+
+    @Override
+    public List<User> selectByOption(UserSelect userSelect) {
+        return userMapper.selectByOptions(userSelect);
     }
 
     @Override

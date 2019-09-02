@@ -3,6 +3,7 @@ package com.larimar.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.larimar.entity.*;
+import com.larimar.selectPojo.*;
 import com.larimar.service.*;
 import com.larimar.util.Msg;
 import org.apache.ibatis.annotations.Param;
@@ -161,6 +162,18 @@ public class AdminController {
             return Msg.success().add("删除用户信息失败！", null);
         }
     }
+    @RequestMapping("/userSelect")
+    @ResponseBody
+    public Msg userSelect(@RequestParam(value = "pn", defaultValue = "1") Integer pn,UserSelect userSelect){
+        PageHelper.startPage(pn,7);
+        List<User> user = userService.selectByOption(userSelect);
+        if (user.size()>0){
+             PageInfo users = new PageInfo(user);
+            return Msg.success().add("成功查到",users);
+        }else {
+            return Msg.fail().add("没有查到符合条件的数据。",null);
+        }
+    }
 
 
     /**
@@ -290,6 +303,19 @@ public class AdminController {
         }
     }
 
+    @RequestMapping("/comicSelect")
+    @ResponseBody
+    public Msg comicSelect(@RequestParam(value = "pn", defaultValue = "1") Integer pn, ComicSelect comicSelect){
+        PageHelper.startPage(pn,5);
+        List<Comic> comic = comicService.selectByOption(comicSelect);
+        if (comic.size()>0){
+            PageInfo comics = new PageInfo(comic);
+            return Msg.success().add("成功查到",comics);
+        }else {
+            return Msg.fail().add("没有查到符合条件的数据。",null);
+        }
+
+    }
 
     /**
      * 章节详情管理
@@ -414,6 +440,20 @@ public class AdminController {
         return Msg.success().add("修改章节成功！", null);
     }
 
+    @RequestMapping("/detailSelect")
+    @ResponseBody
+    public Msg detailSelect(@RequestParam(value = "pn", defaultValue = "1") Integer pn, DetailSelect detailSelect){
+        PageHelper.startPage(pn,5);
+        List<Detail> detail = detailService.selectByOption(detailSelect);
+        if (detail.size()>0){
+            PageInfo details = new PageInfo(detail);
+            return Msg.success().add("成功查到",details);
+        }else {
+            return Msg.fail().add("没有查到符合条件的数据。",null);
+        }
+
+    }
+
 
     /**
      * 订阅管理
@@ -494,7 +534,21 @@ public class AdminController {
             return Msg.success().add("删除订阅信息失败！", null);
         }
     }
+    
+    @RequestMapping("/orderSelect")
+    @ResponseBody
+    public Msg orderSelect(@RequestParam(value = "pn", defaultValue = "1") Integer pn, OrderSelect orderSelect){
+        PageHelper.startPage(pn,5);
+        List<Orders> order = orderService.selectByOption(orderSelect);
+        if (order.size()>0){
+            PageInfo orders = new PageInfo(order);
+            return Msg.success().add("成功查到",orders);
+        }else {
+            return Msg.fail().add("没有查到符合条件的数据。",null);
+        }
 
+    }  
+    
     /**
      * 评论管理
      */
@@ -635,6 +689,19 @@ public class AdminController {
             return Msg.fail().add("删除评论失败",null);
         }
     }
+    
+    @RequestMapping("/commentSelect")
+    @ResponseBody
+    public Msg commentSelect(@RequestParam(value = "pn", defaultValue = "1") Integer pn, CommentSelect commentSelect){
+        PageHelper.startPage(pn,5);
+        List<Comment> comment = commentService.selectByOption(commentSelect);
+        if (comment.size()>0){
+            PageInfo comments = new PageInfo(comment);
+            return Msg.success().add("成功查到",comments);
+        }else {
+            return Msg.fail().add("没有查到符合条件的数据。",null);
+        }
+    }
 
     /**
      * 历史管理
@@ -696,7 +763,7 @@ public class AdminController {
                     history.setUserId(user.getUserId());
                     history.setComicId(comic.getComicId());
                     history.setDetailId(detail.getDetailId());
-                    if (historyService.addHistory(history)) {
+                    if (historyService.updateHistory(history)) {
                         return Msg.success().add("修改浏览历史成功",null);
                     }else {
                         return Msg.fail().add("修改浏览历史失败",null);
@@ -719,5 +786,19 @@ public class AdminController {
         }else {
             return Msg.fail().add("删除该浏览历史失败",null);
         }
+    }
+
+    @RequestMapping("/historySelect")
+    @ResponseBody
+    public Msg historySelect(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HistorySelect historySelect){
+        PageHelper.startPage(pn,5);
+        List<History> history = historyService.selectByOption(historySelect);
+        if (history.size()>0){
+            PageInfo historys = new PageInfo(history);
+            return Msg.success().add("成功查到",historys);
+        }else {
+            return Msg.fail().add("没有查到符合条件的数据。",null);
+        }
+
     }
 }

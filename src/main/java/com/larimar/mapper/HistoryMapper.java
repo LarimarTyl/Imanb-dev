@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.History;
+import com.larimar.selectPojo.HistorySelect;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -48,6 +49,7 @@ public interface HistoryMapper {
      */
     public List<History> selectUsersAllHistory(Integer userId);
     public List<History> selectAllHistory();
+    public List<History> selectByOptions(HistorySelect historySelect);
 
     /**
      * 查询用户对应状态的历史记录

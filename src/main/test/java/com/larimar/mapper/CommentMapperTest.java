@@ -1,8 +1,8 @@
 package com.larimar.mapper;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.larimar.entity.Comment;
 import com.larimar.entity.Reply;
+import com.larimar.selectPojo.CommentSelect;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
@@ -14,10 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.LinkedList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * @author Larimar
@@ -41,7 +38,7 @@ public class CommentMapperTest {
 
     @Test
     public void test(){
-        System.out.println(mapper.queryAllComments());
+        System.out.println(mapper.selectByOptions(new CommentSelect(null,0,1)));
     }
     @Test
     public void addComicComment() {

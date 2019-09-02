@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.Orders;
+import com.larimar.selectPojo.OrderSelect;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -53,13 +54,14 @@ public interface OrdersMapper {
      * @return 订阅集合
      */
     public List<Orders> selectAllOrders();
+    public List<Orders> selectByOptions(OrderSelect orderSelect);
     /**
      * 查询用户指定状态的订阅（未读更新订阅 已读更新订阅）
      * @param userId 用户id
      * @param status 状态码（0未更新； 1已更新； -1未读更新）
      * @return
      */
-    public List<Orders> selectAllOrdersByStatus(@Param("userId") Integer userId,@Param("status") Integer status);
+    public List<Orders> selectAllOrdersByStatus(@Param("userId") Integer userId, @Param("status") Integer status);
 
     public Orders getOrdersById(Integer ordersId);
 

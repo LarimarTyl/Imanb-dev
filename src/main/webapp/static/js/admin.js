@@ -100,7 +100,137 @@ function to_Page(pn) {
     historyTo_page(pn);
 }
 
+function getUserSelect(pn) {
+    var formData = new FormData($("#user-search")[0]);
+    formData.append("pn",pn);
+    $.ajax({
+        url: rootPath + "userSelect",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            if (result.code==200){
+                var users = result.data;
+                build_user_tables2(users);
+            }else {
+                if (alert (result.msg)){
+                    userTo_page(1)
+                }
+            }
+        }
+    })
+}
+function getComicSelect(pn) {
+    var formData = new FormData($("#comic-search")[0]);
+    formData.append("pn",pn);
+    $.ajax({
+        url: rootPath + "comicSelect",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            if (result.code==200){
+                var comics = result.data;
+                build_comic_tables2(comics);
+            }else {
+                if (alert (result.msg)){
+                    comicTo_page(1)
+                }
+            }
+        }
+    })
+}
+function getDetailSelect(pn) {
+    var formData = new FormData($("#detail-search")[0]);
+    formData.append("pn",pn);
+    $.ajax({
+        url: rootPath + "detailSelect",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            if (result.code==200){
+                var details = result.data;
+                build_detail_tables2(details);
+            }else {
+                if (alert (result.msg)){
+                detailTo_page(1)
+                }
+            }
+        }
+    })
+}
+function getOrderSelect(pn) {
+    var formData = new FormData($("#order-search")[0]);
+    formData.append("pn",pn);
+    $.ajax({
+        url: rootPath + "orderSelect",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            if (result.code==200){
+                var orders = result.data;
+                build_order_tables2(orders);
+            }else {
+                if (alert (result.msg)){
+                orderTo_page(1)
+                }
+            }
+        }
+    })
+}
+function getCommentSelect(pn) {
+    var formData = new FormData($("#comment-search")[0]);
+    formData.append("pn",pn);
+    $.ajax({
+        url: rootPath + "commentSelect",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            if (result.code==200){
+                var comments = result.data;
+                build_comment_tables2(comments);
+            }else {
+                if (alert (result.msg)) {
+                    commentTo_page(1)
+                }
+            }
+        }
+    })
+}
+function getHistorySelect(pn) {
+
+    var formData = new FormData($("#history-search")[0]);
+    formData.append("pn",pn);
+    $.ajax({
+        url: rootPath + "historySelect",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            if (result.code==200){
+                var historys = result.data;
+                build_history_tables2(historys);
+            }else {
+                if (alert (result.msg)){
+                historyTo_page(1)
+                }
+            }
+        }
+    })
+}
+
+
 function userTo_page(pn) {
+    $("#user-search")[0].reset();
     $.ajax({
         url: rootPath + "userInfo",
         data: "pn=" + pn,
@@ -113,6 +243,7 @@ function userTo_page(pn) {
 }
 
 function orderTo_page(pn) {
+    $("#order-search")[0].reset();
     $.ajax({
         url: rootPath + "orderInfo",
         data: "pn=" + pn,
@@ -125,6 +256,7 @@ function orderTo_page(pn) {
 }
 
 function detailTo_page(pn) {
+    $("#detail-search")[0].reset();
     $.ajax({
         url: rootPath + "detailInfo",
         data: "pn=" + pn,
@@ -137,6 +269,7 @@ function detailTo_page(pn) {
 }
 
 function comicTo_page(pn) {
+    $("#comic-search")[0].reset();
     $.ajax({
         url: rootPath + "comicInfo",
         data: "pn=" + pn,
@@ -149,6 +282,7 @@ function comicTo_page(pn) {
 }
 
 function commentTo_page(pn) {
+    $("#comment-search")[0].reset();
     $.ajax({
         url: rootPath + "commentInfo",
         data: "pn=" + pn,
@@ -161,6 +295,7 @@ function commentTo_page(pn) {
 }
 
 function historyTo_page(pn) {
+    $("#history-search")[0].reset();
     $.ajax({
         url: rootPath + "historyInfo",
         data: "pn=" + pn,
@@ -439,7 +574,7 @@ function build_comment_tables(comments) {
             aim = $("<th></th>").append("章节id：" + item.detailId);
         }
         if (item.commentAim != null) {
-            aim = $("<th></th>").append("回复id：" + item.commentId);
+            aim = $("<th></th>").append("回复id：" + item.commentAim);
         }
         var text = $("<textarea name='content' style='border: none' id='text' class='form-control' readonly rows='3'></textarea>").append(item.content);
         var textarea = $("<th></th>").append(text);
@@ -557,7 +692,391 @@ function build_history_tables(historys) {
         historyTo_page(totalPage)
     })
 }
+//查询更新数据
+function build_user_tables2(users) {
+    var list = users.list;//获取数据
+    //清空table
+    $(".user-table tbody").empty();
+    //添加数据
+    $.each(list, function (index, item) {
+        var id = $("<td></td>").append(item.userId);
+        var img = $("<img alt=''  class='userPhoto'>").attr("src", "/images/user/" + item.photo + ".jpg");
+        var photo = $("<th></th>").append(img);
+        var username = $("<th></th>").append(item.userName);
+        var password = $("<th></th>").append(item.password);
+        var gender = $("<th></th>").append(item.gender);
+        var email = $("<th></th>").append(item.email);
+        var qq = $("<th></th>").append(item.qq);
+        var nickName = $("<th></th>").append(item.nickName);
+        var userstatu;
+        switch (item.status) {
+            case (0):
+                userstatu = "未激活";
+                break;
+            case (1):
+                userstatu = "已激活";
+                break;
+            case (-1):
+                userstatu = "封禁";
+        }
+        var status = $("<th></th>").append(userstatu);
+        var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editUser'>修改</a>").attr("edit-id", item.userId);
+        var del = $("<a  class='btn btn-danger btn-xs' id='btn-delUser'>删除</a>").attr("del-id", item.userId);
+        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        $("<tr></tr>").append(id).append(photo).append(username)
+            .append(password).append(gender).append(email).append(qq)
+            .append(nickName).append(status).append(handle).appendTo(".user-table tbody")
+    });
+    //添加页面信息
+    $(".userPageInfo").empty().append("当前第<span id='userCurrent'>" + users.pageNum + "</span>页，总共" + users.pages + "页，总共" + users.total + "条记录");
+    var totalPage = users.pages;
+    var currentPage = users.pageNum;
+    //页面控制
+    //更新页面控制内容（清除原有的绑定事件）
+    $(".userPage").empty().append($("<li><a>首页</a></li>")).append($("<li><a>上一页 </a></li>")).append($("<li><a>" + currentPage + "</a></li>"))
+        .append($("<li><a>下一页</a></li>")).append($("<li><a >尾页</a></li>"));
+    $("#userPageControl ul li").eq(0).click(function () {
+        getUserSelect(1);
+    });
+    $("#userPageControl ul li").eq(1).click(function () {
+        if (currentPage - 1 > 0) {
+            getUserSelect(currentPage - 1);
+        } else {
+            alert("已经到顶了嗷，没有更多信息啦！")
+        }
+    });
+    $("#userPageControl ul li").eq(2).find("a").text(currentPage);
+    $("#userPageControl ul li").eq(3).click(function () {
 
+        if (currentPage + 1 <= totalPage) {
+            getUserSelect(currentPage + 1);
+        } else {
+            alert("已经到底了嗷，没有更多信息啦！")
+        }
+    });
+    $("#userPageControl ul li").eq(4).click(function () {
+        getUserSelect(totalPage)
+    })
+}
+
+function build_comic_tables2(comics) {
+    var list = comics.list;//获取数据
+    //清空table
+    $(".comic-table tbody").empty();
+    //添加数据
+    $.each(list, function (index, item) {
+        var id = $("<td></td>").append(item.comicId);
+        var Img = $("<img alt='' class='comicPhoto'>").attr("src", "/images/comics/" + item.root + "/cover.jpg");
+        var comicImg = $("<th></th>").append(Img);
+        var comicName = $("<th></th>").append(item.comicName);
+        var author = $("<th></th>").append(item.author);
+        var type = $("<th></th>").append(item.type);
+        var root = $("<th></th>").append(item.root);
+        var location = $("<th></th>").append(item.location);
+        var newUpdate = $("<th></th>").append(item.newUpdate);
+        var newChapterName = $("<th></th>").append(item.newChapterName);
+        var text = $("<textarea name='introduction' style='border: none' id='text' class='form-control' readonly rows='3'></textarea>").append(item.introduction);
+        var textarea = $("<th></th>").append(text);
+        var comicstatu;
+        switch (item.status) {
+            case (0):
+                comicstatu = "完结";
+                break;
+            case (1):
+                comicstatu = "连载中";
+                break;
+            case (-1):
+                comicstatu = "停更";
+        }
+        var status = $("<th></th>").append(comicstatu);
+        var mark = $("<th></th>").append(item.mark);
+        var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editComic'>修改</a>").attr("edit-id", item.comicId);
+        var del = $("<a  class='btn btn-danger btn-xs' id='btn-delComic'>删除</a>").attr("del-id", item.comicId);
+        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        $("<tr></tr>").append(id).append(comicImg).append(comicName).append(author).append(type).append(root)
+            .append(location).append(newUpdate).append(newChapterName).append(textarea).append(status)
+            .append(mark).append(handle).appendTo(".comic-table tbody");
+    });
+    //添加页面信息
+    $(".comicPageInfo").empty().append("当前第<span id='comicCurrent'>" + comics.pageNum + "</span>页，总共" + comics.pages + "页，总共" + comics.total + "条记录");
+    var totalPage = comics.pages;
+    var currentPage = comics.pageNum;
+    //页面控制
+    //更新页面控制内容（清除原有的绑定事件）
+    $(".comicPage").empty().append($("<li><a>首页</a></li>")).append($("<li><a>上一页 </a></li>")).append($("<li><a>" + currentPage + "</a></li>"))
+        .append($("<li><a>下一页</a></li>")).append($("<li><a >尾页</a></li>"));
+    $("#comicPageControl ul li").eq(0).click(function () {
+        getComicSelect(1);
+    });
+    $("#comicPageControl ul li").eq(1).click(function () {
+        if (currentPage - 1 > 0) {
+            getComicSelect(currentPage - 1);
+        } else {
+            alert("已经到顶了嗷，没有更多信息啦！")
+        }
+    });
+    $("#comicPageControl ul li").eq(2).find("a").text(currentPage);
+    $("#comicPageControl ul li").eq(3).click(function () {
+
+        if (currentPage + 1 <= totalPage) {
+            getComicSelect(currentPage + 1);
+        } else {
+            alert("已经到底了嗷，没有更多信息啦！")
+        }
+    });
+    $("#comicPageControl ul li").eq(4).click(function () {
+        getComicSelect(totalPage)
+    })
+}
+
+function build_detail_tables2(details) {
+    var list = details.list;//获取数据
+    $(".detail-table tbody").empty();
+    $.each(list, function (index, item) {
+        var id = $("<td></td>").append(item.detailId);
+        var comicImg = $("<img alt='' class='comicPhoto'>").attr("src", "/images/comics/" + item.comic.root + "/cover.jpg");
+        var comicPath = $("<th></th>").append(comicImg);
+        var comicName = $("<th></th>").append(item.comic.comicName);
+        var chapterName = $("<th></th>").append(item.chapterName);
+        var path = $("<th></th>").append(item.path);
+        var generalize = $("<textarea name='introduction' style='border: none' class='form-control' readonly rows='3'></textarea>").append(item.generalize);
+        var textarea = $("<th></th>").append(generalize);
+        var updateTime = $("<th></th>").append(item.updateTime);
+        var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editDetail'>修改</a>").attr("edit-id", item.detailId);
+        var del = $("<a  class='btn btn-danger btn-xs' id='btn-delDetail'>删除</a>").attr("del-id", item.detailId);
+        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        $("<tr></tr>").append(id).append(comicPath).append(comicName).append(chapterName).append(path)
+            .append(textarea).append(updateTime).append(handle).appendTo(".detail-table tbody")
+    });
+//添加页面信息
+    $(".detailPageInfo").empty().append("当前第<span id='detailCurrent'>" + details.pageNum + "</span>页，总共" + details.pages + "页，总共" + details.total + "条记录");
+    var totalPage = details.pages;
+    var currentPage = details.pageNum;
+    //页面控制
+    //更新页面控制内容（清除原有的绑定事件）
+    $(".detailPage").empty().append($("<li><a>首页</a></li>")).append($("<li><a>上一页 </a></li>")).append($("<li><a>" + currentPage + "</a></li>"))
+        .append($("<li><a>下一页</a></li>")).append($("<li><a >尾页</a></li>"));
+    $("#detailPageControl ul li").eq(0).click(function () {
+        getDetailSelect(1);
+    });
+    $("#detailPageControl ul li").eq(1).click(function () {
+        if (currentPage - 1 > 0) {
+            getDetailSelect(currentPage - 1);
+        } else {
+            alert("已经到顶了嗷，没有更多信息啦！")
+        }
+    });
+    $("#detailPageControl ul li").eq(2).find("a").text(currentPage);
+    $("#detailPageControl ul li").eq(3).click(function () {
+
+        if (currentPage + 1 <= totalPage) {
+            getDetailSelect(currentPage + 1);
+        } else {
+            alert("已经到底了嗷，没有更多信息啦！")
+        }
+    });
+    $("#detailPageControl ul li").eq(4).click(function () {
+        getDetailSelect(totalPage)
+    })
+}
+
+function build_order_tables2(orders) {
+    var list = orders.list;//获取数据
+    //清空table
+    $(".order-table tbody").empty();
+    $.each(list, function (index, item) {
+        var id = $("<td></td>").append(item.ordersId);
+        var comic = $("<th></th>").append(item.comic.comicName);
+        var comicImg = $("<img alt='' class='comicPhoto'>").attr("src", "/images/comics/" + item.comic.root + "/cover.jpg");
+        var comicPath = $("<th></th>").append(comicImg);
+        var userName = $("<th></th>").append(item.user.userName);
+        var userImg = $("<img alt='' class='userPhoto'>").attr("src", "/images/user/" + item.user.photo + ".jpg");
+        var userPath = $("<th></th>").append(userImg);
+        var orderstatu;
+        switch (item.status) {
+            case (0):
+                orderstatu = "未更新";
+                break;
+            case (1):
+                orderstatu = "已更新";
+                break;
+            case (-1):
+                orderstatu = "已读更新";
+        }
+        var status = $("<th></th>").append(orderstatu);
+        var edit = $("<a class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editOrder'>修改</a>").attr("edit-id", item.ordersId);
+        var del = $("<a  class='btn btn-danger btn-xs' id='btn-delOrder'>删除</a>").attr("del-id", item.ordersId);
+        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        $("<tr></tr>").append(id).append(comic).append(comicPath).append(userName)
+            .append(userPath).append(status).append(handle).appendTo(".order-table tbody");
+    });
+    //添加页面信息
+    $(".orderPageInfo").empty().append("当前第<span id='orderCurrent'>" + orders.pageNum + "</span>页，总共" + orders.pages + "页，总共" + orders.total + "条记录");
+    var totalPage = orders.pages;
+    var currentPage = orders.pageNum;
+    //页面控制
+    //更新页面控制内容（清除原有的绑定事件）
+    $(".orderPage").empty().append($("<li><a>首页</a></li>")).append($("<li><a>上一页 </a></li>")).append($("<li><a>" + currentPage + "</a></li>"))
+        .append($("<li><a>下一页</a></li>")).append($("<li><a >尾页</a></li>"));
+    $("#orderPageControl ul li").eq(0).click(function () {
+        getOrderSelect(1);
+    });
+    $("#orderPageControl ul li").eq(1).click(function () {
+        if (currentPage - 1 > 0) {
+            getOrderSelect(currentPage - 1);
+        } else {
+            alert("已经到顶了嗷，没有更多信息啦！")
+        }
+    });
+    $("#orderPageControl ul li").eq(2).find("a").text(currentPage);
+    $("#orderPageControl ul li").eq(3).click(function () {
+
+        if (currentPage + 1 <= totalPage) {
+            getOrderSelect(currentPage + 1);
+        } else {
+            alert("已经到底了嗷，没有更多信息啦！")
+        }
+    });
+    $("#orderPageControl ul li").eq(4).click(function () {
+        getOrderSelect(totalPage)
+    })
+}
+
+function build_comment_tables2(comments) {
+    var list = comments.list;//获取数据
+    //清空table
+    $(".comment-table tbody").empty();
+    $.each(list, function (index, item) {
+        var id = $("<td></td>").append(item.commentId);
+        var userImg = $("<img alt='' class='userPhoto'>").attr("src", "/images/user/" + item.user.photo + ".jpg");
+        var userPath = $("<th></th>").append(userImg);
+        var userName = $("<th></th>").append(item.user.userName);
+        var aim;
+        if (item.comicId != null) {
+            aim = $("<th></th>").append("漫画id：" + item.comicId);
+        }
+        if (item.detailId != null) {
+            aim = $("<th></th>").append("章节id：" + item.detailId);
+        }
+        if (item.commentAim != null) {
+            aim = $("<th></th>").append("回复id：" + item.commentAim);
+        }
+        var text = $("<textarea name='content' style='border: none' id='text' class='form-control' readonly rows='3'></textarea>").append(item.content);
+        var textarea = $("<th></th>").append(text);
+        var historyStatus;
+        switch (item.status) {
+            case (0):
+                historyStatus = "未回复";
+                break;
+            case (1):
+                historyStatus = "已回复";
+                break;
+            case (-1):
+                historyStatus = "已读不回";
+        }
+        var status = $("<th></th>").append(historyStatus);
+        var time = $("<th></th>").append(item.time);
+        var edit = $("<a class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editComment'>修改</a>").attr("edit-id", item.commentId);
+        var del = $("<a  class='btn btn-danger btn-xs' id='btn-delComment'>删除</a>").attr("del-id", item.commentId);
+        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        $("<tr></tr>").append(id).append(userPath).append(userName).append(aim)
+            .append(textarea).append(status).append(time).append(handle).appendTo(".comment-table tbody");
+    });
+    //添加页面信息
+    $(".commentPageInfo").empty().append("当前第<span id='commentCurrent'>" + comments.pageNum + "</span>页，总共" + comments.pages + "页，总共" + comments.total + "条记录");
+    var totalPage = comments.pages;
+    var currentPage = comments.pageNum;
+    //页面控制
+    //更新页面控制内容（清除原有的绑定事件）
+    $(".commentPage").empty().append($("<li><a>首页</a></li>")).append($("<li><a>上一页 </a></li>")).append($("<li><a>" + currentPage + "</a></li>"))
+        .append($("<li><a>下一页</a></li>")).append($("<li><a >尾页</a></li>"));
+    $("#commentPageControl ul li").eq(0).click(function () {
+        getCommentSelect(1);
+    });
+    $("#commentPageControl ul li").eq(1).click(function () {
+        if (currentPage - 1 > 0) {
+            getCommentSelect(currentPage - 1);
+        } else {
+            alert("已经到顶了嗷，没有更多信息啦！")
+        }
+    });
+    $("#commentPageControl ul li").eq(2).find("a").text(currentPage);
+    $("#commentPageControl ul li").eq(3).click(function () {
+
+        if (currentPage + 1 <= totalPage) {
+            getCommentSelect(currentPage + 1);
+        } else {
+            alert("已经到底了嗷，没有更多信息啦！")
+        }
+    });
+    $("#commentPageControl ul li").eq(4).click(function () {
+        getCommentSelect(totalPage)
+    })
+}
+
+function build_history_tables2(historys) {
+    var list = historys.list;//获取数据
+    //清空table
+    $(".history-table tbody").empty();
+    $.each(list, function (index, item) {
+        var id = $("<td></td>").append(item.historyId);
+        var userImg = $("<img alt='' class='userPhoto'>").attr("src", "/images/user/" + item.user.photo + ".jpg");
+        var userPath = $("<th></th>").append(userImg);
+        var userName = $("<th></th>").append(item.user.userName);
+        var comicImg = $("<img alt='' class='comicPhoto'>").attr("src", "/images/comics/" + item.comic.root + "/cover.jpg");
+        var comicPath = $("<th></th>").append(comicImg);
+        var comic = $("<th></th>").append(item.comic.comicName);
+        var chapter = $("<th></th>").append(item.detail.chapterName);
+        var lastTime = $("<th></th>").append(item.lastReadTime);
+        var historyStatu;
+        switch (item.status) {
+            case (0):
+                historyStatu = "未更新";
+                break;
+            case (1):
+                historyStatu = "已更新";
+                break;
+            case (-1):
+                historyStatu = "已读更新";
+        }
+        var status = $("<th></th>").append(historyStatu);
+        var edit = $("<a class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editHistory'>修改</a>").attr("edit-id", item.historyId);
+        var del = $("<a  class='btn btn-danger btn-xs' id='btn-delHistory'>删除</a>").attr("del-id", item.historyId);
+        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        $("<tr></tr>").append(id).append(userPath).append(userName).append(comicPath)
+            .append(comic).append(chapter).append(lastTime).append(status).append(handle).appendTo(".history-table tbody");
+    });
+    //添加页面信息
+    $(".historyPageInfo").empty().append("当前第<span id='historyCurrent'>" + historys.pageNum + "</span>页，总共" + historys.pages + "页，总共" + historys.total + "条记录");
+    var totalPage = historys.pages;
+    var currentPage = historys.pageNum;
+    //页面控制
+    //更新页面控制内容（清除原有的绑定事件）
+    $(".historyPage").empty().append($("<li><a>首页</a></li>")).append($("<li><a>上一页 </a></li>")).append($("<li><a>" + currentPage + "</a></li>"))
+        .append($("<li><a>下一页</a></li>")).append($("<li><a >尾页</a></li>"));
+    $("#historyPageControl ul li").eq(0).click(function () {
+        getHistorySelect(1);
+    });
+    $("#historyPageControl ul li").eq(1).click(function () {
+        if (currentPage - 1 > 0) {
+            getHistorySelect(currentPage - 1);
+        } else {
+            alert("已经到顶了嗷，没有更多信息啦！")
+        }
+    });
+    $("#historyPageControl ul li").eq(2).find("a").text(currentPage);
+    $("#historyPageControl ul li").eq(3).click(function () {
+
+        if (currentPage + 1 <= totalPage) {
+            getHistorySelect(currentPage + 1);
+        } else {
+            alert("已经到底了嗷，没有更多信息啦！")
+        }
+    });
+    $("#historyPageControl ul li").eq(4).click(function () {
+        getHistorySelect(totalPage)
+    })
+}
 //清空原表 绑定事件
 $(function () {
     $(".add").on("click", function () {
@@ -572,6 +1091,27 @@ $(function () {
 });
 //Ajax请求
 $(function () {
+
+    //左侧导航栏按钮绑定刷新事件
+    $("#userPage").click(function () {
+        userTo_page(1);
+    });
+    $("#comicPage").click(function () {
+        comicTo_page(1);
+    });
+    $("#orderPage").click(function () {
+        orderTo_page(1);
+    });
+    $("#detailPage").click(function () {
+        detailTo_page(1);
+    });
+    $("#commentPage").click(function () {
+        commentTo_page(1);
+    });
+    $("#historyPage").click(function () {
+        historyTo_page(1);
+    });
+
     //添加用户请求
     $("div .modal-footer").on("click", "#btn-addUser", function () {
         var formData = new FormData($("#new_user_form")[0]);
@@ -647,6 +1187,10 @@ $(function () {
                 }
             })
         }
+    });
+    //查询用户请求
+    $("#btn-search-user").click(function () {
+        getUserSelect(1);
     });
 
 
@@ -739,6 +1283,10 @@ $(function () {
             })
         }
     });
+    //查询漫画请求
+    $("#btn-search-comic").click(function () {
+        getComicSelect(1);
+    });
 
     //添加订阅请求
     $("div .modal-footer").on("click", "#btn-addOrder", function () {
@@ -810,6 +1358,10 @@ $(function () {
                 }
             })
         }
+    });
+    //查询订阅请求
+    $("#btn-search-order").click(function () {
+        getOrderSelect(1);
     });
 
     //添加章节请求
@@ -896,6 +1448,11 @@ $(function () {
             })
         }
     });
+    //查询章节请求
+    $("#btn-search-detail").click(function () {
+        getDetailSelect(1);
+    });
+
     //添加评论请求
     $("div .modal-footer").on("click", "#btn-addComment", function () {
         var formData = new FormData($("#add_comment_form")[0]);
@@ -980,6 +1537,10 @@ $(function () {
             })
         }
     });
+    //查询评论请求
+    $("#btn-search-comment").click(function () {
+        getCommentSelect(1);
+    });
 
     //添加浏览历史请求
     $("div .modal-footer").on("click", "#btn-addHistory", function () {
@@ -1054,6 +1615,12 @@ $(function () {
             })
         }
     });
+    //查询历史请求
+    $("#btn-search-history").click(function () {
+        getHistorySelect(1);
+    });
+
+
 });
 //Ajax请求
 

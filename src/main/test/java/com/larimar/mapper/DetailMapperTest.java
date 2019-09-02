@@ -2,6 +2,7 @@ package com.larimar.mapper;
 
 import com.larimar.entity.Comic;
 import com.larimar.entity.Detail;
+import com.larimar.selectPojo.DetailSelect;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
@@ -37,8 +38,7 @@ public class DetailMapperTest {
 
     @Test
     public void addDetail() {
-        System.out.println(mapper.addDetail(new Detail(24,1,new Comic(1,null,"斗罗大陆",null,null,null,null,null,null,null,null),"唐三穿越（中）","2","双生武魂","2019-08-20 14:49:15")));
-    }
+        System.out.println(mapper.selectByOptions(new DetailSelect(null,null,"国漫"))); }
 
     @Test
     public void delDetail() {

@@ -59,6 +59,20 @@
         from user
         where username like #{likeName} or nickname like #{likeName}
     </select>
+    <select id="selectByOptions" parameterType="com.larimar.selectPojo.UserSelect" resultMap="BaseResultMap">
+        select * from user
+        <where>
+            <if test="userName!=null">
+                <bind name="userLike" value="'%' + userName + '%'"/>
+                <if test="userName!=''">
+                   and username like #{userLike}
+                </if>
+            </if>
+            <if test="gender!=''">
+                and gender=#{gender}
+            </if>
+        </where>
+    </select>
     <update id="updateUser" parameterType="user">
         update user
         <set>

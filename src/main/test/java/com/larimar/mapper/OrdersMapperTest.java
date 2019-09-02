@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.Orders;
+import com.larimar.selectPojo.OrderSelect;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
@@ -35,7 +36,7 @@ public class OrdersMapperTest {
 
     @Test
     public void addOrders() {
-//        System.out.println(mapper.addOrders(new Orders(7,2,"斗罗大陆",2,"admin",0)));
+        System.out.println(mapper.selectByOptions(new OrderSelect("魔道祖师",null,null,"国漫")));
     }
 
     @Test

@@ -110,4 +110,33 @@
           and orders.user_id = #{userId}
           and orders.comic_id = #{comicId}
     </select>
+    <select id="selectByOptions" parameterType="com.larimar.selectPojo.OrderSelect" resultMap="BaseResultMap">
+        select *
+        from orders,
+             user,
+             comic
+        where comic.comic_id = orders.comic_id
+          and orders.user_id = `user`.user_id
+        <if test="userName!=null">
+            <bind name="userLike" value="'%' + userName + '%'"/>
+            <if test="userName!=''">
+               and user.username like #{userLike}
+            </if>
+        </if>
+        <if test="comicName!=null">
+            <bind name="comicLike" value="'%'+comicName+'%'"/>
+            <if test="comicName!=''">
+                and comic.comicname like #{comicLike}
+            </if>
+        </if>
+        <if test="typeName!=null">
+            <bind name="likeType" value="'%' +typeName+ '%'"/>
+            <if test="typeName!=''">
+                and comic.type like #{likeType}
+            </if>
+        </if>
+        <if test="location!=''">
+            and comic.location=#{location}
+        </if>
+    </select>
 </mapper>

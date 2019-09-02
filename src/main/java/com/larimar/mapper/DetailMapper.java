@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.Detail;
+import com.larimar.selectPojo.DetailSelect;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public interface DetailMapper {
      */
     public List<Detail> selectComicAllDetails(Integer comicId);
     public List<Detail> selectAllDetails();
+    public List<Detail> selectByOptions(DetailSelect detailSelect);
 
     // TODO: 2019/8/21 根据时间 查找当月更新用更新时间的字符串包含来实现 更新session就可以是实现
 

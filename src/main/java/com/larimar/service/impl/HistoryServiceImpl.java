@@ -2,6 +2,7 @@ package com.larimar.service.impl;
 
 import com.larimar.entity.History;
 import com.larimar.mapper.HistoryMapper;
+import com.larimar.selectPojo.HistorySelect;
 import com.larimar.service.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,11 @@ public class HistoryServiceImpl implements HistoryService {
     @Override
     public List<History> queryAllHistory() {
         return historyMapper.selectAllHistory();
+    }
+
+    @Override
+    public List<History> selectByOption(HistorySelect historySelect) {
+        return historyMapper.selectByOptions(historySelect);
     }
 
     @Override

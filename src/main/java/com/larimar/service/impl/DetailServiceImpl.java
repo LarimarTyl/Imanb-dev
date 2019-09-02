@@ -4,6 +4,7 @@ import com.larimar.entity.Comic;
 import com.larimar.entity.Detail;
 import com.larimar.entity.History;
 import com.larimar.mapper.DetailMapper;
+import com.larimar.selectPojo.DetailSelect;
 import com.larimar.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,11 @@ public class DetailServiceImpl implements DetailService {
     @Override
     public List<Detail> queryAllDetail() {
         return detailMapper.selectAllDetails();
+    }
+
+    @Override
+    public List<Detail> selectByOption(DetailSelect detailSelect) {
+        return detailMapper.selectByOptions(detailSelect);
     }
 
 

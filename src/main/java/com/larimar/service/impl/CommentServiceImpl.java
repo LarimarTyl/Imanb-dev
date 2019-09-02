@@ -2,6 +2,7 @@ package com.larimar.service.impl;
 
 import com.larimar.entity.Comment;
 import com.larimar.mapper.CommentMapper;
+import com.larimar.selectPojo.CommentSelect;
 import com.larimar.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,6 +66,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> getAllComment() {
         return commentMapper.queryAllComments();
+    }
+
+    @Override
+    public List<Comment> selectByOption(CommentSelect commentSelect) {
+        return commentMapper.selectByOptions(commentSelect);
     }
 
     @Override

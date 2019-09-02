@@ -1,6 +1,7 @@
 package com.larimar.service;
 
 import com.larimar.entity.Orders;
+import com.larimar.selectPojo.OrderSelect;
 
 import java.util.List;
 
@@ -17,5 +18,6 @@ public interface OrderService {
     public Orders getOrdersById(Integer ordersId);
     public List<Orders> selectUsersAllOrders(Integer userId);
     public List<Orders> selectAllOrders();
+    public List<Orders> selectByOption(OrderSelect orderSelect);
     public List<Orders> selectAllOrdersByStatus(Integer userId,Integer status);
 }

@@ -32,26 +32,26 @@
     <div role="tabpanel">
         <!-- 导航栏Nav tabs -->
         <ul class="admin-tab" role="tablist">
-            <li role="presentation" class="left_active active">
-                <a href="#home" aria-controls="home" role="tab" data-toggle="tab"><span>🏠 </span> 管理中心</a>
-            </li>
-            <li role="presentation">
+            <li role="presentation" id="userPage"  class="left_active active">
                 <a href="#user" aria-controls="user" role="tab" data-toggle="tab"><span>👤 </span> 用户管理</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" id="comicPage">
                 <a href="#comic" aria-controls="comic" role="tab" data-toggle="tab"><span>📚 </span> 漫画管理</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" id="orderPage">
                 <a href="#orders" aria-controls="orders" role="tab" data-toggle="tab"><span>📫 </span> 订阅管理</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" id="detailPage">
                 <a href="#detail" aria-controls="detail" role="tab" data-toggle="tab"><span>✨ </span> 章节管理</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" id="commentPage">
                 <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab"><span>📋 </span> 评论管理</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" id="historyPage">
                 <a href="#history" aria-controls="history" role="tab" data-toggle="tab"><span>📅 </span> 历史管理</a>
+            </li>
+            <li role="presentation">
+                <a href="#home" aria-controls="home" role="tab" data-toggle="tab"><span>🏠 </span> 管理中心</a>
             </li>
         </ul>
     </div>
@@ -60,85 +60,11 @@
 <div id="admin-content" class=" wd80 m20 left">
     <!-- 内容栏Tab panes -->
     <div class="tab-content admin-content">
-        <div role="tabpanel" class="tab-pane admin-content-item active" id="home">
-            <div class="col-xs-8 col-md-4 item">
-                <a href="#" class="thumbnail">
-                    <h2 class="title">103
-                        <span my-icon="users" class="right myIcon"></span>
-                    </h2>
-                    <h4 class="discription">总用户</h4>
-                </a>
-            </div>
-            <div class="col-xs-8 col-md-4 item">
-                <a href="#" class="thumbnail">
-                    <h2 class="title">103
-                        <span my-icon="user" class="right myIcon"></span>
-                    </h2>
-                    <h4 class="discription">有效用户</h4>
-                </a>
-            </div>
-            <div class="col-xs-8 col-md-4 item">
-                <a href="#" class="thumbnail">
-                    <h2 class="title">103
-                        <span my-icon="user" class="right myIcon"></span>
-                    </h2>
-                    <h4 class="discription">封禁用户</h4>
-                </a>
-            </div>
-            <div class="col-xs-8 col-md-4 item">
-                <a href="#" class="thumbnail">
-                    <h2 class="title">103
-                        <span my-icon="manhua" class="right myIcon"></span>
-                    </h2>
-                    <h4 class="discription">漫画总量</h4>
-                </a>
-            </div>
-            <div class="col-xs-8 col-md-4 item">
-                <a href="#" class="thumbnail">
-                    <h2 class="title">103
-                        <span my-icon="hot" class="right myIcon"></span>
-                    </h2>
-                    <h4 class="discription">热门漫画</h4>
-                </a>
-            </div>
-            <div class="col-xs-8 col-md-4 item">
-                <a href="#" class="thumbnail">
-                    <h2 class="title">103
-                        <span my-icon="new" class="right myIcon"></span>
-                    </h2>
-                    <h4 class="discription">最新漫画</h4>
-                </a>
-            </div>
-            <div class="col-xs-8 col-md-4 item">
-                <a href="#" class="thumbnail">
-                    <h2 class="title">103
-                        <span my-icon="comic" class="right myIcon"></span>
-                    </h2>
-                    <h4 class="discription">完结漫画</h4>
-                </a>
-            </div>
-            <div class="col-xs-8 col-md-4 item">
-                <a href="#" class="thumbnail">
-                    <h2 class="title">103
-                        <span my-icon="comments" class="right myIcon"></span>
-                    </h2>
-                    <h4 class="discription">评论数</h4>
-                </a>
-            </div>
-            <div class="col-xs-8 col-md-4 item">
-                <a href="#" class="thumbnail">
-                    <h2 class="title">103
-                        <span my-icon="upload" class="right myIcon"></span>
-                    </h2>
-                    <h4 class="discription">更新数</h4>
-                </a>
-            </div>
-        </div>
-        <div role="tabpanel" class="tab-pane  admin-content-item" id="user">
+        <div role="tabpanel" class="tab-pane  admin-content-item active" id="user">
             <div class="panel panel-default">
                 <!-- 搜索部分 -->
                 <div class="panel-body">
-                    <form class="form-inline" method="get" action="">
+                    <form class="form-inline"  id="user-search">
                         <div class="form-group">
                             <label for="userName">用户名</label>
                             <input type="text" class="form-control" id="userName" value="" name="userName">
@@ -146,11 +72,12 @@
                         <div class="form-group">
                             <label for="gender">性别</label>
                             <select class="form-control" id="gender" name="gender">
+                                <option value="">性别</option>
                                 <option value="男">男</option>
                                 <option value="女">女</option>
                             </select>
                         </div>
-                        <button type="button" id="userSearch" class="btn btn-primary">查询</button>
+                        <button type="button" id="btn-search-user" class="btn btn-primary">查询</button>
                     </form>
                 </div>
             </div>
@@ -370,7 +297,7 @@
             <div class="panel panel-default">
                 <!-- 搜索部分 -->
                 <div class="panel-body">
-                    <form class="form-inline" method="get" action="">
+                    <form class="form-inline"  id="order-search">
                         <div class="form-group">
                             <label for="orderSearch_comicName">漫画名称</label>
                             <input type="text" class="form-control" id="orderSearch_comicName" placeholder="漫画名称"
@@ -398,12 +325,13 @@
                         <div class="form-group">
                             <label for="orderSearch_location">地区</label>
                             <select class="form-control" id="orderSearch_location" name="location">
+                                <option value="">地区</option>
                                 <option value="国漫">国漫</option>
                                 <option value="日漫">日漫</option>
                                 <option value="其他漫画">其他漫画</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-primary">查询</button>
+                        <button type="button" class="btn btn-primary" id="btn-search-order">查询</button>
                     </form>
                 </div>
             </div>
@@ -545,7 +473,7 @@
             <div class="panel panel-default">
                 <!-- 搜索部分 -->
                 <div class="panel-body">
-                    <form class="form-inline" method="get" action="">
+                    <form class="form-inline"  id="comic-search">
                         <div class="form-group">
                             <label for="">漫画名称</label>
                             <input type="text" class="form-control" id="" value="" name="comicName">
@@ -553,6 +481,7 @@
                         <div class="form-group">
                             <label for="typeName">类别</label>
                             <select class="form-control" id="typeName" name="typeName">
+                                <option value="">类别</option>
                                 <option value="玄幻">玄幻</option>
                                 <option value="言情">言情</option>
                                 <option value="都市">都市</option>
@@ -567,12 +496,22 @@
                         <div class="form-group">
                             <label for="comicSearch_location">地区</label>
                             <select class="form-control" id="comicSearch_location" name="location">
+                                <option value="">地区</option>
                                 <option value="国漫">国漫</option>
                                 <option value="日漫">日漫</option>
                                 <option value="其他漫画">其他漫画</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-primary">查询</button>
+                        <div class="form-group">
+                            <label for="comicSearch_status">状态</label>
+                            <select class="form-control" id="comicSearch_status" name="status">
+                                <option value="">状态</option>
+                                <option value="1">连载中</option>
+                                <option value="0">完结</option>
+                                <option value="-1">停更</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btn-search-comic">查询</button>
                     </form>
                 </div>
             </div>
@@ -874,7 +813,7 @@
             <div class="panel panel-default">
                 <!-- 搜索部分 -->
                 <div class="panel-body">
-                    <form class="form-inline" method="get" action="">
+                    <form class="form-inline"  id="detail-search">
                         <div class="form-group">
                             <label for="">漫画名称</label>
                             <input type="text" class="form-control" id="detailSearchComicName" value=""
@@ -883,6 +822,7 @@
                         <div class="form-group">
                             <label for="typeName">类别</label>
                             <select class="form-control" id="detailSearchTypeName" name="typeName">
+                                <option value="">类别</option>
                                 <option value="玄幻">玄幻</option>
                                 <option value="言情">言情</option>
                                 <option value="都市">都市</option>
@@ -897,12 +837,13 @@
                         <div class="form-group">
                             <label for="detailSearchLocation">地区</label>
                             <select class="form-control" id="detailSearchLocation" name="location">
+                                <option value="">地区</option>
                                 <option value="国漫">国漫</option>
                                 <option value="日漫">日漫</option>
                                 <option value="其他漫画">其他漫画</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-primary">查询</button>
+                        <button type="button" class="btn btn-primary"  id="btn-search-detail">查询</button>
                     </form>
                 </div>
             </div>
@@ -1086,7 +1027,7 @@
             <div class="panel panel-default">
                 <!-- 搜索部分 -->
                 <div class="panel-body">
-                    <form class="form-inline" method="get" action="">
+                    <form class="form-inline"  id="comment-search">
                         <div class="form-group">
                             <label for="commentSearch_uerName">用户名</label>
                             <input type="text" class="form-control" id="commentSearch_uerName" placeholder="用户名"
@@ -1100,7 +1041,12 @@
                                 <option value="1">章节</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-primary">查询</button>
+                        <div class="form-group">
+                            <label for="commentSearch_aimId"></label>
+                            <input type="text" class="form-control" id="commentSearch_aimId" placeholder="目标id"
+                                   name="aimId">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btn-search-comment">查询</button>
                     </form>
                 </div>
             </div>
@@ -1285,7 +1231,7 @@
             <div class="panel panel-default">
                 <!-- 搜索部分 -->
                 <div class="panel-body">
-                    <form class="form-inline" method="get" action="">
+                    <form class="form-inline"  id="history-search">
                         <div class="form-group">
                             <label for="historySearch_userName">用户名</label>
                             <input type="text" class="form-control" id="historySearch_userName" placeholder="用户名"
@@ -1299,12 +1245,13 @@
                         <div class="form-group">
                             <label for="historySearch_status">状态</label>
                             <select class="form-control" id="historySearch_status" name="status">
+                                <option value="">状态</option>
                                 <option value="0">未更新</option>
                                 <option value="1">已更新</option>
                                 <option value="-1">已读更新</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-primary">查询</button>
+                        <button type="button" class="btn btn-primary" id="btn-search-history">查询</button>
                     </form>
                 </div>
             </div>
@@ -1469,6 +1416,80 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane admin-content-item " id="home">
+            <div class="col-xs-8 col-md-4 item">
+                <a href="#" class="thumbnail">
+                    <h2 class="title">103
+                        <span my-icon="users" class="right myIcon"></span>
+                    </h2>
+                    <h4 class="discription">总用户</h4>
+                </a>
+            </div>
+            <div class="col-xs-8 col-md-4 item">
+                <a href="#" class="thumbnail">
+                    <h2 class="title">103
+                        <span my-icon="user" class="right myIcon"></span>
+                    </h2>
+                    <h4 class="discription">有效用户</h4>
+                </a>
+            </div>
+            <div class="col-xs-8 col-md-4 item">
+                <a href="#" class="thumbnail">
+                    <h2 class="title">103
+                        <span my-icon="user" class="right myIcon"></span>
+                    </h2>
+                    <h4 class="discription">封禁用户</h4>
+                </a>
+            </div>
+            <div class="col-xs-8 col-md-4 item">
+                <a href="#" class="thumbnail">
+                    <h2 class="title">103
+                        <span my-icon="manhua" class="right myIcon"></span>
+                    </h2>
+                    <h4 class="discription">漫画总量</h4>
+                </a>
+            </div>
+            <div class="col-xs-8 col-md-4 item">
+                <a href="#" class="thumbnail">
+                    <h2 class="title">103
+                        <span my-icon="hot" class="right myIcon"></span>
+                    </h2>
+                    <h4 class="discription">热门漫画</h4>
+                </a>
+            </div>
+            <div class="col-xs-8 col-md-4 item">
+                <a href="#" class="thumbnail">
+                    <h2 class="title">103
+                        <span my-icon="new" class="right myIcon"></span>
+                    </h2>
+                    <h4 class="discription">最新漫画</h4>
+                </a>
+            </div>
+            <div class="col-xs-8 col-md-4 item">
+                <a href="#" class="thumbnail">
+                    <h2 class="title">103
+                        <span my-icon="comic" class="right myIcon"></span>
+                    </h2>
+                    <h4 class="discription">完结漫画</h4>
+                </a>
+            </div>
+            <div class="col-xs-8 col-md-4 item">
+                <a href="#" class="thumbnail">
+                    <h2 class="title">103
+                        <span my-icon="comments" class="right myIcon"></span>
+                    </h2>
+                    <h4 class="discription">评论数</h4>
+                </a>
+            </div>
+            <div class="col-xs-8 col-md-4 item">
+                <a href="#" class="thumbnail">
+                    <h2 class="title">103
+                        <span my-icon="upload" class="right myIcon"></span>
+                    </h2>
+                    <h4 class="discription">更新数</h4>
+                </a>
             </div>
         </div>
     </div>

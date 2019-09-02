@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.Comment;
+import com.larimar.selectPojo.CommentSelect;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -92,6 +93,7 @@ public interface CommentMapper {
      * @return 回复评论集合
      */
     public List<Comment> selectUsersRevertComments(Integer userId);
+    public List<Comment>  selectByOptions(CommentSelect commentSelect);
 
     public int updateComment(Comment comment);
 }

@@ -3,6 +3,8 @@ package com.larimar.service.impl;
 import com.larimar.entity.Comic;
 import com.larimar.entity.Conditon;
 import com.larimar.mapper.ComicMapper;
+import com.larimar.selectPojo.ComicSelect;
+import com.larimar.selectPojo.CommentSelect;
 import com.larimar.service.ComicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +65,11 @@ public class ComicServiceImpl implements ComicService {
     }
 
     @Override
+    public List<Comic> selectByOption(ComicSelect comicSelect) {
+        return comicMapper.selectByOptions(comicSelect);
+    }
+
+    @Override
     public List<Comic> findLikestComic() {
         return comicMapper.selectComicsByLikes();
     }
@@ -87,7 +94,6 @@ public class ComicServiceImpl implements ComicService {
         return comicMapper.selectOrderComic(userId);
     }
 
-    // TODO: 2019/8/26 按条件查找漫画
     @Override
     public List<Comic> findComicByCondition(Conditon condition) {
         return null;

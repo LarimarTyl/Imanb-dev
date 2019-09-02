@@ -1,6 +1,8 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.Comic;
+import com.larimar.selectPojo.ComicSelect;
+import com.larimar.selectPojo.UserSelect;
 import net.sf.jsqlparser.statement.Commit;
 import org.apache.ibatis.annotations.Param;
 
@@ -126,4 +128,5 @@ public interface ComicMapper {
     public List<Comic> selectJapaneseRank();
 
     public List<Comic> selectAllRank();
+    public List<Comic> selectByOptions(ComicSelect comicSelect);
 }

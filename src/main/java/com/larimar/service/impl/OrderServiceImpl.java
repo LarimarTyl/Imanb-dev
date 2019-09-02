@@ -2,6 +2,7 @@ package com.larimar.service.impl;
 
 import com.larimar.entity.Orders;
 import com.larimar.mapper.OrdersMapper;
+import com.larimar.selectPojo.OrderSelect;
 import com.larimar.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Orders> selectAllOrders() {
         return ordersMapper.selectAllOrders();
+    }
+
+    @Override
+    public List<Orders> selectByOption(OrderSelect orderSelect) {
+        return ordersMapper.selectByOptions(orderSelect);
     }
 
     @Override

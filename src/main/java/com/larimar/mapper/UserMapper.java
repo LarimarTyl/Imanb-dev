@@ -1,6 +1,7 @@
 package com.larimar.mapper;
 
 import com.larimar.entity.User;
+import com.larimar.selectPojo.UserSelect;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -96,6 +97,7 @@ public interface UserMapper {
      * @return 所用用户集合
      */
     public List<User> selectAllUsers();
+    public List<User> selectByOptions(UserSelect userSelect);
 
     /**
      * 根据用户名或昵称粗查找用户（搜索栏用）
