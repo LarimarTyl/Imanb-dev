@@ -1553,10 +1553,11 @@ $(function () {
             contentType: false,
             success: function (result) {
                 if (result.code == 200) {
+                    alert(result.msg);
                     $("#newHistoryDialog").modal("hide");
                     historyTo_page(1);
                 } else {
-                    confirm(result.msg)
+                    confirm(result.msg);
                 }
             }
         })

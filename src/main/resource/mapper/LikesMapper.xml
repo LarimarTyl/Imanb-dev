@@ -17,11 +17,15 @@
     delete from likes
     where detail_id = #{detailId}
   </delete>
-  <select id="selectComicLikes" resultType="Integer">
+  <select id="selectComicLikes" resultType="integer">
     select number from likes where comic_id=#{comicId}
   </select>
-  <select id="selectDetailLikes" resultType="Integer">
+  <select id="selectDetailLikes" resultType="integer">
     select number from likes where detail_id=#{detailId}
+  </select>
+  <select id="queryAllLikes" resultType="com.larimar.entity.Likes">
+        select *
+        from likes;
   </select>
   <update id="updateComicLikes">
         update likes

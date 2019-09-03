@@ -23,7 +23,6 @@
 			
 			// create shadow element
 			$("<img>", {
-				src : "images/shadow-effect.png",
 				alt : ""
 			}).appendTo(elem).addClass("shadow-effect");
 			if(typeof speed === "undefined") speed = 150;
@@ -262,20 +261,20 @@
 		setPattern : function() {
 			var pattern = "<span class='patt-bg'>&nbsp;</span>";
 			var pattabs = "<span class='patt-bg-abs'>&nbsp;</span>";
-			$("div#slider").append( pattern );
-			$("a.big-button-style").append( pattabs );
-			$(".projects-band ul li a").append( pattabs );
-			$(".team-build ul li a").append( pattabs );
-			$(".footer_image").append( pattabs );
-			$("a.standart-button-style").append( pattabs );
-			$("div.team-band ul li a").append( pattabs );
-			$("div#page_header").append( pattabs );
-			$("div.team-service ul li a").append( pattabs );
-			$("div.portfolio-items ul li a").append( pattabs );
-			$("a.portfolio-sphere").append( pattabs );
-			$("div.navigation a").append( pattabs );
-			$("a.thumb-blog").append( pattabs );
-			$("div.slider_thumb a").append( pattabs );
+			// $("div#slider").append( pattern );
+			// $("a.big-button-style").append( pattabs );
+			// $(".projects-band ul li a").append( pattabs );
+			// $(".team-build ul li a").append( pattabs );
+			// $(".footer_image").append( pattabs );
+			// $("a.standart-button-style").append( pattabs );
+			// $("div.team-band ul li a").append( pattabs );
+			// $("div#page_header").append( pattabs );
+			// $("div.team-service ul li a").append( pattabs );
+			// $("div.portfolio-items ul li a").append( pattabs );
+			// $("a.portfolio-sphere").append( pattabs );
+			// $("div.navigation a").append( pattabs );
+			// $("a.thumb-blog").append( pattabs );
+			// $("div.slider_thumb a").append( pattabs );
 			
 			if(!jQuery.browser.opera) // if not opera browser
 			{
@@ -500,29 +499,29 @@
 			
 			getAnimation : function() {
 				var Self = this, integer = 0;
-				
+
 				intervalTriggerSlider = window.setInterval(function() {
 					integer++;
-					
+
 					$("div.inside-controls").each(function() {
-						
+
 						if($(this).hasClass("active"))
 						{
 							$thisCat = $(this);
 							indexTrigger = $thisCat.find("a").length;
 						}
 					});
-					if(integer < indexTrigger)
-					{
-						$thisCat.find("a.active").next().trigger("getSliderClick");
-					}
-					else
-					{
-						integer = 0;
-						$thisCat.find("a").eq(0).trigger("getSliderClick");
-					}
+					// if(integer < indexTrigger)
+					// {
+					// 	$thisCat.find("a.active").next().trigger("getSliderClick");
+					// }
+					// else
+					// {
+					// 	integer = 0;
+					// 	$thisCat.find("a").eq(0).trigger("getSliderClick");
+					// }
 				}, 7000);
-				
+
 			},
 			
 			footerSlider : {

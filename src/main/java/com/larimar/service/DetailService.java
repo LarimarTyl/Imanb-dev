@@ -14,6 +14,7 @@ public interface DetailService {
     public boolean delDetail(Integer detailId);
     public boolean updateDetail(Detail detail);
     public Detail getDetailById(Integer id);
+    public Detail selectNewestDetail(Integer comicId);
     public Detail getDetailByComicAndChapter(Integer comicId,String chapterName);
     public List<Detail> queryAllDetail();
     public List<Detail> selectByOption(DetailSelect detailSelect);

@@ -27,6 +27,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public boolean userAddOrders(Integer userId, Integer comicId) {
+        Orders findOrders = ordersMapper.selectOrdersByUserAndComic(userId, comicId);
+        if (findOrders==null) {
+        return ordersMapper.userAddOrders(userId,comicId)>0;
+        }else return false;
+    }
+
+    @Override
+    public boolean userDelOrders(Integer userId, Integer comicId) {
+        return ordersMapper.userDelOrders(userId,comicId)>0;
+    }
+
+    @Override
     public boolean delOrders(Integer ordersId) {
         return ordersMapper.delOrders(ordersId)>0;
     }

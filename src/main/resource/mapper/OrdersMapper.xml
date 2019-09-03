@@ -5,9 +5,17 @@
         insert into orders(orders_id, comic_id, user_id, status)
         values (#{ordersId},#{comicId},#{userId},#{status})
     </insert>
+    <insert id="userAddOrders">
+        insert into orders(comic_id, user_id)
+        values (#{comicId},#{userId})
+    </insert>
     <delete id="delOrders" parameterType="Integer">
         delete from orders
         where orders_id = #{ordersId}
+    </delete>
+    <delete id="userDelOrders">
+        delete from orders
+        where user_id = #{userId} and comic_id = #{comicId}
     </delete>
     <update id="updateOrders">
         update orders
@@ -61,7 +69,7 @@
              comic
         where comic.comic_id = orders.comic_id
           and orders.user_id = `user`.user_id
-          and orders.user_id = #{userId};
+          and orders.user_id = #{userId}
     </select>
     <select id="selectAllOrders" resultMap="BaseResultMap">
         select *
@@ -98,7 +106,7 @@
         where comic.comic_id = orders.comic_id
           and orders.user_id = `user`.user_id
           and orders.user_id = #{userId}
-          and orders.status = #{status};
+          and orders.status = #{status}
     </select>
     <select id="selectOrdersByUserAndComic" resultMap="BaseResultMap">
         select *

@@ -145,7 +145,7 @@
     where user.user_id = comment.user_id
       and aim in (select comment_id from comment where user_id=#{userId})
       and comment.status=#{status}
-    order by time desc;
+    order by time desc
   </select>
     <select id="queryAllComments" resultMap="BaseResultMap">
       select *

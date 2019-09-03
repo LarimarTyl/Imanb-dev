@@ -72,11 +72,10 @@
             <div class="more-info">
                 <h1 class="mytext-title2" th:text="*{comicName}">斗破苍穹</h1>
                 <div class="focus right">
-                    <button type="button" class="btn btn-danger" th:attr="comic-id=*{comicId}">订阅 👀</button>
-                    <button type="button" class="btn btn-primary isLike likes" th:attr="comic-id=*{comicId}">
-                        <span id="like" class="full">喜欢 ❤</span>
-                        <span id="unlike" class="full"> 不喜欢 💔</span>
-                    </button>
+                    <button type="button" class="btn btn-danger order orderIt"  th:attr="comic-id=*{comicId}">订阅 👀</button>
+                    <button type="button" class="btn btn-danger order hideIt delOrder" th:attr="comic-id=*{comicId}">取消订阅 🚨</button>
+                    <button type="button" class="btn btn-primary isLike likeIt" th:attr="comic-id=*{comicId}" th:text="'喜欢 ❤'+*{likes}">喜欢 ❤</button>
+                    <button type="button" class="btn btn-primary isLike hideIt delLike" th:attr="comic-id=*{comicId}" th:text="'不喜欢 💔'+*{likes}"> 不喜欢 💔</button>
                     <button type="button" class="btn btn-success"> 分享 🔗</button>
                 </div>
                 <h4 class="mytext-p3 left f2" th:text="'作者：'+*{author}">作者：天蚕土豆</h4>
@@ -129,7 +128,7 @@
             <div class="projects-band-nohidden">
                 <ul class="likes">
                     <li th:each="comic:${session.typeLike}">
-                        <a th:href="@{/showDetail(id=${comic.comicId})}" class="inline-border">
+                        <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
                         <img th:src="|/images/comics/${comic.root}/cover.jpg|" width="160" height="200" alt=""/>
                          </a>
                         <div class="info">

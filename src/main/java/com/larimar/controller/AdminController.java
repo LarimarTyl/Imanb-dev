@@ -729,7 +729,7 @@ public class AdminController {
                     if (historyService.addHistory(history)) {
                         return Msg.success().add("添加浏览历史成功",null);
                     }else {
-                        return Msg.fail().add("添加浏览历史失败",null);
+                        return Msg.success().add("已存在该浏览历史，原记录已更新",null);
                     }
                 }else {
                     return Msg.fail().add("添加失败,该漫画不存在此章节。",null);

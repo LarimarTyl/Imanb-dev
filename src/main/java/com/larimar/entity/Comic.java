@@ -16,6 +16,15 @@ public class Comic {
     private String newChapterName;//最新章节
     private String introduction; //简介
     private Double mark; //评分
+    private Integer likes;
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
 
     public Comic() {
     }

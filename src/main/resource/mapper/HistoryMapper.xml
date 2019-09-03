@@ -13,8 +13,8 @@
       <association property="detail" javaType="detail" column="detail_id" resultMap="com.larimar.mapper.DetailMapper.BaseResultMap"/>
   </resultMap>
   <insert id="addHistory" parameterType="history">
-    insert into history(history_id, user_id, comic_id, detail_id, lastreadtime, status)
-    values (#{historyId},#{userId},#{comicId},#{detailId},#{lastReadTime},#{status})
+    insert into history(user_id, comic_id, detail_id, lastreadtime, status)
+    values (#{userId},#{comicId},#{detailId},#{lastReadTime},#{status})
   </insert>
   <delete id="delHistory" parameterType="Integer">
     delete from history
@@ -86,5 +86,12 @@
           and comic.comicname like #{comicLike}
         </if>
       </if>
+    </select>
+    <select id="selectByUserAndComic" resultMap="BaseResultMap">
+      select *
+      from history,comic,user,detail
+      where history.comic_id = comic.comic_id and history.comic_id  = detail.comic_id and
+        history.detail_id = detail.detail_id and user.user_id = history.user_id
+        and history.user_id=#{userId} and comic.comic_id=#{comicId}
     </select>
 </mapper>

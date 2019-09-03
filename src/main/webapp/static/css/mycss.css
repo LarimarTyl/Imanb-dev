@@ -2,12 +2,18 @@
 ul,ol{
     list-style: none;
 }
+
 h1,h2,h3,h4,h5,p{
     margin: 0px;
 }
 a:hover, a:focus {
     color: #23527c;
     text-decoration: none;
+}
+div.myData {
+    width: 70px;
+    margin: 80px auto 0;
+    padding-top: 15px;
 }
 /* a标签下划线 */
 /*字体设置*/
@@ -719,9 +725,14 @@ div#user-info{
 /* 左侧导航按钮 */
 div#user-info .user-tabs{
     width: 21.875%;
-    background-color:#fffefea1;
+    background-color:#fff;
     padding: 20px 0px;
     margin-bottom: 135px;
+    border: 1px solid transparent;
+    border-color: #ddd;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 div#user-info .user-tabs .user-tab li{
     height: 50px;
@@ -746,13 +757,17 @@ div#user-info .user-tabs .user-tab li a{
 /* 右侧内容 */
 div#user-info .user-content{
     width: 76%;
-    /* height: 100%; */
     margin-bottom: 75px;
-    background-color:#fffefea1;
+    background-color:#fff;
     padding: 10px 0px;
+    border: 1px solid transparent;
+    border-color: #ddd;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 div#user-info .user-content div.tab-content div{
-    padding: 10px;
+    padding: 5px;
 }
 /* 用户信息页面 */
 div#user-info .user-content div.tab-content div.info-head{
@@ -788,11 +803,16 @@ div#user-info div.user-item{
     padding: 3px;
     margin-top: 10px;
     margin:10px 3px;
-    border: #c9c8c8 1px solid;
+    border: 1px solid transparent;
+    border-color: #ddd;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     float: left;
 }
 div#user-info div.user-item img{
     width: 100%;
+    height: 250px;
 }
 div.user-item .pagecontroller{
     width: 100%;
@@ -800,5 +820,13 @@ div.user-item .pagecontroller{
 }
 .pagination{
     margin: 0px;
+}
+
+/*用户记录*/
+.pOver{
+    width: 100%;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
 }
 /* 用户信息样式 */

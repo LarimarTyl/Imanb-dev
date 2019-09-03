@@ -46,6 +46,8 @@ public class SystemController {
     OrderService orderService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    LikeService likeService;
 
     /**
      * 页面初始加载数据
@@ -63,6 +65,9 @@ public class SystemController {
         List<Comic> allRank = comicService.findAllRank();
         PageHelper.startPage(1,4);
         List<Detail> details = detailService.queryAllDetail();
+        for (Detail d : details) {
+            d.setLikes(likeService.selectDetailLikeNum(d.getDetailId()));
+        }
         request.getSession().getServletContext().setAttribute("likestComic",likestComic);
         request.getSession().getServletContext().setAttribute("newComic",newComic);
         request.getSession().getServletContext().setAttribute("comicByOrderNum",comicByOrderNum);
@@ -70,6 +75,7 @@ public class SystemController {
         request.getSession().getServletContext().setAttribute("japaneseRank",japaneseRank);
         request.getSession().getServletContext().setAttribute("allRank",allRank);
         request.getSession().getServletContext().setAttribute("details",details);
+        request.getSession().setAttribute("user",userService.findUserById(2));
         return "index";
     }
     @RequestMapping("/index")

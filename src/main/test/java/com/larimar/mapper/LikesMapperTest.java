@@ -34,7 +34,7 @@ public class LikesMapperTest {
 
     @Test
     public void addComicLikes() {
-        System.out.println(mapper.addComicLikes(4));
+        System.out.println(mapper.selectComicLikes(8));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class LikesMapperTest {
 
     @Test
     public void updateDetailLikes() {
-        System.out.println(mapper.updateDetailLikes(1,100));
+        System.out.println(mapper.queryAllLikes());
     }
 
     @Test

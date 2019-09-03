@@ -15,7 +15,7 @@ public class Detail {
     private String generalize;//章节概况
     private String updateTime;//章节更新时间
     private List<String> images;//指定文件名
-
+    private Integer likes;
     public Detail() {
     }
 
@@ -87,6 +87,14 @@ public class Detail {
 
     public List<String> getImages() {
         return images;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
     }
 
     public void setImages(List<String> images) {

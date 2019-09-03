@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface OrderService {
     public boolean addOrders(Orders orders);
+    public boolean userAddOrders(Integer userId,Integer comicId);
+    public boolean userDelOrders(Integer userId,Integer comicId);
     public boolean delOrders(Integer ordersId);
     public boolean updateOrdersComicStatus(Integer comicId,Integer status);
     public boolean updateOrdersInfo(Orders orders);

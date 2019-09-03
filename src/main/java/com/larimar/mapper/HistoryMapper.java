@@ -60,4 +60,6 @@ public interface HistoryMapper {
     public List<History> selectHistoryByStatus(@Param("userId") Integer userId,@Param("status") Integer status);
 
     public History selectHistoryById(Integer HistoryId);
+
+    public History selectByUserAndComic(@Param("userId") Integer userId,@Param("comicId") Integer comicId);
 }

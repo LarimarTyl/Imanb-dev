@@ -5,14 +5,18 @@ package com.larimar.entity;
  * @time 2019/8/20 周二 19:00
  */
 public class Likes {
-    private Integer likesId; //点赞id
+    private Integer likesId;
+    private Integer comicId;
+    private Integer detailId; //点赞id
     private Integer number; //点赞数
 
     public Likes() {
     }
 
-    public Likes(Integer likesId, Integer number) {
-        this.likesId = likesId;
+    public Likes(Integer likes_id, Integer comicId, Integer detailId, Integer number) {
+        this.likesId = likes_id;
+        this.comicId = comicId;
+        this.detailId = detailId;
         this.number = number;
     }
 
@@ -22,6 +26,22 @@ public class Likes {
 
     public void setLikesId(Integer likesId) {
         this.likesId = likesId;
+    }
+
+    public Integer getComicId() {
+        return comicId;
+    }
+
+    public void setComicId(Integer comicId) {
+        this.comicId = comicId;
+    }
+
+    public Integer getDetailId() {
+        return detailId;
+    }
+
+    public void setDetailId(Integer detailId) {
+        this.detailId = detailId;
     }
 
     public Integer getNumber() {
@@ -35,7 +55,9 @@ public class Likes {
     @Override
     public String toString() {
         return "Likes{" +
-                "likesId=" + likesId +
+                "likes_id=" + likesId +
+                ", comicId=" + comicId +
+                ", detailId=" + detailId +
                 ", number=" + number +
                 '}';
     }

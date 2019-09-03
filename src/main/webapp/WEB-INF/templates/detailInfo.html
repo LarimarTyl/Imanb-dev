@@ -121,7 +121,8 @@
                     </div>
                     <!--判断是否关注-->
                     <div class="focus right">
-                        <button type="button" class="btn btn-danger" th:attr="comic-id=${session.detail.detailId}">关注漫画</button>
+                        <button type="button" class="btn btn-danger order orderIt" th:attr="comic-id=${session.detail.comic.comicId}">订阅漫画</button>
+                        <button type="button" class="btn btn-danger order hideIt delOrder" th:attr="comic-id=${session.detail.comic.comicId}">取消订阅</button>
                     </div>
                     <div class="social-media right">
                         <!--//th标签中直接写字符串可以用||括起来-->

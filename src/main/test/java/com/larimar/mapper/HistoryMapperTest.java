@@ -37,7 +37,7 @@ public class HistoryMapperTest {
     }
     @Test
     public void addHistory() {
-        System.out.println(mapper.addHistory(new History(3,1,null,3,null,17,null,"2019-08-21 14:49:06",0)));
+        System.out.println(mapper.addHistory(new History(1,4,17,"2019-08-21 14:49:06",0)));
     }
 
     @Test

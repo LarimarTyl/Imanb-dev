@@ -94,9 +94,10 @@
                             <p class="year" th:text="${#strings.substring(detail.updateTime,0,4)}">2012</p>
                         </div>
                     </div>
-                    <div class="com-data">
-                        <a href="#" class="comments">113</a>
-                        <a href="#" class="likes">206</a>
+                    <div class="myData">
+                        <a  class="comments">113</a>
+                        <a  class="isLike  likeIt" th:attr="detail-id=${detail.detailId}" th:text="'&nbsp;❤ '+${detail.likes}">🖤206</a>
+                        <a  class="isLike delLike hideIt" th:attr="detail-id=${detail.detailId}" th:text="'💔 '+${detail.likes}">💔206</a>
                     </div>
                 </div>
                 <div class="grid article-content w775">

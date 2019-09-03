@@ -6,10 +6,7 @@ import com.larimar.entity.Comment;
 import com.larimar.entity.History;
 import com.larimar.entity.Orders;
 import com.larimar.entity.User;
-import com.larimar.service.CommentService;
-import com.larimar.service.HistoryService;
-import com.larimar.service.OrderService;
-import com.larimar.service.UserService;
+import com.larimar.service.*;
 import com.larimar.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,37 +36,15 @@ public class UserController {
     private OrderService orderService;
     @Autowired
     private HistoryService historyService;
+    @Autowired
+    private LikeService likeService;
+
 
     @RequestMapping("/user")
     public String userInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn, HttpServletRequest request){
         return "user";
     }
 
-    // TODO: 2019/9/1 待处理 用户的回复 订阅 浏览历史通过ajax获取和刷新
-    @RequestMapping("/userRevert")
-    public Msg getUserRevert(@RequestParam(value = "pn",defaultValue = "1")Integer pn, HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
-        PageHelper.startPage(pn,10);
-        List<Comment> usersRevertComment = commentService.getUsersRevertComment(user.getUserId());
-        PageInfo userRevent = new PageInfo(usersRevertComment);
-        return null;
-    }
-    @RequestMapping("/userOrder")
-    public Msg getUserOrder(@RequestParam(value = "pn",defaultValue = "1")Integer pn, HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
-        PageHelper.startPage(pn,8);
-        List<Orders> userOrders = orderService.selectUsersAllOrders(user.getUserId());
-        PageInfo userOrder = new PageInfo( userOrders);
-        return null;
-    }
-    @RequestMapping("/userHistory")
-    public Msg getUserHistory(@RequestParam(value = "pn",defaultValue = "1")Integer pn, HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
-        PageHelper.startPage(pn,8);
-        List<History> userHistorys = historyService.selectUsersAllHistory(user.getUserId());
-        PageInfo userHistory = new PageInfo( userHistorys);
-        return null;
-    }
 
     @RequestMapping("/doLogin")
     public String doLogin(String userName, String password, String validateCode, HttpServletRequest request){
@@ -176,5 +151,155 @@ public class UserController {
             //重新获取用户session
         request.getSession().setAttribute("user",userService.findUserById(userId));
         return msg;
+    }
+
+    /**
+     * 点赞功能
+     */
+    @RequestMapping("/addDetailLike")
+    @ResponseBody
+    public Msg addDetailLike(Integer id){
+        if (likeService.addDetailLikes(id)) {
+            return Msg.success().add("感谢点赞。",likeService.selectDetailLikeNum(id));
+        }else {
+            return Msg.fail().add("发生未知错误，点赞失败。",likeService.selectDetailLikeNum(id));
+        }
+    }
+
+    @RequestMapping("/addComicLike")
+    @ResponseBody
+    public Msg addComicLike(Integer id){
+        if (likeService.addComicLikes(id)) {
+            return Msg.success().add("感谢点赞。",likeService.selectComicLikeNum(id));
+        }else {
+            return Msg.fail().add("发生未知错误，点赞失败。",likeService.selectComicLikeNum(id));
+        }
+    }
+
+    @RequestMapping("/delDetailLike")
+    @ResponseBody
+    public Msg delDetailLike(Integer id){
+        if (likeService.delDetailLikes(id)) {
+                return Msg.success().add("取消点赞。",likeService.selectDetailLikeNum(id));
+        }else {
+            return Msg.fail().add("发生未知错误，取消点赞失败。",likeService.selectDetailLikeNum(id));
+        }
+    }
+
+    @RequestMapping("/delComicLike")
+    @ResponseBody
+    public Msg delComicLike(Integer id){
+        if (likeService.delComicLikes(id)) {
+                return Msg.success().add("取消点赞。",likeService.selectComicLikeNum(id));
+        }else {
+            return Msg.fail().add("发生未知错误，取消点赞失败。",likeService.selectComicLikeNum(id));
+        }
+    }
+
+    /**
+     * 订阅功能
+     */
+    @RequestMapping("/userAddOrder")
+    @ResponseBody
+    public Msg addOrder(Integer id,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        if (user!=null){
+            if (orderService.userAddOrders(user.getUserId(),id)) {
+                return Msg.success().add("添加订阅成功！",null);
+            }else {
+                return Msg.fail().add("您已经订阅了该漫画，请勿重复订阅订阅。",null);
+            }
+        }else {
+            return Msg.fail().add("请先登录后，再订阅。",null);
+        }
+    }
+    @RequestMapping("/userDelOrder")
+    @ResponseBody
+    public Msg userDelOrder(Integer id,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        if (user!=null){
+            if (orderService.userDelOrders(user.getUserId(),id)) {
+                return Msg.success().add("取消订阅成功！",null);
+            }else {
+                return Msg.fail().add("取消订阅失败",null);
+            }
+        }else {
+            return Msg.fail().add("请先登录后，再订阅。",null);
+        }
+    }
+    /**
+     * 用户信息内ajax控制器
+     */
+    @RequestMapping("/allRevertInfo")
+    @ResponseBody
+    public Msg allRevertInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,6);
+        List<Comment> allRevert = commentService.getUsersRevertComment(user.getUserId());
+        PageInfo allReverts = new PageInfo(allRevert);
+        return Msg.success().add(null,allReverts);
+    }
+    @RequestMapping("/noReadRevertInfo")
+    @ResponseBody
+    public Msg noReadRevertInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,6);
+        List<Comment> allRevert = commentService.getUsersCommentByStatus(user.getUserId(),0);
+        PageInfo allReverts = new PageInfo(allRevert);
+        return Msg.success().add(null,allReverts);
+    }
+    @RequestMapping("/readRevertInfo")
+    @ResponseBody
+    public Msg readRevertInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,6);
+        List<Comment> allRevert = commentService.getUsersCommentByStatus(user.getUserId(),-1);
+        PageInfo allReverts = new PageInfo(allRevert);
+        return Msg.success().add(null,allReverts);
+    }
+    @RequestMapping("/allOrderInfo")
+    @ResponseBody
+    public Msg allOrderInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,8);
+        List<Orders> order = orderService.selectUsersAllOrders(user.getUserId());
+        PageInfo orders = new PageInfo(order);
+        return Msg.success().add(null,orders);
+    }
+    @RequestMapping("/readOrderInfo")
+    @ResponseBody
+    public Msg readOrderInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,8);
+        List<Orders> order = orderService.selectAllOrdersByStatus(user.getUserId(),-1);
+        PageInfo orders = new PageInfo(order);
+        return Msg.success().add(null,orders);
+    }
+    @RequestMapping("/noReadOrderInfo")
+    @ResponseBody
+    public Msg noReadOrderInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,8);
+        List<Orders> order = orderService.selectAllOrdersByStatus(user.getUserId(),1);
+        PageInfo orders = new PageInfo(order);
+        return Msg.success().add(null,orders);
+    }
+    @RequestMapping("/allHistoryInfo")
+    @ResponseBody
+    public Msg allHistoryInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,8);
+        List<History> historie = historyService.selectUsersAllHistory(user.getUserId());
+        PageInfo histories = new PageInfo(historie);
+        return Msg.success().add(null,histories);
+    }
+    @RequestMapping("/haveNewHistoryInfo")
+    @ResponseBody
+    public Msg haveNewHistoryInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        PageHelper.startPage(pn,8);
+        List<History> historie = historyService.selectUsersHistoryByStatus(user.getUserId(),1);
+        PageInfo histories = new PageInfo(historie);
+        return Msg.success().add(null,histories);
     }
 }

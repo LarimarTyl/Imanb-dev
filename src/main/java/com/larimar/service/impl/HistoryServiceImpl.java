@@ -1,6 +1,7 @@
 package com.larimar.service.impl;
 
 import com.larimar.entity.History;
+import com.larimar.mapper.DetailMapper;
 import com.larimar.mapper.HistoryMapper;
 import com.larimar.selectPojo.HistorySelect;
 import com.larimar.service.HistoryService;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.larimar.util.DateUtil.localDateToString;
 
 /**
  * @author Larimar
@@ -17,10 +20,27 @@ import java.util.List;
 public class HistoryServiceImpl implements HistoryService {
     @Autowired
     HistoryMapper historyMapper;
+    @Autowired
+    DetailMapper detailMapper;
 
     @Override
     public boolean addHistory(History history) {
-        return historyMapper.addHistory(history)>0;
+        if (historyMapper.selectByUserAndComic(history.getUserId(),history.getComicId())==null){
+            return historyMapper.addHistory(history)>0;
+        }else {
+            //存在的话就只改原历史记录章节，时间，和状态
+            History exitHistory = historyMapper.selectByUserAndComic(history.getUserId(), history.getComicId());
+            exitHistory.setDetailId(history.getDetailId());
+            //不是最新章节
+            if (!history.getDetailId().equals(detailMapper.getNewest(history.getComicId()).getDetailId())){
+                exitHistory.setStatus(0);
+            }else {
+                exitHistory.setStatus(-1);
+            }
+            exitHistory.setLastReadTime(localDateToString());
+            historyMapper.updateHistory(exitHistory);
+            return false;
+        }
     }
 
     @Override
@@ -41,6 +61,11 @@ public class HistoryServiceImpl implements HistoryService {
     @Override
     public History selectHistoryById(Integer id) {
         return historyMapper.selectHistoryById(id);
+    }
+
+    @Override
+    public History selectHistoryByUserAndComic(Integer userId, Integer comicId) {
+        return historyMapper.selectByUserAndComic(userId,comicId);
     }
 
     @Override

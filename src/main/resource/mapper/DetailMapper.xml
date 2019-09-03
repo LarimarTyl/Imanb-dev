@@ -67,7 +67,7 @@
     from detail,comic
     where detail.comic_id=comic.comic_id
       and detail.comic_id = #{comicId}
-    order by updatetime desc
+    order by detail_id desc
   </select>
 
   <select id="selectDetailsByType" parameterType="String" resultMap="BaseResultMap">
@@ -81,7 +81,7 @@
     where detail.comic_id=comic.comic_id
       and detail.comic_id
               in (select comic.comic_id from comic where type like #{likeType})
-    order by updatetime DESC
+    order by detail_id DESC
   </select>
     <select id="getDetailById" resultMap="BaseResultMap">
         select detail_id,detail.comic_id, chaptername,
@@ -121,5 +121,16 @@
           <if test="location!=''">
             and comic.location=#{location}
         </if>
+    </select>
+    <select id="getNewest" resultType="com.larimar.entity.Detail">
+        select detail_id,detail.comic_id, chaptername,
+               detail.path as path, generalize, updatetime,
+               comic.comic_id, comic.root, comicname, author,
+               status, type, location, newupdate,
+               newchaptername, introduction, mark
+        from detail,comic
+        where detail.comic_id=comic.comic_id
+          and detail.comic_id = #{comicId}
+        order by detail_id desc limit 1
     </select>
 </mapper>

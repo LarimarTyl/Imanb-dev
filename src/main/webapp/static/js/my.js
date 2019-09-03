@@ -21,24 +21,95 @@
        })
     });
 //漫画项选择案例
-// 点赞案例
+// 点赞 订阅案例
 $(function () {
-    $(".focus #like");
-    $(".focus #unlike").addClass("hideIt");
-    $(".com-data").find(".likes").click(function(){
-        $(this).attr("href","").toggleClass("likes-select")
-    });
-    $(".focus").on("click",".isLike",function(){
-        $(this).toggleClass("likes").toggleClass("unlike");
-        $(".focus span").toggleClass("hideIt");
-    });
-    $("#like").click(function () {
-        alert("点赞加1")
-    });
-    $("#unlike").click(function () {
-        alert("点赞减1")
-    })
 
+    $("body").on("click",".orderIt",function () {
+        var id = $(this).attr("comic-id");
+        $this=$(this);
+        $.ajax({
+            url:rootPath+"userAddOrder?id="+id,
+            method:"POST",
+            success:function (result) {
+                if (result.code==200){
+                    $this.toggleClass("hideIt").siblings(".order").toggleClass("hideIt");
+                    alert(result.msg);
+                }else {
+                    $this.toggleClass("hideIt").siblings(".order").toggleClass("hideIt");
+                    alert(result.msg);
+                }
+            }
+        })
+    });
+    $("body").on("click",".delOrder",function () {
+        var id = $(this).attr("comic-id");
+        $this=$(this);
+        $.ajax({
+            url:rootPath+"userDelOrder?id="+id,
+            method:"POST",
+            success:function (result) {
+                if (result.code==200){
+                    $this.toggleClass("hideIt").siblings(".order").toggleClass("hideIt");
+                    alert(result.msg);
+                }else {
+                    $this.toggleClass("hideIt").siblings(".order").toggleClass("hideIt");
+                    alert(result.msg);
+                }
+            }
+        })
+    });
+    $("body").on("click","a.likeIt",function () {
+        var id = $(this).attr("detail-id");
+        $this=$(this);
+        $.ajax({
+            url:rootPath+"addDetailLike?id="+id,
+            method:"POST",
+            success:function (result) {
+                alert(result.msg);
+                $this.siblings(".delLike").text("💔 "+result.data);
+                $this.toggleClass("hideIt").siblings(".isLike").toggleClass("hideIt");
+            }
+        })
+    });
+    $("body").on("click","a.delLike",function () {
+        var id = $(this).attr("detail-id");
+        $this=$(this);
+        $.ajax({
+            url:rootPath+"delDetailLike?id="+id,
+            method:"POST",
+            success:function (result) {
+                alert(result.msg);
+                $this.siblings(".likeIt").html("&nbsp;❤"+result.data);
+                $this.toggleClass("hideIt").siblings(".isLike").toggleClass("hideIt");
+            }
+        })
+    });
+    $("body").on("click","button.likeIt",function () {
+        var id = $(this).attr("comic-id");
+        $this=$(this);
+        $.ajax({
+            url:rootPath+"addComicLike?id="+id,
+            method:"POST",
+            success:function (result) {
+                alert(result.msg);
+                $this.siblings(".delLike").text("不喜欢 💔 "+result.data);
+                $this.toggleClass("hideIt").siblings(".isLike").toggleClass("hideIt");
+            }
+        })
+    });
+    $("body").on("click","button.delLike",function () {
+        var id = $(this).attr("comic-id");
+        $this=$(this);
+        $.ajax({
+            url:rootPath+"delComicLike?id="+id,
+            method:"POST",
+            success:function (result) {
+                alert(result.msg);
+                $this.siblings(".likeIt").text("喜欢 ❤ "+result.data);
+                $this.toggleClass("hideIt").siblings(".isLike").toggleClass("hideIt");
+            }
+        })
+    });
   });
 
 // 点赞案例

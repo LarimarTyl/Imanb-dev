@@ -36,7 +36,7 @@ public class OrdersMapperTest {
 
     @Test
     public void addOrders() {
-        System.out.println(mapper.selectByOptions(new OrderSelect("魔道祖师",null,null,"国漫")));
+        System.out.println(mapper.userAddOrders(1,3));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class OrdersMapperTest {
 
     @Test
     public void selectAllOrders() {
-        System.out.println(mapper.selectAllOrders());
+        System.out.println(mapper.selectUsersAllOrders(2));
     }
 
     @Test

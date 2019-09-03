@@ -66,4 +66,8 @@ public interface OrdersMapper {
     public Orders getOrdersById(Integer ordersId);
 
     public Orders selectOrdersByUserAndComic(@Param("userId")Integer userId,@Param("comicId") Integer comicId);
+
+    public int userAddOrders(@Param("userId")Integer userId,@Param("comicId") Integer comicId);
+
+    public int userDelOrders(@Param("userId") Integer userId, @Param("comicId") Integer comicId);
 }

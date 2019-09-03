@@ -77,6 +77,11 @@ public class DetailServiceImpl implements DetailService {
     }
 
     @Override
+    public Detail selectNewestDetail(Integer comicId) {
+        return detailMapper.getNewest(comicId);
+    }
+
+    @Override
     public Detail getDetailByComicAndChapter(Integer comicId, String chapterName) {
         return detailMapper.selectDetailByComicIdAndChapter(comicId,chapterName);
     }

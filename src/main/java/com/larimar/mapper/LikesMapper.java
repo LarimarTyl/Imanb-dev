@@ -1,6 +1,9 @@
 package com.larimar.mapper;
 
+import com.larimar.entity.Likes;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author Larimar
@@ -64,4 +67,6 @@ public interface LikesMapper {
      * @return 点赞数
      */
     public int selectComicLikes(Integer comicId);
+
+    public List<Likes> queryAllLikes();
 }

@@ -18,6 +18,14 @@ public class History {
     public History() {
     }
 
+    public History(Integer userId, Integer comicId, Integer detailId, String lastReadTime, Integer status) {
+        this.userId = userId;
+        this.comicId = comicId;
+        this.detailId = detailId;
+        this.lastReadTime = lastReadTime;
+        this.status = status;
+    }
+
     public History(Integer historyId, Integer userId, User user, Integer comicId, Comic comic, Integer detailId, Detail detail, String lastReadTime, Integer status) {
         this.historyId = historyId;
         this.userId = userId;

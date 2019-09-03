@@ -15,6 +15,7 @@ public interface HistoryService {
     public boolean updateHistory(History history);
     public boolean updateHistoryStatus(Integer comicId,Integer status);
     public History selectHistoryById(Integer id);
+    public History selectHistoryByUserAndComic(Integer userId,Integer comicId);
     public List<History> queryAllHistory();
     public List<History> selectByOption(HistorySelect historySelect);
     public List<History> selectUsersAllHistory(Integer userId);

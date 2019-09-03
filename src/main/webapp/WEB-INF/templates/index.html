@@ -266,8 +266,11 @@
                     <div class="blog-excerpt">
                         <h2><a th:href="@{/showDetail(id=${detail.detailId})}" th:text="${detail.chapterName}">海贼王第972话：索隆的暴走！！！</a></h2>
                         <p class="mytext-p2" th:text="${detail.generalize}">索隆霸气鬼刀全开，对战大蛇将军，路飞正在赶来路上，他们能否战胜敌人帮助小桃拿回属于他的和之国呢 </p>
-                        <p class="blog-excerpt-bottom"><a href="#" class="comments">113</a><a href="#"
-                                                                                              class="likes">206</a></p>
+                        <p class="blog-excerpt-bottom com-data">
+                            <a href="#" class="comments">113</a>
+                            <a href="#" class="isLike  likeIt" th:attr="detail-id=${detail.detailId}"  th:text="'❤'+${detail.likes}">🖤206</a>
+                            <a href="#" class="isLike delLike hideIt" th:attr="detail-id=${detail.detailId}" th:text="'💔 '+${detail.likes}">💔206</a>
+                        </p>
                     </div>
                 </div>
             </div> <!-- end of recent blog -->
