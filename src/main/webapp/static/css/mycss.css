@@ -227,7 +227,7 @@ div.scroll-left ul li a img {width:220px;height:270px}
 div.scroll-left ul li:last-child a {margin-right:0}
 
 div.projects-band-nohidden {margin:25px 0 25px;width:100%}
-div.projects-band-nohidden ul {list-style:none;overflow:hidden;padding-top:15px;width:1280px;height: 790px;}
+div.projects-band-nohidden ul {list-style:none;overflow:hidden;padding-top:15px;width:1280px;height: 780px;}
 div.projects-band-nohidden ul li {float:left;margin-bottom: 35px;margin-right:36px;height:360px}
 div.projects-band-nohidden ul li a {display:block;width:220px;height:270px;position:relative}
 div.projects-band-nohidden ul li a img {width:220px;height:270px}
@@ -242,12 +242,12 @@ div.projects-band-nohidden .description,div.scroll-left .description{
 /* 标题居中 */
 div.projects-band-nohidden .description .title,div.scroll-left .description .title{
     font-weight: bolder;
-    padding:5px 0px; 
+    padding:5px 0px;
     text-align: center;
     margin: 0;
 }
 div.info p{
-    margin:0 0 5px; 
+    margin:0 0 5px;
 }
 /* 指定变色 */
 .description:hover .title{
@@ -292,7 +292,7 @@ div#rank .rank-items .rank-info{
     padding-top: 5px;
 }
 div#rank .rank-items .rank-info span{
-    margin-top:20px; 
+    margin-top:20px;
     display: block;
     height: 25px;
     width: 25px;
@@ -305,7 +305,7 @@ div#rank .rank-items .rank-info span{
 }
 /* 标题处理 */
 div#rank .rank-items div .title{
-    margin-top:0px; 
+    margin-top:0px;
     font-weight: bold;
     font-family: HelveticaLTStdRoman, sans-serif;
 }
@@ -352,7 +352,7 @@ div.date-blog {
     background:url(../images/icons/portfolio/gaoxiao.png);
     background-size: cover;
     z-index: 99;
-	
+
 }
 
 [my-icon="xianxia"]
@@ -363,7 +363,7 @@ div.date-blog {
     background:url(../images/icons/portfolio/xianxia.png);
     background-size: cover;
     z-index: 99;
-	
+
 }
 [my-icon="xiaoyuan"]
 {
@@ -372,7 +372,7 @@ div.date-blog {
 	height:100%;
     background:url(../images/icons/portfolio/xiaoyuan.png);
     background-size: cover;
-    z-index: 99;	
+    z-index: 99;
 }
 [my-icon="maoxian"]
 {
@@ -382,7 +382,7 @@ div.date-blog {
     background:url(../images/icons/portfolio/maoxian.png);
     background-size: cover;
     z-index: 99;
-	
+
 }
 [my-icon="yanqing"]
 {
@@ -392,7 +392,7 @@ div.date-blog {
     background:url(../images/icons/portfolio/yanqing.png);
     background-size: cover;
     z-index: 99;
-	
+
 }
 [my-icon="dushi"]
 {
@@ -402,7 +402,7 @@ div.date-blog {
     background:url(../images/icons/portfolio/dushi.png);
     background-size: cover;
     z-index: 99;
-	
+
 }
 [my-icon="xuanhuan"]
 {
@@ -430,7 +430,7 @@ div.date-blog {
     background:url(../images/icons/portfolio/guoman.png);
     background-size: cover;
     z-index: 99;
-	
+
 }
 [my-icon="riman"]
 {
@@ -486,13 +486,14 @@ div#book-list{
 }
 .list li p{
     text-align: center;
-    margin-top: 10px; 
+    margin-top: 10px;
 }
 /* 漫画列表 */
 
 /* 漫画项 */
 ul.book-item li{
     transition: all 0.3s ease 0s;
+    height: auto;
 }
 ul.book-item li:hover{
 transform: scale(1.1);
@@ -573,7 +574,7 @@ div#detail div#item-info .icon{
 /* 图片设置 */
 div#detail div#item-info .icon img{
     height: 100%;
-    border-radius:15px; 
+    border-radius:15px;
 }
 /* 信息框大小,位置 */
 div#detail div#item-info .more-info{
@@ -615,7 +616,7 @@ div#catalog .catalog-info{
 }
 /* 排序按钮 */
 div#catalog .catalog-info .order{
-    margin-bottom:20px; 
+    margin-bottom:20px;
 }
 div#catalog .catalog-info .catalog-info-contant .catalog-item{
     display: block;
@@ -623,7 +624,7 @@ div#catalog .catalog-info .catalog-info-contant .catalog-item{
     height: 30px;
     margin-bottom: 20px;
     line-height: 30px;
-    border-radius:10px; 
+    border-radius:10px;
     background-color: #eeeeeea8;
 }
 /* 显示全部章节*/

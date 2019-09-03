@@ -81,34 +81,34 @@
 <div class="content elastic">
     <div id="book-list">
         <ul class="list">
-            <li><a href="#">
+            <li id="yanQing"><a href="#">
                 <div class="list-noset"><span my-icon="yanqing"></span></div>
                 <p class="book_name mytext-title">言情</p></a></li>
-            <li><a href="#">
+            <li id="xuanHuan"><a href="#">
                 <div class="list-noset"><span my-icon="xuanhuan"></span></div>
                 <p class="book_name mytext-title">玄幻</p></a></li>
-            <li><a href="#">
+            <li id="duShi"><a href="#">
                 <div class="list-noset"><span my-icon="dushi"></span></div>
                 <p class="book_name mytext-title">都市</p></a></li>
-            <li><a href="#">
+            <li id="maoXian"><a href="#">
                 <div class="list-noset"><span my-icon="maoxian"></span></div>
                 <p class="book_name mytext-title">冒险</p></a></li>
-            <li><a href="#">
+            <li id="xiaoYuan"><a href="#">
                 <div class="list-noset"><span my-icon="xiaoyuan"></span></div>
                 <p class="book_name mytext-title">校园</p></a></li>
-            <li><a href="#">
+            <li id="xianXia"><a href="#">
                 <div class="list-noset"><span my-icon="xianxia"></span></div>
                 <p class="book_name mytext-title">仙侠</p></a></li>
-            <li><a href="#">
+            <li id="gaoXiao"><a href="#">
                 <div class="list-noset"><span my-icon="gaoxiao"></span></div>
                 <p class="book_name mytext-title">搞笑</p></a></li>
-            <li><a href="#">
+            <li id="guoMan"><a href="#">
                 <div class="list-noset"><span my-icon="guoman"></span></div>
                 <p class="book_name mytext-title">国漫</p></a></li>
-            <li><a href="#">
+            <li id="riMan"><a href="#">
                 <div class="list-noset"><span my-icon="riman"></span></div>
                 <p class="book_name mytext-title">日漫</p></a></li>
-            <li><a href="#">
+            <li id="qiTa"><a href="#">
                 <div class="list-noset"><span my-icon="more"></span></div>
                 <p class="book_name mytext-title">更多</p></a></li>
         </ul>
@@ -120,7 +120,7 @@
     <div class="space50"></div>
     <div class="space"></div>
     <div class="projects-band-nohidden">
-        <ul class="book-item">
+        <ul class="book-item" style="height: auto;">
             <li th:each="comic:${session.comics.list}">
                 <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
                     <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt=""/>

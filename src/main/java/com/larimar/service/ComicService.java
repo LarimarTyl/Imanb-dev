@@ -20,6 +20,7 @@ public interface ComicService {
     public Comic getComicById(Integer comicId);
     public Comic getComicByName(String comicName);
     public List<Comic> queryComicTypeLike(String type);
+    public List<Comic> queryComicLocation(String location);
     public List<Comic> queryAllComic();
     public List<Comic> selectByOption(ComicSelect comicSelect);
     public List<Comic> findLikestComic();

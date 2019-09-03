@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,38 +91,49 @@ public class CommentMapperTest {
     @Test
     // TODO: 2019/8/22 测试留言系统
     public void testCommentsSystem(){
-        List<Comment> comments = mapper.selectUsersComments(1);
-
-        for (Comment c : comments) {
+        List<Comment> comments = mapper.selectComicComments(1);
+        Reply comicReply = new Reply();
+        List<Reply> replies = new ArrayList<>();
+        for (Comment c:comments) {
             Reply reply = new Reply(c);
-            Reply comments1 = getComments(reply);
-            printlnComment(comments1);
+            replies.add(reply);
         }
+        comicReply.setReplyList(replies);
+        System.out.println("===========================");
+        getComments(comicReply);
+        printlnComment(comicReply);
     }
 
 
 
-    public Reply getComments(Reply reply){
-        Integer comicId = reply.getComicId();
-        List<Comment> comments = mapper.selectRevertComments(comicId);
-        if (comments!=null){
-            List<Reply> replyList = reply.getReplyList();
-            for (Comment c : comments) {
-                Reply childReply = new Reply(c);
-                Reply lastReply = getComments(childReply);
-                lastReply.getReplyList().add(lastReply);
-                replyList.add(childReply);
-            }
-            return reply;
-        }else {
-            return reply;
-        }
-    }
-    public void printlnComment(Reply reply){
-        System.out.println("主楼层内容："+reply.getContent());
+    public void getComments(Reply reply){
         List<Reply> replyList = reply.getReplyList();
-        for (Reply replys:replyList) {
-            printlnComment(replys);
+        for (Reply r: replyList) {
+            Integer commentId = r.getCommentId();
+            List<Comment> revertComments = mapper.selectRevertComments(commentId);
+            if (revertComments.size()>0) {
+                List<Reply> replies = new ArrayList<>();
+                for (Comment c : revertComments) {
+                    Reply reply1 = new Reply(c);
+                    getComments(reply1);
+                    reply.setReplyList(replies);
+                }
+            }
         }
+        }
+
+        //子楼层获取回复
+
+
+
+    public void printlnComment(Reply reply){
+        List<Reply> replyList = reply.getReplyList();
+        for (int i=1;i<replyList.size()+1;i++){
+            System.out.println("第"+i+"楼层");
+            Reply r = replyList.get(i - 1);
+            System.out.println(r);
+            System.out.println();
+        }
+
     }
 }

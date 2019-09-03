@@ -60,6 +60,11 @@ public class ComicServiceImpl implements ComicService {
     }
 
     @Override
+    public List<Comic> queryComicLocation(String location) {
+        return comicMapper.selectComicByLocation(location);
+    }
+
+    @Override
     public List<Comic> queryAllComic() {
         return comicMapper.selectAllComics();
     }
