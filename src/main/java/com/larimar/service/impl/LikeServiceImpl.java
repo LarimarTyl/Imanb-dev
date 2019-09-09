@@ -80,6 +80,7 @@ public class LikeServiceImpl implements LikeService {
     public int selectDetailLikeNum(Integer detailId) {
         int i = 0;
         try {
+//            return likesMapper.selectDetailLikes(detailId).orElse(0);
             i=likesMapper.selectDetailLikes(detailId);
         } catch (Exception e) {
             return 0;

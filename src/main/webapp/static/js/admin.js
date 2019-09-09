@@ -337,7 +337,10 @@ function build_user_tables(users) {
         var status = $("<th></th>").append(userstatu);
         var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editUser'>修改</a>").attr("edit-id", item.userId);
         var del = $("<a  class='btn btn-danger btn-xs' id='btn-delUser'>删除</a>").attr("del-id", item.userId);
-        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        var order = $("<a  class='btn btn-default btn-xs' id='user-order'>添加订阅</a>").attr("user-name", item.userName);
+        var history = $("<a  class='btn btn-success btn-xs' id='user-history'>添加历史</a>").attr("user-name", item.userName);
+        var comment = $("<a  class='btn btn-warning btn-xs' id='user-comment'>添加评论</a>").attr("user-name", item.userName);
+        var handle = $("<td></td>").append(edit).append(" ").append(comment).append(" ").append(order).append(" ").append(history).append(" ").append(del);
         $("<tr></tr>").append(id).append(photo).append(username)
             .append(password).append(gender).append(email).append(qq)
             .append(nickName).append(status).append(handle).appendTo(".user-table tbody")
@@ -407,7 +410,10 @@ function build_comic_tables(comics) {
         var mark = $("<th></th>").append(item.mark);
         var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editComic'>修改</a>").attr("edit-id", item.comicId);
         var del = $("<a  class='btn btn-danger btn-xs' id='btn-delComic'>删除</a>").attr("del-id", item.comicId);
-        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        var detail = $("<a  class='btn btn-success btn-xs' id='comic-detail'>添加章节</a>").attr("comic-name", item.comicName);
+        var comment = $("<a  class='btn btn-default btn-xs' id='comic-comment'>添加评论</a>").attr("comic-id", item.comicId);
+        var order = $("<a  class='btn btn-warning btn-xs' id='comic-order'>添加订阅</a>").attr("comic-name", item.comicName);
+                var handle = $("<td></td>").append(edit).append(" ").append(order).append(" ").append(detail).append(" ").append(comment).append(" ").append(del);
         $("<tr></tr>").append(id).append(comicImg).append(comicName).append(author).append(type).append(root)
             .append(location).append(newUpdate).append(newChapterName).append(textarea).append(status)
             .append(mark).append(handle).appendTo(".comic-table tbody");
@@ -459,7 +465,9 @@ function build_detail_tables(details) {
         var updateTime = $("<th></th>").append(item.updateTime);
         var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editDetail'>修改</a>").attr("edit-id", item.detailId);
         var del = $("<a  class='btn btn-danger btn-xs' id='btn-delDetail'>删除</a>").attr("del-id", item.detailId);
-        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        var comment = $("<a  class='btn btn-success btn-xs' id='detail-comment'>添加评论</a>").attr("detail-id",  item.detailId);
+        var history = $("<a  class='btn btn-warning btn-xs' id='detail-history'>添加历史</a>").attr("detail-name", item.chapterName).attr("comic-name", item.comic.comicName);
+        var handle = $("<td></td>").append(edit).append(" ").append(history).append(" ").append(comment).append(" ").append(del);
         $("<tr></tr>").append(id).append(comicPath).append(comicName).append(chapterName).append(path)
             .append(textarea).append(updateTime).append(handle).appendTo(".detail-table tbody")
     });
@@ -722,7 +730,10 @@ function build_user_tables2(users) {
         var status = $("<th></th>").append(userstatu);
         var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editUser'>修改</a>").attr("edit-id", item.userId);
         var del = $("<a  class='btn btn-danger btn-xs' id='btn-delUser'>删除</a>").attr("del-id", item.userId);
-        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        var order = $("<a  class='btn btn-default btn-xs' id='user-order'>添加订阅</a>").attr("user-name", item.userName);
+        var history = $("<a  class='btn btn-success btn-xs' id='user-history'>添加历史</a>").attr("user-name", item.userName);
+        var comment = $("<a  class='btn btn-warning btn-xs' id='user-comment'>添加评论</a>").attr("user-name", item.userName);
+        var handle = $("<td></td>").append(edit).append(" ").append(del).append(" ").append(order).append(" ").append(history).append(" ").append(comment);
         $("<tr></tr>").append(id).append(photo).append(username)
             .append(password).append(gender).append(email).append(qq)
             .append(nickName).append(status).append(handle).appendTo(".user-table tbody")
@@ -792,7 +803,10 @@ function build_comic_tables2(comics) {
         var mark = $("<th></th>").append(item.mark);
         var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editComic'>修改</a>").attr("edit-id", item.comicId);
         var del = $("<a  class='btn btn-danger btn-xs' id='btn-delComic'>删除</a>").attr("del-id", item.comicId);
-        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        var detail = $("<a  class='btn btn-success btn-xs' id='comic-comment'>添加章节</a>").attr("comic-name", item.comicName);
+        var comment = $("<a  class='btn btn-default btn-xs' id='comic-comment'>添加评论</a>").attr("comic-id", item.comicId);
+        var order = $("<a  class='btn btn-warning btn-xs' id='comic-order'>添加订阅</a>").attr("comic-name", item.comicName);
+                var handle = $("<td></td>").append(edit).append(" ").append(order).append(" ").append(detail).append(" ").append(comment).append(" ").append(del);
         $("<tr></tr>").append(id).append(comicImg).append(comicName).append(author).append(type).append(root)
             .append(location).append(newUpdate).append(newChapterName).append(textarea).append(status)
             .append(mark).append(handle).appendTo(".comic-table tbody");
@@ -844,7 +858,9 @@ function build_detail_tables2(details) {
         var updateTime = $("<th></th>").append(item.updateTime);
         var edit = $("<a  class='btn btn-primary btn-xs' data-toggle='modal'  id='btn-editDetail'>修改</a>").attr("edit-id", item.detailId);
         var del = $("<a  class='btn btn-danger btn-xs' id='btn-delDetail'>删除</a>").attr("del-id", item.detailId);
-        var handle = $("<td></td>").append(edit).append(" ").append(del);
+        var comment = $("<a  class='btn btn-success btn-xs' id='detail-comment'>添加评论</a>").attr("detail-id",  item.detailId);
+        var history = $("<a  class='btn btn-warning btn-xs' id='detail-history'>添加历史</a>").attr("detail-name", item.chapterName).attr("comic-name", item.comic.comicName);
+        var handle = $("<td></td>").append(edit).append(" ").append(history).append(" ").append(comment).append(" ").append(del);
         $("<tr></tr>").append(id).append(comicPath).append(comicName).append(chapterName).append(path)
             .append(textarea).append(updateTime).append(handle).appendTo(".detail-table tbody")
     });
@@ -1183,7 +1199,7 @@ $(function () {
                 type: "GET",
                 success: function (result) {
                     alert(result.msg);
-                    to_Page($("#userCurrent").text())
+                    userTo_page($("#userCurrent").text())
                 }
             })
         }
@@ -1222,8 +1238,8 @@ $(function () {
             type: "GET",
             success: function (result) {
                 $("#edit_id").val(result.data.comicId);
-                $("#edit_showPhotos").attr("src", "/images/comics/" + result.data.path + "/cover.jpg");
-                $("#edit_coverPath").val(result.data.path);
+                $("#edit_showPhotos").attr("src", "/images/comics/" + result.data.root + "/cover.jpg");
+                $("#edit_coverPath").val(result.data.root);
                 $("#edit_comicName").val(result.data.comicName);
                 $("#edit_author").val(result.data.author);
                 $("#edit_location").val(result.data.location);
@@ -1621,7 +1637,58 @@ $(function () {
         getHistorySelect(1);
     });
 
-
+    //其余按钮绑定事件
+    $("tbody").on("click", "#user-comment", function (){
+        // $("#commentPage a").click();
+        $("#addComment").click();
+        var form = $("#newCommentDialog form");
+        form.find("#add_comment_userName").val($(this).attr("user-name"));
+    });
+    $("tbody").on("click", "#user-order", function (){
+        // $("#orderPage a").click();
+        $("#addOrder").click();
+        var form = $("#newOrdersDialog form");
+        form.find("#edit_order_user").val($(this).attr("user-name"));
+    });
+    $("tbody").on("click", "#user-history", function (){
+        // $("#historyPage a").click();
+        $("#addHistory").click();
+        var form = $("#newHistoryDialog form");
+        form.find("#add_history_user").val($(this).attr("user-name"));
+    });
+    $("tbody").on("click", "#comic-order", function (){
+        // $("#orderPage a").click();
+        $("#addOrder").click();
+        var form = $("#newOrdersDialog form");
+        form.find("#add_order_comic").val($(this).attr("comic-name"));
+    });
+    $("tbody").on("click", "#comic-detail", function (){
+        // $("#detailPage a").click();
+        $("#addDetail").click();
+        var form = $("#addDetailDialog form");
+        form.find("#new_detail_comicname").val($(this).attr("comic-name"));
+    });
+    $("tbody").on("click", "#comic-comment", function (){
+        // $("#commentPage a").click();
+        $("#addComment").click();
+        var form = $("#newCommentDialog form");
+        form.find("#add_comment_type").val(0    );
+        form.find("#add_coment_aim").val($(this).attr("comic-id"));
+    });
+    $("tbody").on("click", "#detail-comment", function (){
+        // $("#commentPage a").click();
+        $("#addComment").click();
+        var form = $("#newCommentDialog form");
+        form.find("#add_comment_type").val(1);
+        form.find("#add_coment_aim").val($(this).attr("detail-id"));
+    });
+    $("tbody").on("click", "#detail-history", function (){
+        // $("#historyPage a").click();
+        $("#addHistory").click();
+        var form = $("#newHistoryDialog form");
+        form.find("#add_history_comic").val($(this).attr("comic-name"));
+        form.find("#add_history_detail").val($(this).attr("detail-name"));
+    });
 });
 //Ajax请求
 

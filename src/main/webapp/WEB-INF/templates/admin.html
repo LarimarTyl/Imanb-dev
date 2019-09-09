@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>爱漫吧管理后台</title>
+    <link  rel="shortcut icon" th:href="@{/static/images/icon/logo.ico}"/>
     <link rel="stylesheet" th:href="@{/static/css/reset.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
@@ -85,7 +86,7 @@
             <div class="right userPageInfo mr40">当前第2页，总共2页，共10条记录</div>
             <!-- 添加用户模态框 -->
             <div class="modal fade" id="addUserDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog"  role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -335,7 +336,7 @@
                     </form>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary add" dialog="#newOrdersDialog">添加订阅</a>
+            <a href="#" class="btn btn-primary add" id="addOrder" dialog="#newOrdersDialog">添加订阅</a>
             <div class="right orderPageInfo mr40">当前第1页，总共2页，共10条记录</div>
             <div class="modal fade" id="newOrdersDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -515,11 +516,11 @@
                     </form>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary add" dialog="#addComicDialog">添加漫画</a>
+            <a href="#" class="btn btn-primary add" id="addComic" dialog="#addComicDialog">添加漫画</a>
             <div class="right comicPageInfo mr40">当前第1页，总共2页，共10条记录</div>
             <!-- 添加漫画模态框 -->
             <div class="modal fade" id="addComicDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog" style="width: 800px" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -550,7 +551,7 @@
                                     <label for="new_coverPath" class="col-sm-2 control-label">漫画目录</label>
                                     <div class="col-sm-4">
                                         <input type="text" class="form-control" id="new_coverPath" placeholder="漫画资源目录"
-                                               name="path">
+                                               name="root">
                                     </div>
                                     <input type="hidden" class="form-control" id="new_typeName" name="type">
                                 </div>
@@ -692,7 +693,7 @@
                 </nav>
             </div>
             <div class="modal fade" id="comicEditDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog" style="width: 800px" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -724,7 +725,7 @@
                                     <label for="edit_coverPath" class="col-sm-2 control-label">漫画目录</label>
                                     <div class="col-sm-4">
                                         <input type="text" class="form-control" id="edit_coverPath" placeholder="漫画资源目录"
-                                               name="path">
+                                               name="root">
                                     </div>
                                     <input type="hidden" class="form-control" id="edit_typeName" name="type">
                                 </div>
@@ -847,7 +848,7 @@
                     </form>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary add" dialog="#addDetailDialog">添加章节</a>
+            <a href="#" class="btn btn-primary add" id="addDetail" dialog="#addDetailDialog">添加章节</a>
             <div class="right detailPageInfo mr40">当前第1页，总共2页，共10条记录</div>
             <!-- 添加章节模态框 -->
             <div class="modal fade" id="addDetailDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -908,7 +909,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" id="btn-addDetail">添加章节</button>
+                            <button type="button" class="btn  btn-primary" id="btn-addDetail">添加章节</button>
                         </div>
                     </div>
                 </div>
@@ -1050,7 +1051,7 @@
                     </form>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary add" dialog="#newCommentDialog">添加评论</a>
+            <a href="#" class="btn btn-primary add" id="addComment" dialog="#newCommentDialog">添加评论</a>
             <div class="right commentPageInfo mr40">当前第1页，总共2页，共10条记录</div>
             <div class="modal fade" id="newCommentDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -1255,7 +1256,7 @@
                     </form>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary add" dialog="#newHistoryDialog">添加浏览历史</a>
+            <a href="#" class="btn btn-primary add" id="addHistory" dialog="#newHistoryDialog">添加浏览历史</a>
             <div class="right historyPageInfo mr40">当前第1页，总共2页，共10条记录</div>
             <div class="modal fade" id="newHistoryDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">

@@ -383,9 +383,9 @@ public class AdminController {
         }
 
         if (detailService.delDetail(id)) {
-            return Msg.success().add("删除订阅信息成功！", null);
+            return Msg.success().add("删除章节信息成功！", null);
         } else {
-            return Msg.success().add("删除订阅信息失败！", null);
+            return Msg.success().add("删除章节信息失败！", null);
         }
     }
 

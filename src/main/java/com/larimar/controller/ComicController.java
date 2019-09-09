@@ -13,6 +13,7 @@ import com.larimar.service.LikeService;
 import com.larimar.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +51,43 @@ public class ComicController {
         return "list";
     }
 
+
+    /**
+     * 搜索漫画
+     * @param comicName 漫画名 粗查询
+     * @param request 用于存放结果
+     * @return 返回查找数据
+     */
+    @RequestMapping("/searchComic")
+    public String searchComic(@RequestParam(value = "comicName",defaultValue = " ") String comicName, HttpServletRequest request){
+        PageHelper.startPage(1,10);
+        List<Comic> comic = comicService.getComicNameLike(comicName);
+        if (comic.size()>0){
+            PageInfo comics = new PageInfo(comic);
+            request.getSession().setAttribute("comics",comics);
+            return "list";
+        }else {
+            request.getSession().setAttribute("msg","找不到类似的数据嗷~~~~~~");
+            return "errors";
+        }
+    }
+    @RequestMapping("/searchDetail")
+    public String searchDetail(@RequestParam(value = "comicName",defaultValue = " ") String comicName,@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
+        PageHelper.startPage(pn,10);
+        List<Detail> updateLogs = detailService.queryComicDetailByName(comicName);
+        if (updateLogs.size()>1){
+            for (Detail d : updateLogs) {
+                d.setLikes(likeService.selectDetailLikeNum(d.getDetailId()));
+            }
+            PageInfo updateLog = new PageInfo(updateLogs);
+            request.getSession().setAttribute("updateLog",updateLog);
+            return "updateLog";
+        }else {
+            request.getSession().setAttribute("msg","找不到类似的数据嗷~~~~~~");
+            return "errors";
+        }
+    }
+
     @RequestMapping("/updateLog")
     public String updateLog(@RequestParam(value = "pn" ,defaultValue = "1") Integer pn,HttpServletRequest request){
         PageHelper.startPage(pn,4);
@@ -65,39 +103,51 @@ public class ComicController {
     @RequestMapping("/detail")
     public String detail(Integer id, HttpServletRequest request){
         Comic comic= comicService.getComicById(id);
-        comic.setLikes(likeService.selectComicLikeNum(id));
-        List<Detail> details = detailService.queryComicDetail(id);
-        String type = comic.getType();
-        //类型相似的漫画
-        ArrayList<Comic> typeLike = new ArrayList<>();
-        if (type.lastIndexOf("/")!=-1){
-            String[] types = type.split("/");
-            for (String s : types) {
-                typeLike.addAll(comicService.queryComicTypeLike(s));
-            }
-        }
-        request.getSession().setAttribute("comic",comic);
-        request.getSession().setAttribute("details",details);
-        request.getSession().setAttribute("typeLike",typeLike);
-        return "detail";
+       if (comic!=null){
+           comic.setLikes(likeService.selectComicLikeNum(id));
+           List<Detail> details = detailService.queryComicDetail(id);
+           String type = comic.getType();
+           //类型相似的漫画
+           ArrayList<Comic> typeLike = new ArrayList<>();
+           if (type.lastIndexOf("/")!=-1){
+               String[] types = type.split("/");
+               for (String s : types) {
+                   typeLike.addAll(comicService.queryComicTypeLike(s));
+               }
+           }
+           request.getSession().setAttribute("comic",comic);
+           request.getSession().setAttribute("details",details);
+           request.getSession().setAttribute("typeLike",typeLike);
+           return "detail";
+       }else {
+           request.getSession().setAttribute("msg","找不到该数据嗷~~~~~~");
+           return "errors";
+       }
     }
     @RequestMapping("/showDetail")
     public String showDetail(Integer id,HttpServletRequest request){
         String comicRoot = "F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\";
         Detail detailById = detailService.getDetailById(id);
-        File dest = new File( comicRoot+ detailById.getComic().getRoot() + "\\" + detailById.getPath());
-        // FIXME: 2019/8/29  detail添加了一个字段用于存放章节对应的目录下的 图片文件名
-        detailById.setImages(getImages(dest));
-        User user = (User) request.getSession().getAttribute("user");
-        //有用户登录就更新历史状态
-        if (user!=null){
-            //判断是否是最新章节
-            History newHistory = new History(user.getUserId(), detailById.getComicId(), id, localDateToString(), null);
+        if (detailById!=null){
+            File dest = new File( comicRoot+ detailById.getComic().getRoot() + "\\" + detailById.getPath());
+            // FIXME: 2019/8/29  detail添加了一个字段用于存放章节对应的目录下的 图片文件名
+            detailById.setImages(getImages(dest));
+            detailById.setLikes(likeService.selectDetailLikeNum(id));
+            User user = (User) request.getSession().getAttribute("user");
+            //有用户登录就更新历史状态
+            if (user!=null){
+                //判断是否是最新章节
+                History newHistory = new History(user.getUserId(), detailById.getComicId(), id, localDateToString(), null);
 
-            historyService.addHistory(newHistory);
+                historyService.addHistory(newHistory);
+            }
+            request.getSession().setAttribute("detail",detailById);
+            return "detailInfo";
+        }else {
+            request.getSession().setAttribute("msg","找不到该数据嗷~~~~~~");
+            return "errors";
         }
-        request.getSession().setAttribute("detail",detailById);
-        return "detailInfo";
+
     }
 
     /**
@@ -213,7 +263,7 @@ public class ComicController {
     @ResponseBody
     public Msg listQiTa(@RequestParam(value = "pn",defaultValue = "1")Integer pn){
         PageHelper.startPage(pn,10);
-        List<Comic> comic = comicService.queryComicLocation("其它");
+        List<Comic> comic = comicService.queryComicLocation("其他漫画");
         if (comic.size()>0){
             PageInfo comics = new PageInfo(comic);
             return Msg.success().add(null,comics);
@@ -221,5 +271,42 @@ public class ComicController {
             return Msg.fail();
         }
     }
-
+    /**
+     * 日志分类列表
+     */
+    @RequestMapping("/logForType")
+    @ResponseBody
+    public Msg logForType(@RequestParam(value = "type",defaultValue = "/")String type,@RequestParam(value = "pn",defaultValue = "1")Integer pn){
+        PageHelper.startPage(pn,4);
+            List<Detail> detail=null;
+        if (!type.equals("全部")){
+            detail = detailService.selectComicDetailByType(type);
+        }else {
+            detail = detailService.queryAllDetail();
+        }
+        if (detail.size()>1){
+            for (Detail d : detail) {
+                d.setLikes(likeService.selectDetailLikeNum(d.getDetailId()));
+            }
+            PageInfo details = new PageInfo(detail);
+            return Msg.success().add(null,details);
+        }else {
+            return Msg.fail().add("没有找到符合要求的数据",null);
+        }
+    };
+    @RequestMapping("/logForTime")
+    @ResponseBody
+    public Msg logForTime(@RequestParam(value = "time")String time,@RequestParam(value = "pn",defaultValue = "1")Integer pn){
+        PageHelper.startPage(pn,4);
+        List<Detail> detail = detailService.selectComicDetailByTime(time);
+        if (detail.size()>1){
+            for (Detail d : detail) {
+                d.setLikes(likeService.selectDetailLikeNum(d.getDetailId()));
+            }
+            PageInfo details = new PageInfo(detail);
+            return Msg.success().add(null,details);
+        }else {
+            return Msg.fail().add("没有找到符合要求的数据",null);
+        }
+    };
 }

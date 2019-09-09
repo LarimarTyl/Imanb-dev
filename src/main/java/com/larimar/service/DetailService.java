@@ -20,4 +20,7 @@ public interface DetailService {
     public List<Detail> selectByOption(DetailSelect detailSelect);
     public List<Detail> queryComicDetail(Integer comicId);
     public List<Detail> selectComicDetailByType(String typeName);
+    public List<Detail> selectComicDetailByTime(String time);
+
+    public List<Detail> queryComicDetailByName(String comicName);
 }

@@ -55,4 +55,8 @@ public interface DetailMapper {
     public Detail selectDetailByComicIdAndChapter(@Param("comicId") Integer comicId,@Param("chapterName") String chapterName);
 
     public Detail getNewest(Integer comicId);
+
+   public List<Detail> selectDetailsByTime(String time);
+
+    public List<Detail> selectDetailsByComicName(String comicName);
 }

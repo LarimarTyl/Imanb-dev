@@ -1,9 +1,9 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <title>I❤Manb 爱漫吧</title>
+    <link  rel="shortcut icon" th:href="@{/static/images/icon/logo.ico}" >
     <link rel="stylesheet" th:href="@{/static/css/reset.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
@@ -30,7 +30,7 @@
                 <li>
                     <form class="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="搜索漫画">
+                            <input type="text" name="comicName" class="form-control" placeholder="搜索漫画">
                         </div>
                     </form>
                 </li>
@@ -68,22 +68,16 @@
     <div class="bg-wood circle-inline-border"><img th:src="@{/static/images/slider/3.jpg}" class="big">
         <div class="elastic">
             <div id="slider-item">
-                <div class="f1 left controll-btn"></div>
+                <div class="f1 left controll-btn preOne"></div>
                 <div class="f1 item">
                     <ul class="nav nav-pills smallpics">
-                        <li class="smallpic"><img th:src="@{/static/images/slider/1.jpg}" alt=""></li>
-                        <li class="smallpic"><img th:src="@{/static/images/slider/2.jpg}" alt=""></li>
-                        <li class="smallpic"><img th:src="@{/static/images/slider/3.jpg}" alt=""></li>
-                        <li class="smallpic"><img th:src="@{/static/images/slider/4.jpg}" alt=""></li>
-                        <li class="smallpic"><img th:src="@{/static/images/slider/5.jpg}" alt=""></li>
-                        <li class="smallpic"><img th:src="@{/static/images/slider/6.jpg}" alt=""></li>
-                        <li class="smallpic"><img th:src="@{/static/images/slider/7.jpg}" alt=""></li>
-                        <li class="smallpic"><img th:src="@{/static/images/slider/8.jpg}" alt=""></li>
-                        <li class="smallpic"><img th:src="@{/static/images/slider/9.jpg}" alt=""></li>
-                        <li class="smallpic"><img th:src="@{/static/images/slider/1.jpg}" alt=""></li>
+                        <!--fixme 遍历固定大小的内容-->
+                        <li class="smallpic" th:each="i:${#numbers.sequence(1,30)}">
+                            <img th:src="|/images/slider/${iStat.count}.jpg|" alt="">
+                        </li>
                     </ul>
                 </div>
-                <div class="f1 right controll-btn"></div>
+                <div class="f1 right controll-btn nextOne"></div>
 
             </div>
 
@@ -96,11 +90,12 @@
         <!-- popular人气漫画 -->
         <div id="projects">
             <h1 class="title-line blue settings-text"><span class="current-bg pr5">优作推荐</span>
-                <small class="current-bg right" style="float:right;margin-top:5px"><a class="arrow-left">&nbsp</a>
-                    <a class="arrow-right" >&nbsp</a></small>
+                <small class="current-bg right" style="float:right;margin-top:5px">
+                    <a class="arrow-left leftAway" bindScope="#scope1" bindLength ="1280px">&nbsp</a>
+                    <a class="arrow-right rightAway" bindScope="#scope1" bindLength ="1280px" >&nbsp</a></small>
             </h1>
             <div class="scroll-left">
-                <ul class="popular">
+                <ul class="popular" id="scope1">
                     <li th:each="comic:${application.likestComic}">
                         <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
                             <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt=""/></a>
@@ -117,10 +112,10 @@
 
             <!-- new item新作推送 -->
             <h1 class="title-line blue settings-text"><span class="current-bg pr5">新作推送</span>
-                <a class="reset" href="#"><small class="current-bg right">换一批</small></a>
+                <a class="reset" href="#"><small class="current-bg right changeOnce" bindScope="#changeOnce"  bingHeight="780px">换一批</small></a>
             </h1>
-            <div class="projects-band-nohidden">
-                <ul class="newitem">
+            <div class="projects-band-nohidden overHide">
+                <ul class="newitem" id="changeOnce">
                     <li th:each="comic:${application.newComic}">
                         <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
                             <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" />
@@ -138,10 +133,10 @@
 
             <!-- new item热门订阅漫画 -->
             <h1 class="title-line blue settings-text"><span class="current-bg pr5">热门订阅</span>
-                <a class="reset" href="#"><small class="current-bg right">更多</small></a>
+                <a class="reset" href="#"><small class="current-bg right changeOnce" bindScope="#changeOnce2"  bingHeight="780px">更多</small></a>
             </h1>
-            <div class="projects-band-nohidden">
-                <ul class="newitem">
+            <div class="projects-band-nohidden overHide">
+                <ul class="newitem" id="changeOnce2">
                     <li th:each="comic:${application.comicByOrderNum}">
                         <a th:href="@{/detail(id=${comic.comicId})}" class="inline-border">
                             <img th:src="|/images/comics/${comic.root}/cover.jpg|" alt="" />
@@ -243,9 +238,9 @@
                 </div>
                 <p class="mytext-title">声明：Imanb爱漫吧为纯属个人学习项目，仅作为学习网站部署搭建学习所用，并不具备版权，广大读者老爷们如果喜欢，且有支付能力，请您一定支持正版。</p>
                 <div class="more-proj">
-                    <a href="#" class="inline-border standart-button-style mln settings-clr"><span
+                    <a th:href="@{/about}" class="inline-border back-button-style mln settings-clr"><span
                             class="over5">关于我们</span></a>
-                    <a href="#" class="inline-border standart-button-style settings-clr"><span
+                    <a th:href="@{/contact}" class="inline-border back-button-style settings-clr"><span
                             class="over5">联系我们</span></a>
                 </div>
             </div> <!-- end of our team -->
@@ -268,7 +263,7 @@
                         <p class="mytext-p2" th:text="${detail.generalize}">索隆霸气鬼刀全开，对战大蛇将军，路飞正在赶来路上，他们能否战胜敌人帮助小桃拿回属于他的和之国呢 </p>
                         <p class="blog-excerpt-bottom com-data">
                             <a href="#" class="comments">113</a>
-                            <a href="#" class="isLike  likeIt" th:attr="detail-id=${detail.detailId}"  th:text="'❤'+${detail.likes}">🖤206</a>
+                            <a href="#" class="isLike  likeIt" th:attr="detail-id=${detail.detailId}"  th:text="'💙'+${detail.likes}">🖤206</a>
                             <a href="#" class="isLike delLike hideIt" th:attr="detail-id=${detail.detailId}" th:text="'💔 '+${detail.likes}">💔206</a>
                         </p>
                     </div>

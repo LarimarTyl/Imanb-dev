@@ -1,12 +1,11 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 
 <head>
     <meta charset="UTF-8">
     <title>I❤Manb 爱漫吧</title>
-    <meta name="keywords" content="GFX, design"/>
-    <meta name="description" content="GFX Design"/>
+    <link  rel="shortcut icon" th:href="@{/static/images/icon/logo.ico}"/>
     <link rel="stylesheet" th:href="@{/static/css/reset.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
@@ -36,7 +35,7 @@
                 <li>
                     <form class="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="搜索漫画">
+                            <input type="text" name="comicName" class="form-control" placeholder="搜索漫画">
                         </div>
                     </form>
                 </li>

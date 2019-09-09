@@ -118,4 +118,9 @@ public class ComicServiceImpl implements ComicService {
     public List<Comic> findAllRank() {
         return comicMapper.selectAllRank();
     }
+
+    @Override
+    public List<Comic> getComicNameLike(String comicName) {
+        return comicMapper.selectComicLikeName(comicName);
+    }
 }

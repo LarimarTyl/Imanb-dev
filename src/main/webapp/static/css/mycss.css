@@ -10,6 +10,10 @@ a:hover, a:focus {
     color: #23527c;
     text-decoration: none;
 }
+.img-border{
+    outline: 3px solid #ffffff;
+    outline-offset: -3px;
+}
 div.myData {
     width: 70px;
     margin: 80px auto 0;
@@ -19,9 +23,19 @@ div.myData {
 /*字体设置*/
 a.thumb-blog {
     position: relative;
-    width: 575px;
+    width: 375px;
     display: block;
     margin-bottom: 20px;
+}
+a.back-button-style{
+    position: relative;
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 25px;
+    color: #fff;
+    background: #1577b8;
+    font: 20px HelveticaLTStdBold, sans-serif;
+    max-width: 300px;
 }
 .title-large{
     font-weight: bolder;
@@ -74,7 +88,9 @@ a.thumb-blog {
     font:18px HelveticaLTStdBold, sans-serif;
 }
 
-
+.ml100{
+    margin-left: 100px;
+}
 .f4{
     margin-right:20px; 
 }
@@ -154,7 +170,10 @@ ul#main-menu li a.loginOut:hover {
 
 /* 轮播图内容 */
 div.bg-wood .big{
-    width: 1900px;
+    width: inherit;
+    height: 550px;
+    overflow: hidden;
+    object-fit: cover;
 }
 div#slider-item {
     position: relative;
@@ -190,6 +209,7 @@ div#slider-item .right{
 }
 div#slider-item .item .smallpics{
     margin-top: 4px;
+    width: 99999px;
     position: absolute;
 }
 div#slider-item .item .smallpic{
@@ -220,19 +240,21 @@ div.info{
 }
 
 div.scroll-left{margin:25px 0 25px;width:100%;overflow:hidden}
-div.scroll-left ul {list-style:none;overflow:hidden;padding-top:15px;width:10000000px}
+div.scroll-left ul {position: relative;list-style:none;padding-top:15px;width:10000000px}
 div.scroll-left ul li {float:left;margin-right:36px;height:360px}
 div.scroll-left ul li a {display:block;width:220px;height:270px;position:relative}
 div.scroll-left ul li a img {width:220px;height:270px}
 div.scroll-left ul li:last-child a {margin-right:0}
 
-div.projects-band-nohidden {margin:25px 0 25px;width:100%}
-div.projects-band-nohidden ul {list-style:none;overflow:hidden;padding-top:15px;width:1280px;height: 780px;}
+div.projects-band-nohidden {margin:25px 0 25px;width:100%;overflow: hidden}
+div.projects-band-nohidden ul {position: relative;list-style:none;padding-top:15px;width:1280px;height: 780px;}
 div.projects-band-nohidden ul li {float:left;margin-bottom: 35px;margin-right:36px;height:360px}
 div.projects-band-nohidden ul li a {display:block;width:220px;height:270px;position:relative}
 div.projects-band-nohidden ul li a img {width:220px;height:270px}
 div.projects-band-nohidden ul li:last-child a {margin-right:0}
-
+div.overHide{
+    height: 780px;
+}
 
 /* 图片和简介区分 */
 div.projects-band-nohidden .description,div.scroll-left .description{
@@ -334,8 +356,52 @@ div#rank .rank-items div p{
 }
 /* 排行榜内容 */
 /*日志日期处理*/
+div.blog{
+    width: 1260px;
+}
 div.date-blog {
     margin-top: 5px;
+}
+body.detail div.blog-content{
+    margin: 0 195px;
+}
+div.article-content {
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+div.article-content  .pic-item{
+    position: relative;
+    width: 99999999px;
+}
+div.article-content  .pic-item li{
+    float: left;
+}
+div.article-content p.img{
+    float: left;
+
+}
+a.thumb-blog{
+    position: relative;
+    margin-right:30px;
+    width: 220px;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+}
+a.thumb-blog img{
+    width: 220px;
+    height: 320px;
+    object-fit: cover;
+}
+div.detailInfo{
+    position: relative;
+    float: left;
+    width: 525px;
+    height: 320px;
+}
+a.standart-button-style {
+    position: absolute;
+    bottom: 25px;
 }
 /* 👆上面是主页样式 */
 /* *************************************************************** */
@@ -506,10 +572,10 @@ transform: scale(1.1);
 /* *************************************************************** */
 /* 漫画最新内容展示样式 */
 .new-pic .pic-items .item{
-    margin: 5px 0;
+    margin: 5px 10px;
 }
 .new-pic .pic-items img,.pic-item-img{
-    width: 800px;
+    width: 760px;
 }
 .focus{
     margin: 0 15px;

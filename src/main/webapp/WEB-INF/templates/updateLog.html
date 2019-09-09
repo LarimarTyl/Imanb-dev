@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <title>I❤Manb 爱漫吧</title>
-    <meta name="keywords" content="GFX, design"/>
-    <meta name="description" content="GFX Design"/>
+   <link  rel="shortcut icon" th:href="@{/static/images/icon/logo.ico}"/>
     <link rel="stylesheet" th:href="@{/static/css/reset.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
@@ -31,7 +30,7 @@
                 <li>
                     <form class="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="搜索漫画">
+                            <input type="text" name="comicName" class="form-control" placeholder="搜索漫画">
                         </div>
                     </form>
                 </li>
@@ -42,15 +41,17 @@
                 <li><a th:href="@{/contact}" class="settings-txt">联系我们</a></li>
                 <li>
                     <div th:unless="${session.user}!=null">
-                        <button  class="btn btn-primary btn-lg" data-toggle="modal"
-                                 data-target="#login">注册/登录</button>
+                        <button class="btn btn-primary btn-lg" data-toggle="modal"
+                                data-target="#login">注册/登录
+                        </button>
                     </div>
-                    <div th:if="${session.user}!=null" th:object="${session.user}"  class="user">
+                    <div th:if="${session.user}!=null" th:object="${session.user}" class="user">
                         <div class="left">
-                            <a th:href="@{/user}" class="user-ican"><img th:src="|/images/user/*{photo}.jpg|" alt=""></a>
+                            <a th:href="@{/user}" class="user-ican"><img th:src="|/images/user/*{photo}.jpg|"
+                                                                         alt=""></a>
                             <p class="center username mytext-p" th:text="*{nickName}">读者老爷</p>
                         </div>
-                        <a class="loginOut right" th:href="@{/loginOut}" >退出</a>
+                        <a class="loginOut right" th:href="@{/loginOut}">退出</a>
                     </div>
                 </li>
             </ul>
@@ -81,50 +82,60 @@
         <!-- HERE START LEFT SIDE BLOG -->
         <div class="grid w870 mr60 blog-content">
             <!-- 更新项 -->
-            <div class="article-blog grid-system log-item" th:each="detail:${session.updateLog.list}">
-                <div class="grid comment-date w95">
-                    <div class="circle-area circle-inline-border settings-clr no-second">
-                        <!-- 更新时间 -->
-                        <div class="date-blog">
-                            <!--fixme 切割日期字符串-->
-                            <p class="day" th:text="${#strings.substring(detail.updateTime,9,10)}">
-                                12
-                            </p>
-                            <p class="month" th:text="${#strings.substring(detail.updateTime,5,7)}">FEB</p>
-                            <p class="year" th:text="${#strings.substring(detail.updateTime,0,4)}">2012</p>
+            <div class="logItemDiv">
+                <div class="article-blog grid-system log-item" th:each="detail:${session.updateLog.list}">
+                    <div class="grid comment-date w95">
+                        <div class="circle-area circle-inline-border settings-clr no-second">
+                            <!-- 更新时间 -->
+                            <div class="date-blog">
+                                <!--fixme 切割日期字符串-->
+                                <p class="day" th:text="${#strings.substring(detail.updateTime,9,10)}">
+                                    12
+                                </p>
+                                <p class="month" th:text="${#strings.substring(detail.updateTime,5,7)}">FEB</p>
+                                <p class="year" th:text="${#strings.substring(detail.updateTime,0,4)}">2012</p>
+                            </div>
+                        </div>
+                        <div class="myData">
+                            <a class="comments">113</a>
+                            <a class="isLike  likeIt" th:attr="detail-id=${detail.detailId}"
+                               th:text="'💙 '+${detail.likes}">🖤206</a>
+                            <a class="isLike delLike hideIt" th:attr="detail-id=${detail.detailId}"
+                               th:text="'💔 '+${detail.likes}">💔206</a>
                         </div>
                     </div>
-                    <div class="myData">
-                        <a  class="comments">113</a>
-                        <a  class="isLike  likeIt" th:attr="detail-id=${detail.detailId}" th:text="'&nbsp;❤ '+${detail.likes}">🖤206</a>
-                        <a  class="isLike delLike hideIt" th:attr="detail-id=${detail.detailId}" th:text="'💔 '+${detail.likes}">💔206</a>
-                    </div>
-                </div>
-                <div class="grid article-content w775">
-                    <p>
-                        <a class="thumb-blog" th:href="@{/showDetail(id=${detail.detailId})}">
-                        <img class="inline-border " th:src="|/images/comics/${detail.comic.root}/${detail.path}/1.jpg|" alt=""/>
-                        </a>
-                    </p>
-                    <h2 class="blog-title" th:text="${detail.chapterName}">机械总动员第28话:孤独的伊娃</h2>
-                    <p class="blog-excerpt mytext-p2" th:text="${detail.generalize}">机械之城被毁灭后</p>
-                    <p class="blog-more">
-                        <a th:href="@{/showDetail(id=${detail.detailId})}" class="standart-button-style inline-border mln settings-clr">
-                            <span class="over5">查看更多</span>
-                        </a>
-                    </p>
-                </div>
-                <div class="clear"></div>
-                <span class="dotted-line">&nbsp;</span>
-            </div>
+                    <div class="grid article-content w775">
+                        <p class="img">
+                            <a class="thumb-blog" th:href="@{/showDetail(id=${detail.detailId})}">
+                                <img class="inline-border "
+                                     th:src="|/images/comics/${detail.comic.root}/${detail.path}/1.jpg|" alt=""/>
+                            </a>
+                        </p>
 
+                        <div class='detailInfo'>
+                            <h2 class="mytext-title2 mb5" th:text="${detail.comic.comicName}">斗破</h2>
+                            <h2 class="mytext-title mb25" th:text="${detail.chapterName}">机械总动员第28话:孤独的伊娃</h2>
+                            <p class="blog-excerpt mytext-p2" th:text="${detail.generalize}">机械之城被毁灭后</p>
+                            <p class="blog-more">
+                                <a th:href="@{/showDetail(id=${detail.detailId})}"
+                                   class="standart-button-style inline-border mln settings-clr">
+                                    <span class="over5">查看更多</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <span class="dotted-line">&nbsp;</span>
+                </div>
+            </div>
             <!--******************-->
             <!--页码控件-->
             <div class="pagecontroller pagination-small pagination-center center">
                 <ul class="pagination pagination-lg">
                     <li><a th:href="@{/updateLog(pn=1)}">&laquo;</a></li>
                     <li><a th:href="@{/updateLog(pn=${session.updateLog.pageNum}-1)}">上一页</a></li>
-                    <li><a th:href="@{/updateLog(pn=${session.updateLog.pageNum})}" th:text="${session.updateLog.pageNum}">1</a></li>
+                    <li><a th:href="@{/updateLog(pn=${session.updateLog.pageNum})}"
+                           th:text="${session.updateLog.pageNum}">1</a></li>
                     <li><a th:href="@{/updateLog(pn=${session.updateLog.pageNum}+1)}">下一页</a></li>
                     <li><a th:href="@{/updateLog(pn=${session.updateLog.pages})}">&raquo;</a></li>
                 </ul>
@@ -137,26 +148,18 @@
         <!-- HERE START RIGHT SIDE BLOG -->
         <div class="grid w330 blog-aside">
             <div class="search-field">
-                <form action="/" method="get">
+                <form class="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="查找更新...">
+                        <input type="text" name="comicName" id="findUpdate" class="form-control" placeholder="查找更新...">
                     </div>
-                    <input type="submit" class="loop-search" value=""/>
+                    <input type="button" class="loop-search" value=""/>
                 </form>
-            </div>
-
-            <div class="widget-block">
-                <h1 class="title-line blue settings-text"><span class="current-bg pr5"
-                                                                style="font-size:20px">关于我们</span></h1>
-                <p>爱漫吧为纯属个人学习项目，仅作为学习网站部署搭建学习所用，并不具备版权。本站的所有内容均来自网友分享和上传，本站禁止任何形式的下载，
-                    在线漫画的相关版权归原作者及发行商所有！本站欢迎与各大公司进行内容及模式上的合作，如有侵犯到您的权益，请联系我们确认及删除。
-                </p>
             </div>
             <!--分类检索-->
             <div class="widget-block">
                 <h1 class="title-line blue settings-text"><span class="current-bg pr5"
                                                                 style="font-size:20px">分类</span></h1>
-                <ul class="circle-bullet-list">
+                <ul class="circle-bullet-list typeName">
                     <li><a href="#">全部</a></li>
                     <li><a href="#">言情</a></li>
                     <li><a href="#">玄幻</a></li>
@@ -171,20 +174,27 @@
             <div class="widget-block">
                 <h1 class="title-line blue settings-text"><span class="current-bg pr5"
                                                                 style="font-size:20px">每月更新</span></h1>
-                <ul class="circle-bullet-list">
-                    <li><a href="#">January（一月）</a></li>
-                    <li><a href="#">February（二月）</a></li>
-                    <li><a href="#">March（三月）</a></li>
-                    <li><a href="#">April（四月）</a></li>
-                    <li><a href="#">May（五月）</a></li>
-                    <li><a href="#">June（六月）</a></li>
-                    <li><a href="#">July（七月）</a></li>
-                    <li><a href="#">August（八月）</a></li>
-                    <li><a href="#">September（九月）</a></li>
-                    <li><a href="#">October（十月）</a></li>
-                    <li><a href="#">November（十一月）</a></li>
-                    <li><a href="#">December（十二月）</a></li>
+                <ul class="circle-bullet-list dateTime">
+                    <li><a href="#" dataTime="01">January（一月）</a></li>
+                    <li><a href="#" dataTime="02">February（二月）</a></li>
+                    <li><a href="#" dataTime="03">March（三月）</a></li>
+                    <li><a href="#" dataTime="04">April（四月）</a></li>
+                    <li><a href="#" dataTime="05">May（五月）</a></li>
+                    <li><a href="#" dataTime="06">June（六月）</a></li>
+                    <li><a href="#" dataTime="07">July（七月）</a></li>
+                    <li><a href="#" dataTime="08">August（八月）</a></li>
+                    <li><a href="#" dataTime="09">September（九月）</a></li>
+                    <li><a href="#" dataTime="10">October（十月）</a></li>
+                    <li><a href="#" dataTime="11">November（十一月）</a></li>
+                    <li><a href="#" dataTime="12">December（十二月）</a></li>
                 </ul>
+            </div>
+            <div class="widget-block">
+                <h1 class="title-line blue settings-text"><span class="current-bg pr5"
+                                                                style="font-size:20px">关于我们</span></h1>
+                <p>爱漫吧为纯属个人学习项目，仅作为学习网站部署搭建学习所用，并不具备版权。本站的所有内容均来自网友分享和上传，本站禁止任何形式的下载，
+                    在线漫画的相关版权归原作者及发行商所有！本站欢迎与各大公司进行内容及模式上的合作，如有侵犯到您的权益，请联系我们确认及删除。
+                </p>
             </div>
             <!--最新评论-->
             <div class="widget-block">
@@ -334,7 +344,7 @@
                                     <input type="text" class="form-control" id="validateCode" placeholder="验证码"
                                            name="validateCode">
                                     <div class="code" style="float: right">
-                                        <img  th:src="@{/code}" onclick="changeCode()" id="checkCodeImg" />
+                                        <img th:src="@{/code}" onclick="changeCode()" id="checkCodeImg"/>
                                         <a href="javascript:changeCode()">看不清换一张</a><br>
                                         <!-- <img src="${pageContext.request.contextPath}/code" onclick="changeCode()" id="checkCodeImg"/>
                                         <a href="javascript:changeCode()" >看不清换一张</a><br> -->

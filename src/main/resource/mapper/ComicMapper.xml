@@ -120,8 +120,8 @@
   </select>
 
   <select id="selectComicLikeName" resultMap="BaseResultMap">
-    <bind name="likeName" value="'%' +name+ '%'"/>
-    select * from comic where comicname like #{likename}
+      <bind name="comicLike" value="'%'+name+'%'"/>
+    select * from comic where comicname like #{comicLike}
   </select>
     <select id="selectComicByName" resultMap="BaseResultMap">
     select * from comic where comicname=#{comicName}
@@ -156,7 +156,7 @@
     select * from
         comic as c,
         (SELECT comic_id ,number as likesNum from likes
-        where likes.comic_id is not null LIMIT 15)
+        where likes.comic_id is not null limit 25)
         as a
     where c.comic_id = a.comic_id
     ORDER BY likesNum DESC

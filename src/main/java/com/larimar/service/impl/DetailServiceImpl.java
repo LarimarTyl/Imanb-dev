@@ -72,6 +72,16 @@ public class DetailServiceImpl implements DetailService {
     }
 
     @Override
+    public List<Detail> selectComicDetailByTime(String time) {
+        return detailMapper.selectDetailsByTime(time);
+    }
+
+    @Override
+    public List<Detail> queryComicDetailByName(String comicName) {
+        return detailMapper.selectDetailsByComicName(comicName);
+    }
+
+    @Override
     public Detail getDetailById(Integer id) {
         return detailMapper.getDetailById(id);
     }

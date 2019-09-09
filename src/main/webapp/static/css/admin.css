@@ -90,12 +90,12 @@ div#admin-tabs .admin-tab li{
     height: 50px;
     line-height: 50px;
     margin-bottom: 10px;
-    padding-left: 20px;
 }
 div#admin-tabs .admin-tab li a{
     display: block;
     width: 100%;
     height: 100%;
+    padding-left: 20px;
 }
 .admin-tab li a:hover,.admin-tab li a:focus{
     background-color:#F2F6F9;

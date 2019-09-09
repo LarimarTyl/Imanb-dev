@@ -133,4 +133,24 @@
           and detail.comic_id = #{comicId}
         order by detail_id desc limit 1
     </select>
+    <select id="selectDetailsByTime" resultMap="BaseResultMap">
+        select detail_id,detail.comic_id, chaptername,
+               detail.path as path, generalize, updatetime,
+               comic.comic_id, comic.root, comicname, author,
+               status, type, location, newupdate,
+               newchaptername, introduction, mark
+        from detail,comic
+        where detail.comic_id=comic.comic_id
+          and detail.detail_id in (SELECT detail_id FROM detail WHERE  month(detail.updatetime) = #{time})
+        order by detail_id DESC
+    </select>
+    <select id="selectDetailsByComicName" resultMap="BaseResultMap">
+        select detail_id,detail.comic_id, chaptername,
+               detail.path as path, generalize, updatetime,
+               comic.comic_id, comic.root, comicname, author,
+               status, type, location, newupdate,
+               newchaptername, introduction, mark
+        from detail,comic
+        where detail.comic_id=comic.comic_id and comic.comicname = #{comicName}
+    </select>
 </mapper>

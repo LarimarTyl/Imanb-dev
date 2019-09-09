@@ -86,7 +86,7 @@ public class ComicMapperTest {
 
     @Test
     public void selectComicByTypeName() {
-        System.out.println(mapper.selectComicByTypeName("玄幻"));
+        System.out.println(mapper.selectComicLikeName("斗"));
     }
 
     @Test

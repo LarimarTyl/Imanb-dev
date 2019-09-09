@@ -32,4 +32,6 @@ public interface ComicService {
     public List<Comic> findChineseRank();
     public List<Comic> findJapaneseRank();
     public List<Comic> findAllRank();
+
+    public List<Comic> getComicNameLike(String comicName);
 }
