@@ -1639,51 +1639,51 @@ $(function () {
 
     //其余按钮绑定事件
     $("tbody").on("click", "#user-comment", function (){
-        // $("#commentPage a").click();
+        $("#commentPage a").click();
         $("#addComment").click();
         var form = $("#newCommentDialog form");
         form.find("#add_comment_userName").val($(this).attr("user-name"));
     });
     $("tbody").on("click", "#user-order", function (){
-        // $("#orderPage a").click();
+        $("#orderPage a").click();
         $("#addOrder").click();
         var form = $("#newOrdersDialog form");
         form.find("#edit_order_user").val($(this).attr("user-name"));
     });
     $("tbody").on("click", "#user-history", function (){
-        // $("#historyPage a").click();
+        $("#historyPage a").click();
         $("#addHistory").click();
         var form = $("#newHistoryDialog form");
         form.find("#add_history_user").val($(this).attr("user-name"));
     });
     $("tbody").on("click", "#comic-order", function (){
-        // $("#orderPage a").click();
+        $("#orderPage a").click();
         $("#addOrder").click();
         var form = $("#newOrdersDialog form");
         form.find("#add_order_comic").val($(this).attr("comic-name"));
     });
     $("tbody").on("click", "#comic-detail", function (){
-        // $("#detailPage a").click();
+        $("#detailPage a").click();
         $("#addDetail").click();
         var form = $("#addDetailDialog form");
         form.find("#new_detail_comicname").val($(this).attr("comic-name"));
     });
     $("tbody").on("click", "#comic-comment", function (){
-        // $("#commentPage a").click();
+        $("#commentPage a").click();
         $("#addComment").click();
         var form = $("#newCommentDialog form");
-        form.find("#add_comment_type").val(0    );
+        form.find("#add_comment_type").val(0);
         form.find("#add_coment_aim").val($(this).attr("comic-id"));
     });
     $("tbody").on("click", "#detail-comment", function (){
-        // $("#commentPage a").click();
+        $("#commentPage a").click();
         $("#addComment").click();
         var form = $("#newCommentDialog form");
         form.find("#add_comment_type").val(1);
         form.find("#add_coment_aim").val($(this).attr("detail-id"));
     });
     $("tbody").on("click", "#detail-history", function (){
-        // $("#historyPage a").click();
+        $("#historyPage a").click();
         $("#addHistory").click();
         var form = $("#newHistoryDialog form");
         form.find("#add_history_comic").val($(this).attr("comic-name"));
