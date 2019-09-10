@@ -2,14 +2,8 @@ package com.larimar.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.larimar.entity.Comic;
-import com.larimar.entity.Detail;
-import com.larimar.entity.History;
-import com.larimar.entity.User;
-import com.larimar.service.ComicService;
-import com.larimar.service.DetailService;
-import com.larimar.service.HistoryService;
-import com.larimar.service.LikeService;
+import com.larimar.entity.*;
+import com.larimar.service.*;
 import com.larimar.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +35,8 @@ public class ComicController {
     HistoryService historyService;
     @Autowired
     LikeService likeService;
+    @Autowired
+    OrderService orderService;
 
     @RequestMapping("/list")
     public String portfolio(@RequestParam(value = "pn" ,defaultValue = "1") Integer pn, HttpServletRequest request){
@@ -107,6 +103,8 @@ public class ComicController {
            comic.setLikes(likeService.selectComicLikeNum(id));
            List<Detail> details = detailService.queryComicDetail(id);
            String type = comic.getType();
+           //评论
+           Reply comicReply = comicService.getComicReply(id);
            //类型相似的漫画
            ArrayList<Comic> typeLike = new ArrayList<>();
            if (type.lastIndexOf("/")!=-1){
@@ -115,6 +113,7 @@ public class ComicController {
                    typeLike.addAll(comicService.queryComicTypeLike(s));
                }
            }
+           request.getSession().setAttribute("comicReply",comicReply);
            request.getSession().setAttribute("comic",comic);
            request.getSession().setAttribute("details",details);
            request.getSession().setAttribute("typeLike",typeLike);
@@ -137,11 +136,18 @@ public class ComicController {
             //有用户登录就更新历史状态
             if (user!=null){
                 //判断是否是最新章节
-                History newHistory = new History(user.getUserId(), detailById.getComicId(), id, localDateToString(), null);
-
+                History newHistory = new History(user.getUserId(), detailById.getComicId(), id, localDateToString(), -1);
                 historyService.addHistory(newHistory);
+                //更新订阅状态  //判断是否是最新章节
+                Integer newestId = detailService.selectNewestDetail(detailById.getComicId()).getDetailId();
+                if (id.equals(newestId)){
+                    orderService.updateUsersComicStatus(detailById.getComicId(),user.getUserId(),-1);
+                }
             }
             request.getSession().setAttribute("detail",detailById);
+            //章节评论
+            Reply detailReply = detailService.getDetailReply(id);
+            request.getSession().setAttribute("detailReply",detailReply);
             return "detailInfo";
         }else {
             request.getSession().setAttribute("msg","找不到该数据嗷~~~~~~");

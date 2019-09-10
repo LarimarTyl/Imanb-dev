@@ -22,7 +22,10 @@
     <script type="text/javascript" th:src="@{/static/js/PIE.htc}"></script>
     <![endif]-->
 </head>
+<script  th:inline="javascript">
 
+    var user = [[${session.user}]];
+</script>
 <body class="home">
 
 
@@ -280,13 +283,149 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="allMessage">
-                            全部消息
+                            <table class="table comment-table table-striped all-comment">
+                                <thead class="thead-light">
+                                <th>#</th>
+                                <th>用户头像</th>
+                                <th>用户名</th>
+                                <th>回复对象</th>
+                                <th>回复内容</th>
+                                <th>回复时间</th>
+                                <td>操作</td>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img th:src="|/images/user/user.jpg|" alt="" class="userPhoto"></td>
+                                    <td>Larimar</td>
+                                    <td>真的太好了</td>
+                                    <td>嘻嘻</td>
+                                    <td>2019-08-06</td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-xs btn-revert" data-toggle="modal" data-target="#revertDialog">回复</a>
+                                        <a href="#" class="btn btn-danger btn-xs readIt">已读</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div id="all-page-btn">
+                                <div class="pagecontroller pagination-small pagination-center center">
+                                    <ul class="pagination">
+                                        <li><a href="#">&laquo;</a></li>
+                                        <li><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li><a href="#">&raquo;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="noreadMessage">
-                            未读消息
+                            <table class="table comment-table table-striped noread-comment">
+                                <thead class="thead-light">
+                                <th>#</th>
+                                <th>用户头像</th>
+                                <th>用户名</th>
+                                <th>回复对象</th>
+                                <th>回复内容</th>
+                                <th>回复时间</th>
+                                <td>操作</td>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img th:src="|/images/user/user.jpg|" alt="" class="userPhoto"></td>
+                                    <td>Larimar</td>
+                                    <td>真的太好了</td>
+                                    <td>嘻嘻</td>
+                                    <td>2019-08-06</td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-xs btn-revert" data-toggle="modal" data-target="#revertDialog">回复</a>
+                                        <a href="#" class="btn btn-danger btn-xs readIt">已读</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div id="noread-page-btn">
+                                 <div class="pagecontroller pagination-small pagination-center center">
+                                <ul class="pagination">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&raquo;</a></li>
+                                </ul>
+                            </div>
+                            </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="readMessage">
-                            已读消息
+                            <table class="table comment-table table-striped read-comment">
+                                <thead class="thead-light">
+                                <th>#</th>
+                                <th>用户头像</th>
+                                <th>用户名</th>
+                                <th>回复对象</th>
+                                <th>回复内容</th>
+                                <th>回复时间</th>
+                                <td>操作</td>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img th:src="|/images/user/user.jpg|" alt="" class="userPhoto"></td>
+                                    <td>Larimar</td>
+                                    <td>真的太好了</td>
+                                    <td>嘻嘻</td>
+                                    <td>2019-08-06</td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-xs btn-revert" data-toggle="modal" data-target="#revertDialog">回复</a>
+                                        <a href="#" class="btn btn-danger btn-xs readIt">已读</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div id="read-page-btn">
+                                <div class="pagecontroller pagination-small pagination-center center">
+                                    <ul class="pagination">
+                                        <li><a href="#">&laquo;</a></li>
+                                        <li><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li><a href="#">&raquo;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="revertDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title" id="editCommentModalLabel">回复评论</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/" id="detailCommentForm" method="post">
+                                        <div class="block-form">
+                                            <textarea class="form-control" name="content" id="comment" cols="30" rows="10" placeholder="评论..."></textarea>
+                                        </div>
+                                        <input type="hidden" name="commentAim" id="revertId">
+                                        <input type="hidden" name="userId" id="userId">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary" id="revert-btn">回复</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

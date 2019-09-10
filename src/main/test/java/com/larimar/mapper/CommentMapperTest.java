@@ -98,30 +98,37 @@ public class CommentMapperTest {
             Reply reply = new Reply(c);
             replies.add(reply);
         }
+        for (Reply r:replies){
+           getComments(r);
+        }
         comicReply.setReplyList(replies);
-        System.out.println("===========================");
-        getComments(comicReply);
         printlnComment(comicReply);
     }
 
 
 
     public void getComments(Reply reply){
-        List<Reply> replyList = reply.getReplyList();
-        for (Reply r: replyList) {
-            Integer commentId = r.getCommentId();
-            List<Comment> revertComments = mapper.selectRevertComments(commentId);
-            if (revertComments.size()>0) {
-                List<Reply> replies = new ArrayList<>();
-                for (Comment c : revertComments) {
-                    Reply reply1 = new Reply(c);
-                    getComments(reply1);
-                    reply.setReplyList(replies);
+            List<Comment> revert = mapper.selectRevertComments(reply.getCommentId());
+            //是否有回复
+            if (revert.size()>0) {
+                List<Reply> revertReplys = new ArrayList<>();
+                //把回复内容添加到回复集合
+                for (Comment c : revert) {
+                    Reply revertReply = new Reply(c);
+                    List<Comment> revertComments = mapper.selectRevertComments(revertReply.getCommentId());
+                    revertReplys.add(revertReply);
+                    //判断子回复是否有回复
+                    if (revertComments.size()>0){
+                        for (Comment c2 :revertComments){
+                            Reply reply2 = new Reply(c2);
+                            //把回复的回复也添加到回复列表下
+                            revertReplys.add(reply2);
+                        }
+                    }
                 }
+                reply.setReplyList(revertReplys);
             }
         }
-        }
-
         //子楼层获取回复
 
 
@@ -132,7 +139,17 @@ public class CommentMapperTest {
             System.out.println("第"+i+"楼层");
             Reply r = replyList.get(i - 1);
             System.out.println(r);
-            System.out.println();
+            //判断是否有回复
+            if (r.getReplyList().size()>0){
+                List<Reply> childComment = r.getReplyList();
+                for (int j=1;j<childComment.size()+1;j++){
+                    System.out.println(j+"子楼层");
+                    Reply childR = childComment.get(j - 1);
+                    System.out.println(childR);
+                    System.out.println("--------------");
+                }
+            }
+            System.out.println("================");
         }
 
     }

@@ -1,6 +1,7 @@
 package com.larimar.service;
 
 import com.larimar.entity.Detail;
+import com.larimar.entity.Reply;
 import com.larimar.selectPojo.DetailSelect;
 
 import java.util.List;
@@ -21,6 +22,6 @@ public interface DetailService {
     public List<Detail> queryComicDetail(Integer comicId);
     public List<Detail> selectComicDetailByType(String typeName);
     public List<Detail> selectComicDetailByTime(String time);
-
     public List<Detail> queryComicDetailByName(String comicName);
+    public Reply getDetailReply(Integer detailId);
 }

@@ -18,11 +18,12 @@ public interface CommentService {
     public boolean delUserComment(Integer commentId,Integer userId);
     public boolean updateComment(Comment comment);
     public boolean updateCommentStatus(Integer commentId,Integer userId,Integer status);
+    public boolean updateStatus(Integer commentId,Integer status);
     public Comment getCommentById(Integer commentId);
     public List<Comment> getAllComment();
     public List<Comment> selectByOption(CommentSelect commentSelect);
     public List<Comment> getUsersComment(Integer userId);
-    public List<Comment> getUsersCommentByStatus(Integer userId,Integer status);
+    public List<Comment> getUsersRevertByStatus(Integer userId,Integer status);
     public List<Comment> getUsersRevertComment(Integer userId);
     public List<Comment> getComicComment(Integer comicId);
     public List<Comment> getDetailComment(Integer detailId);

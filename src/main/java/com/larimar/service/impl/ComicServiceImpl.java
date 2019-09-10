@@ -1,15 +1,21 @@
 package com.larimar.service.impl;
 
 import com.larimar.entity.Comic;
+import com.larimar.entity.Comment;
 import com.larimar.entity.Conditon;
+import com.larimar.entity.Reply;
 import com.larimar.mapper.ComicMapper;
+import com.larimar.mapper.CommentMapper;
 import com.larimar.selectPojo.ComicSelect;
 import com.larimar.selectPojo.CommentSelect;
 import com.larimar.service.ComicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.larimar.util.CommentUtil.getComments;
 
 /**
  * @author Larimar
@@ -19,6 +25,8 @@ import java.util.List;
 public class ComicServiceImpl implements ComicService {
     @Autowired
     ComicMapper comicMapper;
+    @Autowired
+    CommentMapper commentMapper;
     @Override
     public boolean addComic(Comic comic) {
         return comicMapper.addComic(comic)>0;
@@ -117,6 +125,41 @@ public class ComicServiceImpl implements ComicService {
     @Override
     public List<Comic> findAllRank() {
         return comicMapper.selectAllRank();
+    }
+
+    @Override
+    public Reply getComicReply(Integer comicId) {
+        List<Comment> comments = commentMapper.selectComicComments(comicId);
+        Reply comicReply = new Reply();
+        List<Reply> replies = new ArrayList<>();
+        for (Comment c:comments) {
+            Reply reply = new Reply(c);
+            replies.add(reply);
+        }
+        for (Reply r:replies){
+            List<Comment> revert = commentMapper.selectRevertComments(r.getCommentId());
+            //是否有回复
+            if (revert.size()>0) {
+                List<Reply> revertReplys = new ArrayList<>();
+                //把回复内容添加到回复集合
+                for (Comment c : revert) {
+                    Reply revertReply = new Reply(c);
+                    List<Comment> revertComments = commentMapper.selectRevertComments(revertReply.getCommentId());
+                    revertReplys.add(revertReply);
+                    //判断子回复是否有回复
+                    if (revertComments.size()>0){
+                        for (Comment c2 :revertComments){
+                            Reply reply2 = new Reply(c2);
+                            //把回复的回复也添加到回复列表下
+                            revertReplys.add(reply2);
+                        }
+                    }
+                }
+                r.setReplyList(revertReplys);
+            }
+        }
+        comicReply.setReplyList(replies);
+        return comicReply;
     }
 
     @Override

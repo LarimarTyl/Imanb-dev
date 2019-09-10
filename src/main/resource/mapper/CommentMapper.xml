@@ -104,6 +104,22 @@
             </if>
         </where>
     </update>
+    <update id="updateStatus">
+        update comment
+        <set>
+            <if test="status!=null">
+                status = #{status}
+            </if>
+            <if test="status=null">
+                status = 0
+            </if>
+        </set>
+        <where>
+            <if test="commentId!=null">
+                and comment_id = #{commentId}
+            </if>
+        </where>
+    </update>
 
     <select id="selectUsersComments" parameterType="Integer" resultMap="BaseResultMap">
     select *
@@ -135,7 +151,7 @@
       and aim in
           (SELECT comment_id
           FROM comment WHERE
-            user_id = 1)
+            user_id = #{userId})
     order by time
   </select>
 <!--  查看用户对应状态的评论-->
@@ -193,5 +209,16 @@
                     and  user.username like #{userLike}
             </if>
         </if>
+    </select>
+    <select id="selectRevertsByStatus" resultMap="BaseResultMap">
+        select *
+        from comment,user
+        where user.user_id = comment.user_id
+          and aim in
+              (SELECT comment_id
+               FROM comment WHERE
+                   user_id = #{userId}
+                and comment.status = #{status})
+        order by time
     </select>
 </mapper>

@@ -986,4 +986,205 @@ $(function () {
     })
 });
 //更改密码
+//评论功能
+//评论功能
+$(function () {
+    /*动漫评论*/
+    $(".comicComment").on("click",".reply-button",function () {
+        var revertId = $(this).attr("bind-id");
+        $("#revertId").val(revertId);
+        var comment = document.getElementById("comment");
+        comment.focus();
+    });
+    $(".comicComment").on("click",".del-button",function () {
+        var revertId = $(this).attr("bind-id");
+        var comicId = $(this).attr("comic-id");
+        if (confirm("确定要删除这条评论么？")){
+            $.ajax({
+                url:rootPath+"delUserComicComment?id="+revertId+"&&comicId="+comicId,
+                method:"GET",
+                success:function (result) {
+                    if (result.code==200){
+                        alert(result.msg);
+                        flashComment(result.data.replyList)
+                    }else {
+                        alert(result.msg);
+                    }
+                }
+
+            })
+        }
+    });
+
+    function flashComment(replyList){
+        var comments = $(".comments-area").empty();
+        $.each(replyList,function (index, item) {
+            var comment = $(" <div class=\"comments-block commentDiv\"></div>");
+            var $div = $("<div></div>");
+            $("<h3 class=\"com-author\" ></h3>").append(item.user.userName).appendTo($div);
+            $(" <p class=\"com-text mytext-p3\"></p>").append(item.content).appendTo($div);
+            $("<small></small>").append(item.time).appendTo($div);
+            if(userId!=item.user.userId){
+                var revertBtn = $(" <a href=\"#\"  class=\"blue reply-button revert\"></a>").attr("bind-id",item.commentId) .append("<label for=\"comment\">回复</label>");
+                revertBtn.appendTo($div)
+            }else {
+                var delBtn = $(" <a href=\"#\"  class=\"red del-button revert\"></a>").attr("bind-id",item.commentId).attr("comic-id",item.comicId).append("<label>删除</label>");
+                delBtn.appendTo($div)
+            };
+            var userImg = $(" <a class=\"revert-user\"></a>");
+            $("<img alt=\"\">").attr("src","/images/user/"+item.user.photo+".jpg").appendTo(userImg);
+            userImg.appendTo($div);
+            $div.appendTo(comment);
+            $.each(item.replyList,function (index, item2) {
+                var revert = $("<div class=\"comments-block mt25 reply-comment\"></div>");
+                $("<h3 class=\"com-author\" ></h3>").append(item2.user.userName+":@"+item.user.userName).appendTo(revert);
+                $(" <p class=\"com-text mytext-p3\"></p>").append(item2.content).appendTo(revert);
+                $("<small></small>").append(item2.time).appendTo(revert);
+                if(userId!=item2.user.userId){
+                    var revertBtn = $(" <a href=\"#\"  class=\"blue reply-button revert\"></a>").attr("bind-id",item2.commentId) .append("<label for=\"comment\">回复</label>");
+                    revertBtn.appendTo(revert)
+                }else {
+                    var delBtn = $(" <a href=\"#\"  class=\"red del-button revert\"></a>").attr("bind-id",item2.commentId).attr("comic-id",item.comicId).append("<label>删除</label>");
+                    delBtn.appendTo(revert)
+                };
+                var userImg = $(" <a class=\"revert-user\"></a>");
+                $("<img alt=\"\">").attr("src","/images/user/"+item2.user.photo+".jpg").appendTo(userImg);
+                userImg.appendTo(revert);
+                revert.appendTo(comment)
+            });
+            comment.appendTo(comments);
+        })
+    }
+
+    $("#comic-comment").click(function () {
+        if ($("#revertId").val()==""){
+            var form = $("#comicCommentForm");
+            $.ajax({
+                url:rootPath+"addComicComment",
+                method:"POST",
+                data:form.serialize(),
+                success:function (result) {
+                    form[0].reset();
+                    if (result.code==200){
+                        console.log(result);
+                        flashComment(result.data.replyList)
+                    }
+                }
+            })
+        }else {
+            var form = $("#comicCommentForm");
+            $.ajax({
+                url:rootPath+"addComicRevert",
+                method:"POST",
+                data:form.serialize(),
+                success:function (result) {
+                    form[0].reset();
+                    if (result.code==200){
+                        console.log(result);
+                        flashComment(result.data.replyList)
+                    }
+                }
+            })
+        }
+    });
+
+    /*章节评论*/
+    $(".detailComment").on("click",".reply-button",function () {
+        var revertId = $(this).attr("bind-id");
+        $("#revertId").val(revertId);
+        var comment = document.getElementById("comment");
+        comment.focus();
+    });
+    $(".detailComment").on("click",".del-button",function () {
+        var revertId = $(this).attr("bind-id");
+        var detailId = $(this).attr("detail-id");
+        if (confirm("确定要删除这条评论么？")){
+            $.ajax({
+                url:rootPath+"delUserDetailComment?id="+revertId+"&&detailId="+detailId,
+                method:"GET",
+                success:function (result) {
+                    if (result.code==200){
+                        alert(result.msg);
+                        flashComment2(result.data.replyList)
+                    }else {
+                        alert(result.msg);
+                    }
+                }
+
+            })
+        }
+    });
+
+    function flashComment2(replyList){
+        var comments = $(".comments-area").empty();
+        $.each(replyList,function (index, item) {
+            var comment = $(" <div class=\"comments-block commentDiv\"></div>");
+            var $div = $("<div></div>");
+            $("<h3 class=\"com-author\" ></h3>").append(item.user.userName).appendTo($div);
+            $(" <p class=\"com-text mytext-p3\"></p>").append(item.content).appendTo($div);
+            $("<small></small>").append(item.time).appendTo($div);
+            if(userId!=item.user.userId){
+                var revertBtn = $(" <a    class=\"blue reply-button revert\"></a>").attr("bind-id",item.commentId) .append("<label for=\"comment\">回复</label>");
+                revertBtn.appendTo($div)
+            }else {
+                var delBtn = $(" <a    class=\"red del-button revert\"></a>").attr("bind-id",item.commentId).attr("detail-id",item.detailId).append("<label>删除</label>");
+                delBtn.appendTo($div)
+            };
+            var userImg = $(" <a class=\"revert-user\"></a>");
+            $("<img alt=\"\">").attr("src","/images/user/"+item.user.photo+".jpg").appendTo(userImg);
+            userImg.appendTo($div);
+            $div.appendTo(comment);
+            $.each(item.replyList,function (index, item2) {
+                var revert = $("<div class=\"comments-block mt25 reply-comment\"></div>");
+                $("<h3 class=\"com-author\" ></h3>").append(item2.user.userName+":@"+item.user.userName).appendTo(revert);
+                $(" <p class=\"com-text mytext-p3\"></p>").append(item2.content).appendTo(revert);
+                $("<small></small>").append(item2.time).appendTo(revert);
+                if(userId!=item2.user.userId){
+                    var revertBtn = $(" <a   class=\"blue reply-button revert\"></a>").attr("bind-id",item2.commentId) .append("<label for=\"comment\">回复</label>");
+                    revertBtn.appendTo(revert)
+                }else {
+                    var delBtn = $(" <a    class=\"red del-button revert\"></a>").attr("bind-id",item2.commentId).attr("detail-id",item.detailId).append("<label>删除</label>");
+                    delBtn.appendTo(revert)
+                };
+                var userImg = $(" <a class=\"revert-user\"></a>");
+                $("<img alt=\"\">").attr("src","/images/user/"+item2.user.photo+".jpg").appendTo(userImg);
+                userImg.appendTo(revert);
+                revert.appendTo(comment)
+            });
+            comment.appendTo(comments);
+        })
+    }
+
+    $("#detail-comment").click(function () {
+        if ($("#revertId").val()==""){
+            var form = $("#detailCommentForm");
+            $.ajax({
+                url:rootPath+"addDetailComment",
+                method:"POST",
+                data:form.serialize(),
+                success:function (result) {
+                    form[0].reset();
+                    if (result.code==200){
+                        console.log(result);
+                        flashComment2(result.data.replyList)
+                    }
+                }
+            })
+        }else {
+            var form = $("#detailCommentForm");
+            $.ajax({
+                url:rootPath+"addDetailRevert",
+                method:"POST",
+                data:form.serialize(),
+                success:function (result) {
+                    form[0].reset();
+                    if (result.code==200){
+                        console.log(result);
+                        flashComment2(result.data.replyList)
+                    }
+                }
+            })
+        }
+    });
+});
 

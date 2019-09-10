@@ -50,6 +50,7 @@ public interface CommentMapper {
      */
     public int updateCommentStatus(@Param("commentId") Integer commentId,@Param("userId") Integer userId,@Param("status")Integer status);
 
+    public int updateStatus(@Param("commentId") Integer commentId,@Param("status")Integer status);
     /**
      * 查询用户所有的评论
      * @param userId
@@ -64,6 +65,7 @@ public interface CommentMapper {
      * @return 评论集合
      */
     public List<Comment> selectCommentsByStatus(@Param("userId") Integer userId,@Param("status")Integer status);
+    public List<Comment> selectRevertsByStatus(@Param("userId") Integer userId,@Param("status")Integer status);
 
     /**
      * 查找漫画对应的评论

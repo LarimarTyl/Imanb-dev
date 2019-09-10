@@ -31,10 +31,9 @@ public class HistoryServiceImpl implements HistoryService {
             //存在的话就只改原历史记录章节，时间，和状态
             History exitHistory = historyMapper.selectByUserAndComic(history.getUserId(), history.getComicId());
             exitHistory.setDetailId(history.getDetailId());
-            //不是最新章节
-            if (!history.getDetailId().equals(detailMapper.getNewest(history.getComicId()).getDetailId())){
-                exitHistory.setStatus(0);
-            }else {
+            //是否是最新章节
+            Integer newestId = detailMapper.getNewest(history.getComicId()).getDetailId();
+            if (history.getDetailId().equals(newestId)){
                 exitHistory.setStatus(-1);
             }
             exitHistory.setLastReadTime(localDateToString());

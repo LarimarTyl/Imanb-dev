@@ -19,6 +19,11 @@
     <script type="text/javascript" th:src="@{/static/js/selectivizr-min.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/PIE.htc}"></script>
     <![endif]-->
+
+    <script  th:inline="javascript">
+
+        var userId = [[${session.user.userId}]];
+    </script>
 </head>
 
 <body class="detail">
@@ -143,60 +148,58 @@
             <!-- new item新作推送 -->
 
             <h1 class="title-line blue"><span class="current-bg pr5 settings-text">漫画评论</span></h1>
-            <div class="comments-area">
-                <div class="comments-block">
+            <div class="comments-area comicComment">
+                <div class="comments-block commentDiv" th:each="reply:${session.comicReply.replyList}">
+                    <div>
                     <!--用户名-->
-                    <h3 class="com-author">用户:@小小骚猪</h3>
+                    <h3 class="com-author" th:text="${reply.user.userName}">用户:</h3>
                     <!--评论时间-->
-                    <p class="com-text mytext-p3">
+                    <p class="com-text mytext-p3" th:text="${reply.content}">
                         这一章节的内容太好了
                     </p>
-                    <small>Feb, 20 2012 at 3:00 pm - <a href="#" class="blue reply-button">回复</a></small>
-                    <a class="avatar" href="#"><img class="inline-border" th:src="@{/static/images/avatar_1.jpg}"
-                                                    alt=""/></a>
+                    <small th:text="${reply.time}">Feb, 20 2012 at 3:00 pm -</small>
+                        <!--判断是否是自己的评论-->
+                        <a href="#" th:if="${session.user.userId}!=${reply.user.userId}" class="blue reply-button revert"
+                           th:attr="bind-id=${reply.commentId},userId=${reply.user.userId}"><label for="comment">回复</label>
+                        </a>
+                        <a href="#" th:if="${session.user.userId}==${reply.user.userId}" class="del-button red revert"
+                           th:attr="bind-id=${reply.commentId},comic-id=${reply.comicId}"><label>删除</label>
+                        </a>
+                    <a class="revert-user">
+                        <img th:src="|/images/user/${reply.user.photo}.jpg|" alt="">
+                    </a>
+                    </div>
+                    <!--回复内容用 class reply-comment-->
+                    <div class="comments-block mt25 reply-comment" th:each="revert:${reply.replyList}">
+                        <h3 class="com-author" th:text="${revert.user.userName}+':@'+${reply.user.userName}">用户:@皮皮虾</h3>
+                        <p class="com-text mytext-p3" th:text="${revert.content}">
+                            画质也特别赞！
+                        </p>
+                        <small th:text="${revert.time}">Feb, 20 2012 at 3:00 pm -</small>
+                        <a href="#" th:if="${session.user.userId}!=${revert.user.userId}" class="blue reply-button revert"
+                           th:attr="bind-id=${revert.commentId}"><label for="comment">回复</label>
+                        </a>
+                        <a href="#" th:if="${session.user.userId}==${revert.user.userId}" class="del-button red revert"
+                           th:attr="bind-id=${revert.commentId},comic-id=${reply.comicId}"><label>删除</label>
+                        </a>
+                        <a class="revert-user">
+                            <img  th:src="|/images/user/${revert.user.photo}.jpg|" alt="">
+                        </a>
+                    </div>
                 </div>
-                <!--回复内容用 class reply-comment-->
-                <div class="comments-block reply-comment">
-                    <h3 class="com-author">用户:@皮皮虾</h3>
-                    <p class="com-text mytext-p3">
-                        画质也特别赞！
-                    </p>
-                    <small>Feb, 20 2012 at 3:00 pm - <a href="#" class="blue reply-button">回复</a></small>
-                    <a class="avatar" href="#"><img class="inline-border" th:src="@{/static/images/avatar_2.jpg}"
-                                                    alt=""/></a>
-                </div>
-
-                <div class="comments-block">
-                    <h3 class="com-author">用户:@乐乐</h3>
-                    <p class="com-text mytext-p3">
-                        好惨一只伊娃。 哭撩。。。。
-                    </p>
-                    <small>Feb, 20 2012 at 3:00 pm - <a href="#" class="blue reply-button">回复</a></small>
-                    <a class="avatar" href="#"><img class="inline-border" th:src="@{/static/images/avatar_3.jpg}"
-                                                    alt=""/></a>
-                </div>
-
-                <div class="comments-block">
-                    <h3 class="com-author">用户:@Larimar</h3>
-                    <p class="com-text mytext-p3">
-                        这么好的一只Eva给我也整一只好么！
-                    </p>
-                    <small>Feb, 20 2012 at 3:00 pm - <a href="#" class="blue reply-button">回复</a></small>
-                    <a class="avatar" href="#"><img class="inline-border" th:src="@{/static/images/avatar_4.jpg}"
-                                                    alt=""/></a>
-                </div>
+            </div>
                 <div class="space30"></div>
                 <h1 class="title-line blue"><span class="current-bg pr5 settings-text">发送评论</span></h1>
                 <div class="space30"></div>
-
                 <div class="contact-form">
-                    <form action="/" method="post">
+                    <form action="/" id="comicCommentForm" method="post">
                         <div class="block-form">
-								<textarea name="message" id="message" cols="30" rows="10"
-                                          placeholder="评论..."></textarea>
+                            <textarea name="content" id="comment" cols="30" rows="10" placeholder="评论..."></textarea>
                         </div>
+                        <input type="hidden" name="comicId" th:value="${session.comic.comicId}">
+                        <input type="hidden" name="commentAim" id="revertId">
                         <div class="block-form" th:if="${session.user}!=null">
-                            <input type="submit" value="发送" id="submit-form" class="settings-clr"/>
+                            <button type="button" id="comic-comment" class="btn-primary btn">发送评论</button>
                         </div>
                     </form>
                     <div class="unLogin" th:unless="${session.user}!=null">
@@ -204,7 +207,6 @@
                     </div>
                 </div>
             </div> <!-- .comments-area end of comment area block -->
-        </div>
         <!-- 右边排行信息 -->
         <div class="w350 right ranks">
             <div class="rank1">

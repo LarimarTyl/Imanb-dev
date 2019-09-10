@@ -14,6 +14,15 @@ public class Comment {
     private String content;//评论内容
     private Integer status;//评论状态
     private String time;//评论时间
+    private Comment aimComment;//回复对象
+
+    public Comment getAimComment() {
+        return aimComment;
+    }
+
+    public void setAimComment(Comment aimComment) {
+        this.aimComment = aimComment;
+    }
 
     public Comment() {
     }

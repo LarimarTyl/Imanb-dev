@@ -2,11 +2,9 @@ package com.larimar.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.larimar.entity.Comment;
-import com.larimar.entity.History;
-import com.larimar.entity.Orders;
-import com.larimar.entity.User;
+import com.larimar.entity.*;
 import com.larimar.service.*;
+import com.larimar.util.DateUtil;
 import com.larimar.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +36,10 @@ public class UserController {
     private HistoryService historyService;
     @Autowired
     private LikeService likeService;
-
+    @Autowired
+    private ComicService comicService;
+    @Autowired
+    private DetailService detailService;
 
     @RequestMapping("/user")
     public String userInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn, HttpServletRequest request){
@@ -244,7 +245,7 @@ public class UserController {
     public Msg noReadRevertInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("user");
         PageHelper.startPage(pn,6);
-        List<Comment> allRevert = commentService.getUsersCommentByStatus(user.getUserId(),0);
+        List<Comment> allRevert = commentService.getUsersRevertByStatus(user.getUserId(),0);
         PageInfo allReverts = new PageInfo(allRevert);
         return Msg.success().add(null,allReverts);
     }
@@ -253,7 +254,7 @@ public class UserController {
     public Msg readRevertInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn,HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("user");
         PageHelper.startPage(pn,6);
-        List<Comment> allRevert = commentService.getUsersCommentByStatus(user.getUserId(),-1);
+        List<Comment> allRevert = commentService.getUsersRevertByStatus(user.getUserId(),-1);
         PageInfo allReverts = new PageInfo(allRevert);
         return Msg.success().add(null,allReverts);
     }
@@ -301,5 +302,82 @@ public class UserController {
         List<History> historie = historyService.selectUsersHistoryByStatus(user.getUserId(),1);
         PageInfo histories = new PageInfo(historie);
         return Msg.success().add(null,histories);
+    }
+    @RequestMapping("/addComicComment")
+    @ResponseBody
+    public Msg addComicComment(Comment comment, HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        comment.setUserId(user.getUserId());
+        comment.setStatus(0);
+        comment.setTime(DateUtil.localDateToString());
+        commentService.addComicComment(comment);
+        Reply comicReply = comicService.getComicReply(comment.getComicId());
+        return Msg.success().add(null,comicReply);
+    }
+    @RequestMapping("/addComicRevert")
+    @ResponseBody
+    public Msg addComicRevert(Comment comment, HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        comment.setUserId(user.getUserId());
+        comment.setStatus(0);
+        comment.setTime(DateUtil.localDateToString());
+        commentService.addRevertComment(comment);
+        Reply comicReply = comicService.getComicReply(comment.getComicId());
+        return Msg.success().add(null,comicReply);
+    }
+    @RequestMapping("/delUserComicComment")
+    @ResponseBody
+    public Msg delUserComicComment(Integer id,Integer comicId){
+        if (commentService.delComment(id)) {
+            Reply comicReply = comicService.getComicReply(comicId);
+            return Msg.success().add("删除成功",comicReply);
+        }
+        return  Msg.fail().add("删除失败",null);
+    }
+    @RequestMapping("/addDetailComment")
+    @ResponseBody
+    public Msg addDetailComment(Comment comment, HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        comment.setUserId(user.getUserId());
+        comment.setTime(DateUtil.localDateToString());
+        comment.setStatus(0);
+        commentService.addDetailComment(comment);
+        Reply detailReply = detailService.getDetailReply(comment.getDetailId());
+        return Msg.success().add(null,detailReply);
+    }
+    @RequestMapping("/addUserDetailRevert")
+    @ResponseBody
+    public Msg addDetailRevert(Comment comment, HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        comment.setUserId(user.getUserId());
+        comment.setStatus(0);
+        comment.setTime(DateUtil.localDateToString());
+        commentService.addRevertComment(comment);
+        Reply detailReply = detailService.getDetailReply(comment.getDetailId());
+        return Msg.success().add(null,detailReply);
+    }
+    @RequestMapping("/delUserDetailComment")
+    @ResponseBody
+    public Msg delUserDetailComment(Integer id,Integer detailId){
+        if (commentService.delComment(id)) {
+            Reply detailReply = detailService.getDetailReply(detailId);
+            return Msg.success().add("删除成功",detailReply);
+        }
+        return  Msg.fail().add("删除失败",null);
+    }
+    @RequestMapping("/userRevertComic")
+    @ResponseBody
+    public  Msg userRevertComic(@RequestParam(value = "pn",defaultValue = "1")Integer pn,Comment comment,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        comment.setUserId(user.getUserId());
+        comment.setTime(DateUtil.localDateToString());
+        commentService.addRevertComment(comment);
+        return Msg.success().add("回复成功",null);
+    }
+    @RequestMapping("/haveRead")
+    @ResponseBody
+    public Msg haveRead(Integer id){
+        commentService.updateStatus(id,-1);
+        return Msg.success();
     }
 }

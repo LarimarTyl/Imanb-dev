@@ -59,6 +59,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public boolean updateStatus(Integer commentId, Integer status) {
+        return commentMapper.updateStatus(commentId,status)>0;
+    }
+
+    @Override
     public Comment getCommentById(Integer commentId) {
         return commentMapper.selectCommentById(commentId);
     }
@@ -75,17 +80,29 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> getUsersComment(Integer userId) {
-        return commentMapper.selectUsersComments(userId);
+        List<Comment> comments = commentMapper.selectUsersComments(userId);
+        for (Comment c: comments) {
+            c.setAimComment(commentMapper.selectCommentById(c.getCommentAim()));
+        }
+        return comments;
     }
 
     @Override
-    public List<Comment> getUsersCommentByStatus(Integer userId, Integer status) {
-        return commentMapper.selectCommentsByStatus(userId, status);
+    public List<Comment> getUsersRevertByStatus(Integer userId, Integer status) {
+        List<Comment> comments = commentMapper.selectRevertsByStatus(userId, status);
+        for (Comment c: comments) {
+            c.setAimComment(commentMapper.selectCommentById(c.getCommentAim()));
+        }
+        return comments;
     }
 
     @Override
     public List<Comment> getUsersRevertComment(Integer userId) {
-        return commentMapper.selectUsersRevertComments(userId);
+        List<Comment> comments = commentMapper.selectUsersRevertComments(userId);
+        for (Comment c: comments) {
+            c.setAimComment(commentMapper.selectCommentById(c.getCommentAim()));
+        }
+        return comments;
     }
 
     @Override

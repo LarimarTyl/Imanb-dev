@@ -58,9 +58,29 @@ public class FileUtil {
         }
         return images;
     }
-
+public static void changeName(File file){
+    if (file.exists()) {
+        if (file.list()!=null){
+            String[] fileList = file.list();
+            for (int i = 0; i < fileList.length; i++) {
+                File newFile = new File(file + "/" + (i + 1)+".jpg");
+                File oldFile = new File(file + "/" + fileList[i]);
+                oldFile.renameTo(newFile);
+                System.out.println(newFile.getName());
+            }
+        }
+    }
+}
     public static void main(String[] args) {
-        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\dpcq\\1234");
-        System.out.println(getImages(dest));
+//        File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\dpcq\\1234");
+//        System.out.println(getImages(dest));
+        File dest = new File("C:\\Users\\Larimar\\Downloads\\图片助手(ImageAssistant) 批量图片下载器\\");
+       if (dest.exists()){
+           String[] fileList = dest.list();
+           for (String fileName:fileList){
+               File file = new File(dest+"\\" + fileName);
+                changeName(file);
+           }
+       }
     }
 }

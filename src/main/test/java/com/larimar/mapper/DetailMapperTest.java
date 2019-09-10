@@ -3,6 +3,7 @@ package com.larimar.mapper;
 import com.larimar.entity.Comic;
 import com.larimar.entity.Detail;
 import com.larimar.selectPojo.DetailSelect;
+import com.larimar.util.DateUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
@@ -38,7 +39,17 @@ public class DetailMapperTest {
 
     @Test
     public void addDetail() {
-        System.out.println(mapper.selectByOptions(new DetailSelect(null,null,"国漫"))); }
+        for (int i = 7; i < 65; i++) {
+            Detail detail = new Detail();
+            detail.setComicId(2);
+            int index = i + 1;
+            detail.setChapterName("第"+index+"章");
+            detail.setPath(String.valueOf(index));
+            detail.setGeneralize("第"+index+"章");
+            detail.setUpdateTime(DateUtil.localDateToString());
+            mapper.addDetail(detail);
+        }
+       }
 
     @Test
     public void delDetail() {

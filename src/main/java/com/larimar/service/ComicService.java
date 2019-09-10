@@ -1,10 +1,13 @@
 package com.larimar.service;
 
 import com.larimar.entity.Comic;
+import com.larimar.entity.Comment;
 import com.larimar.entity.Conditon;
+import com.larimar.entity.Reply;
 import com.larimar.selectPojo.ComicSelect;
 import com.larimar.selectPojo.CommentSelect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +35,6 @@ public interface ComicService {
     public List<Comic> findChineseRank();
     public List<Comic> findJapaneseRank();
     public List<Comic> findAllRank();
-
+    public Reply getComicReply(Integer comicId);
     public List<Comic> getComicNameLike(String comicName);
 }

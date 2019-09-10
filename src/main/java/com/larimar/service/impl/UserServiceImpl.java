@@ -1,5 +1,6 @@
 package com.larimar.service.impl;
 
+import com.larimar.entity.Reply;
 import com.larimar.entity.User;
 import com.larimar.mapper.UserMapper;
 import com.larimar.selectPojo.UserSelect;
@@ -17,6 +18,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+
 
     @Override
     public User doLogin(String userName, String passWord) {
@@ -91,5 +93,6 @@ public class UserServiceImpl implements UserService {
     public User findUserByName(String userName) {
         return userMapper.findUserByName(userName);
     }
+
 
 }
