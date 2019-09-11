@@ -344,7 +344,7 @@ public class AdminController {
                     for (int i = 0; i < files.length; i++) {
                         MultipartFile file = files[i];
                         String filename = file.getOriginalFilename();
-                        if (!"".equals(filename)) {
+                         if (!"".equals(filename)) {
                             String suffix = filename.substring(filename.lastIndexOf(".")).toLowerCase();
                             File dest = new File("F:\\MavenDemo\\Imanb-dev\\src\\main\\webapp\\static\\images\\comics\\" + comicPath + "\\" + detail.getPath() + "\\" + (i + 1) + suffix);
                             try {

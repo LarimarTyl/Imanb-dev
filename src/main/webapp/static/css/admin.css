@@ -112,7 +112,8 @@ div#admin-tabs .admin-tab li a{
     overflow: hidden;
 }
 .long{
-    width: 93%
+    width: 92%;
+    margin-left: 30px;
 }
 .wd80{
     width: 80%;}

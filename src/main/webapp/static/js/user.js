@@ -347,7 +347,7 @@ function allHistory(pn) {
                     var title = $(" <p class=\"mytext-p1 left  pOver\" style=\"font-size: 15px\"></p>").append("阅读章节：" + item.detail.chapterName);
                     var newTime = $(" <p class=\"mytext-p1 left \" style=\"font-size: 14px\"></p>").append("阅读时间：" + item.lastReadTime);
                     var btn1 = $("<a  class= \"button btn btn-primary left mt5 ml15\">继续阅读</button>").attr("href", rootPath + "showDetail?id=" + item.detail.detailId);
-                    var btn2 = $("<button type=\"button\" class=\"btn btn-danger left mt5 ml15 delMyOrder\">取消订阅</button>").attr("order-id", item.ordersId);
+                    var btn2 = $("<button type=\"button\" class=\"btn btn-danger left mt5 ml15 delHistory\">删除历史</button>").attr("history-id", item.historyId);
                     childrenDiv.append(img).append(h1).append(title).append(newTime).append(btn1).append(btn2).appendTo(parentDiv);
                 });
                 parentDiv.append($("<div class=\"clearfix \"></div>"));
@@ -397,7 +397,7 @@ function haveNewHistory(pn) {
                     var title = $(" <p class=\"mytext-p1 left pOver\" style=\"font-size: 15px\"></p>").append("阅读章节：" + item.detail.chapterName);
                     var newTime = $(" <p class=\"mytext-p1 left \" style=\"font-size: 14px\"></p>").append("阅读时间：" + item.lastReadTime);
                     var btn1 = $("<a  class= \"button btn btn-primary left mt5 ml15\">继续阅读</button>").attr("href", rootPath + "showDetail?id=" + item.detail.detailId);
-                    var btn2 = $("<button type=\"button\" class=\"btn btn-danger left mt5 ml15 delMyOrder\">删除历史</button>").attr("history-id", item.historyId);
+                    var btn2 = $("<button type=\"button\" class=\"btn btn-danger left mt5 ml15 delHistory\">删除历史</button>").attr("history-id", item.historyId);
                     childrenDiv.append(img).append(h1).append(title).append(newTime).append(btn1).append(btn2).appendTo(parentDiv);
                 });
                 parentDiv.append($("<div class=\"clearfix\"></div>"));
@@ -450,10 +450,12 @@ $(function () {
         $.ajax({
             url:rootPath+"haveRead?id="+id,
             method:"GET",
-            success:function () {
-                allRevertPage(1);
-                noReadRevertPage(1);
-                readRevertPage(1);
+            success:function (result) {
+                if (result.code==200){
+                    allRevertPage(1);
+                    noReadRevertPage(1);
+                    readRevertPage(1);
+                }
             }
         })
     });
@@ -474,5 +476,38 @@ $(function () {
                 }
             }
         })
+    });
+    $(".user-content").on("click",".delMyOrder",function () {
+        if (confirm("确定要取消订阅？")) {
+            var comicId = $(this).attr("comic-id");
+            $.ajax({
+                url:rootPath+"delMyOrder?id="+comicId,
+                method:"GET",
+                success:function (result) {
+                    if (result.code==200){
+                        alert("取消订阅成功");
+                        allOrderPage(1);
+                        noReadOrderPage(1);
+                        readOrderPage(1);
+                    }
+                }
+            })
+        }
+    });
+    $(".user-content").on("click",".delHistory",function () {
+        if (confirm("确定要删除该历史？")) {
+            var historyId = $(this).attr("history-id");
+            $.ajax({
+                url:rootPath+"delMyHistory?id="+historyId,
+                method:"GET",
+                success:function (result) {
+                    if (result.code==200){
+                        alert("删除历史成功");
+                        allHistory(1);
+                        haveNewHistory(1);
+                    }
+                }
+            })
+        }
     })
 });

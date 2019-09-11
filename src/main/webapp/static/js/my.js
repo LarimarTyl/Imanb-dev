@@ -1017,6 +1017,7 @@ $(function () {
     });
 
     function flashComment(replyList){
+         $("#comicCommentForm").find("#revertId").val("");
         var comments = $(".comments-area").empty();
         $.each(replyList,function (index, item) {
             var comment = $(" <div class=\"comments-block commentDiv\"></div>");
@@ -1064,7 +1065,6 @@ $(function () {
                 method:"POST",
                 data:form.serialize(),
                 success:function (result) {
-                    form[0].reset();
                     if (result.code==200){
                         console.log(result);
                         flashComment(result.data.replyList)
@@ -1117,6 +1117,7 @@ $(function () {
 
     function flashComment2(replyList){
         var comments = $(".comments-area").empty();
+        $("#detailCommentForm").find("#revertId").val("");
         $.each(replyList,function (index, item) {
             var comment = $(" <div class=\"comments-block commentDiv\"></div>");
             var $div = $("<div></div>");

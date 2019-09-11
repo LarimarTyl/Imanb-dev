@@ -380,4 +380,17 @@ public class UserController {
         commentService.updateStatus(id,-1);
         return Msg.success();
     }
+    @RequestMapping("/delMyOrder")
+    @ResponseBody
+    public Msg delMyOrder(Integer id,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        orderService.userDelOrders(user.getUserId(),id);
+        return Msg.success().add("取消订阅成功",null);
+    }
+    @RequestMapping("/delMyHistory")
+    @ResponseBody
+    public Msg delMyHistory(Integer id){
+        historyService.delHistory(id);
+        return Msg.success().add("删除浏览历史成功",null);
+    }
 }

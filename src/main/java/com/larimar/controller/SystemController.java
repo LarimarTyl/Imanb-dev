@@ -75,7 +75,6 @@ public class SystemController {
         request.getSession().getServletContext().setAttribute("japaneseRank",japaneseRank);
         request.getSession().getServletContext().setAttribute("allRank",allRank);
         request.getSession().getServletContext().setAttribute("details",details);
-        request.getSession().setAttribute("user",userService.findUserById(2));
         return "index";
     }
     @RequestMapping("/index")
