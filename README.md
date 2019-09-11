@@ -11,11 +11,17 @@ Imanb爱漫吧动漫网
 项目由用户、漫画、章节、订阅、浏览历史、评论、点赞几个模块组成。
 
 数据库文件：[Imanb.sql](imanb.sql)
+
 前端代码（Thymleaf版）：[Imanb前端代码（模板引擎版）](src/main/webapp/WEB-INF/templates)
+
 前端代码（js/css等）：[Imanb前端代码（js/css）](src/main/webapp/static)
+
 前端代码部分（Html版）：[Imanb前端代码（html版）](https://github.com/LarimarTyl/Imanb)
+
 配置文件：[配置文件](src/main/resource)
+
 后端代码：[后端代码](src/main/java)
+
 数据库文件：[Imanb.sql](imanb.sql)
 
 3.技术架构
